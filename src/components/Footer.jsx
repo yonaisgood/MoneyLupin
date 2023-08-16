@@ -24,7 +24,9 @@ const Footer = () => {
 
 const StyledFooter = styled.footer`
   background-color: var(--gray-100);
-
+  width: 100%;
+  position: absolute;
+  bottom: 0;
   .footerContainer {
     background-color: var(--gray-100);
     max-width: 1185px;
@@ -57,8 +59,12 @@ const StyledFooter = styled.footer`
   }
 
   .githubIcon {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
+    transition: all ease 0.3s;
+    &:hover {
+      transform: rotate(20deg);
+    }
   }
 `;
 
