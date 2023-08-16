@@ -28,7 +28,6 @@ const Login = () => {
   );
 };
 const StyledMain = styled.main`
-  /* position: relative; */
   min-height: 100vh;
   width: 50%;
   display: flex;

@@ -1,10 +1,11 @@
 import { styled } from 'styled-components';
+import person from '../assets/icons/person.svg';
 import logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <StyledHeader>
+    <StyledHeader person={person}>
       <div>
         <h1>
           <Link to="/">
@@ -101,8 +102,24 @@ const StyledHeader = styled.header`
 
   #login {
     position: absolute;
+    display: flex;
+    padding: 10px 11px;
     top: 22px;
     right: 27px;
+    border-radius: 10px;
+    border: 1px solid var(--gray-200);
+    line-height: 2.2rem;
+    color: var(--gray-200);
+  }
+
+  #login::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    aspect-ratio: 1/1;
+    margin-right: 13px;
+    background: ${(props) => 'url(' + props.person + ')'} no-repeat center /
+      contain;
   }
 `;
 
