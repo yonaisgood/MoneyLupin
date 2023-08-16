@@ -7,13 +7,13 @@ const Header = () => {
     <StyledHeader>
       <div>
         <h1>
-          <Link to='/'>
-            <img src={logo} alt='lupin 로고' />
+          <Link to="/">
+            <img src={logo} alt="lupin 로고" />
           </Link>
         </h1>
 
         <button>
-          <span className='hamburger'>
+          <span className="hamburger">
             <span></span>
             <span></span>
             <span></span>
@@ -23,26 +23,26 @@ const Header = () => {
         <nav>
           <ul>
             <li>
-              <Link to='/'>NEW 클래스</Link>
+              <Link to="/">NEW 클래스</Link>
             </li>
             <li>
-              <Link to='/'>BEST 클래스</Link>
+              <Link to="/">BEST 클래스</Link>
             </li>
             <li>
-              <Link to='/'>얼리버드 혜택</Link>
+              <Link to="/">얼리버드 혜택</Link>
             </li>
             <li>
-              <Link to='/'>1:1 코칭</Link>
+              <Link to="/">1:1 코칭</Link>
             </li>
             <li>
-              <Link to='/'>이벤트</Link>
+              <Link to="/">이벤트</Link>
             </li>
             <li>
-              <Link to='/'>커리큘럼</Link>
+              <Link to="/">커리큘럼</Link>
             </li>
           </ul>
         </nav>
-        <Link to='/login' id='login'>
+        <Link to="/login" id="login">
           로그인
         </Link>
       </div>
@@ -51,23 +51,26 @@ const Header = () => {
 };
 
 const StyledHeader = styled.header`
+  border-bottom: 2px solid var(--gray-100); // 확인 필요
+
   div {
     position: relative;
-    padding: 34px 0 12px; // 확인 필요
-    max-width: 1185px; // 확인 필요
+    padding: 34px 0 12px;
+    max-width: 1185px;
     margin: auto;
     font-size: 16px;
     color: var(--black-color);
   }
-  border-bottom: 2px solid var(--gray-100); // 확인 필요
+
   h1 {
-    margin: 0;
     margin-bottom: 31px;
     width: 94px;
   }
+
   img {
     aspect-ratio: 94 / 20;
   }
+
   .hamburger {
     display: inline-block;
     margin-right: 7px;
@@ -75,23 +78,27 @@ const StyledHeader = styled.header`
       display: block;
       width: 18px;
       height: 2px;
-      background: #1c1b1f; // 확인 필요
+      background: var(--black-color);
     }
     span + span {
       margin-top: 3px;
     }
   }
+
   nav {
     display: inline-block;
   }
+
   ul {
     margin: 0;
     padding: 0;
   }
+
   li {
     margin-left: 30px;
     display: inline-block;
   }
+
   #login {
     position: absolute;
     top: 22px;
