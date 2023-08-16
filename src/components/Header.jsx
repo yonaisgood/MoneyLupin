@@ -7,13 +7,13 @@ const Header = () => {
     <StyledHeader>
       <div>
         <h1>
-          <Link to='/'>
-            <img src={logo} alt='lupin 로고' />
+          <Link to="/">
+            <img src={logo} alt="lupin 로고" />
           </Link>
         </h1>
 
         <button>
-          <span className='hamburger'>
+          <span className="hamburger">
             <span></span>
             <span></span>
             <span></span>
@@ -23,26 +23,26 @@ const Header = () => {
         <nav>
           <ul>
             <li>
-              <Link to='/'>NEW 클래스</Link>
+              <Link to="/">NEW 클래스</Link>
             </li>
             <li>
-              <Link to='/'>BEST 클래스</Link>
+              <Link to="/">BEST 클래스</Link>
             </li>
             <li>
-              <Link to='/'>얼리버드 혜택</Link>
+              <Link to="/">얼리버드 혜택</Link>
             </li>
             <li>
-              <Link to='/'>1:1 코칭</Link>
+              <Link to="/">1:1 코칭</Link>
             </li>
             <li>
-              <Link to='/'>이벤트</Link>
+              <Link to="/">이벤트</Link>
             </li>
             <li>
-              <Link to='/'>커리큘럼</Link>
+              <Link to="/">커리큘럼</Link>
             </li>
           </ul>
         </nav>
-        <Link to='/login' id='login'>
+        <Link to="/login" id="login">
           로그인
         </Link>
       </div>
