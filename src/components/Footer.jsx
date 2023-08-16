@@ -25,8 +25,6 @@ const Footer = () => {
 const StyledFooter = styled.footer`
   background-color: var(--gray-100);
   width: 100%;
-  position: absolute;
-  bottom: 0;
   .footerContainer {
     background-color: var(--gray-100);
     max-width: 1185px;
