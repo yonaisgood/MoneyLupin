@@ -1,42 +1,116 @@
 import Header from '../../components/Header';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-
-import banner1 from '../../assets/images/banner1.png';
-import banner2 from '../../assets/images/banner2.png';
-import banner3 from '../../assets/images/banner3.png';
+import { useEffect, useRef, useState } from 'react';
 
 import best1 from '../../assets/images/best/1.png';
 import best2 from '../../assets/images/best/2.png';
 import best3 from '../../assets/images/best/3.png';
 import best4 from '../../assets/images/best/4.png';
-import { useEffect } from 'react';
 
-import { contents } from './data';
+import { contents, banners } from './data';
 
 const Home = () => {
+  const [autoSlide, setAutoSlide] = useState(true);
+  const [currBanner, setCurrBanner] = useState(0);
+  const bannerList = useRef(null);
+
+  const hideBanner = (currIndex) => {
+    setCurrBanner(currIndex);
+    [...bannerList.current.children].forEach((v, i) => {
+      if (i === currIndex) {
+        v.setAttribute('aria-hidden', 'false');
+        v.firstElementChild.removeAttribute('tabIndex');
+      } else {
+        v.setAttribute('aria-hidden', 'true');
+        v.firstElementChild.setAttribute('tabIndex', '-1');
+      }
+    });
+  };
+
+  const onLive = () => {
+    bannerList.current.setAttribute('aria-live', 'polite');
+  };
+
+  const offLive = () => {
+    bannerList.current.setAttribute('aria-live', 'off');
+  };
+
+  const rotateSlide = () => {
+    return setInterval(() => {
+      const bannersTransform = bannerList.current.style.transform;
+
+      if (bannersTransform === '') {
+        bannerList.current.style.transform = 'translateX(-100%)';
+        hideBanner(1);
+        return;
+      }
+
+      const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
+      const currBannerIndex = bannersX / -100 + 1;
+      if (currBannerIndex < banners.length) {
+        bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
+        hideBanner(currBannerIndex);
+      } else {
+        bannerList.current.style.transform = '';
+        hideBanner(0);
+      }
+    }, 2000);
+  };
+
+  useEffect(() => {
+    let interval;
+    if (autoSlide) {
+      offLive();
+      interval = rotateSlide();
+    } else {
+      onLive();
+    }
+    return () => clearInterval(interval);
+  }, [autoSlide]);
   return (
     <>
       <Header />
       <StyledMain>
-        <section className="banners">
+        <section
+          className="banners"
+          onFocus={() => setAutoSlide(false)}
+          onBlur={() => setAutoSlide(true)}
+          onMouseOver={() => setAutoSlide(false)}
+          onMouseOut={() => setAutoSlide(true)}
+          // 암시적으로 role='region'
+          aria-roledescription="carousel"
+          aria-label="배너 슬라이드"
+        >
           <h2 className="a11y-hidden">메인 배너</h2>
-          <ul>
-            <li>
-              <Link>
-                <img src={banner1} alt="" />
-              </Link>
-            </li>
-            <li>
-              <Link>
-                <img src={banner2} alt="" />
-              </Link>
-            </li>
-            <li>
-              <Link>
-                <img src={banner3} alt="" />
-              </Link>
-            </li>
+          <ul ref={bannerList} aria-live="off">
+            {banners.map((banner, i) => {
+              return (
+                <li
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-hidden={currBanner !== i}
+                >
+                  <Link>
+                    <img src={banner.img} alt="" />
+                    {banner.text.map((text, i) => {
+                      if (!i) {
+                        return text;
+                      } else {
+                        return (
+                          <>
+                            <br />
+                            {text}
+                          </>
+                        );
+                      }
+                    })}
+                    {/* <br />
+                    {`${banners.length}개의 슬라이드 중 ${i + 1}번`} */}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
 
