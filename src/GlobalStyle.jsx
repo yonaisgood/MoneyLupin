@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     --brand-color-light: #CEC2FD;
   }
 
-  
+  //텍스트 숨김 처리
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
