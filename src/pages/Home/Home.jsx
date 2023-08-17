@@ -1,15 +1,18 @@
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import banner1 from '../assets/images/banner1.png';
-import banner2 from '../assets/images/banner2.png';
-import banner3 from '../assets/images/banner3.png';
+import banner1 from '../../assets/images/banner1.png';
+import banner2 from '../../assets/images/banner2.png';
+import banner3 from '../../assets/images/banner3.png';
 
-import best1 from '../assets/images/best/1.png';
-import best2 from '../assets/images/best/2.png';
-import best3 from '../assets/images/best/3.png';
-import best4 from '../assets/images/best/4.png';
+import best1 from '../../assets/images/best/1.png';
+import best2 from '../../assets/images/best/2.png';
+import best3 from '../../assets/images/best/3.png';
+import best4 from '../../assets/images/best/4.png';
+import { useEffect } from 'react';
+
+import { contents } from './data';
 
 const Home = () => {
   return (
@@ -40,15 +43,16 @@ const Home = () => {
         <section className="contents">
           <h2 className="a11y-hidden">콘텐츠</h2>
           <ul>
-            <li>
-              <Link>1:1 코칭</Link>
-            </li>
-            <li>
-              <Link>NEW</Link>
-            </li>
-            <li>
-              <Link>부동산</Link>
-            </li>
+            {contents.map((content) => {
+              return (
+                <li>
+                  <Link>
+                    <img src={content.img} alt="" />
+                    {content.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
 
@@ -113,18 +117,17 @@ const StyledMain = styled.main`
       line-height: 2.3rem;
       text-align: center;
       color: var(--black-color);
-      border: 1px solid black;
     }
     li + li {
       margin-left: 20px;
     }
-    a::before {
-      content: '';
-      display: block;
-      width: 100%;
+    img {
       aspect-ratio: 92 / 80;
       margin-bottom: 18px;
-      border: 1px solid black;
+    }
+    a:hover > img {
+      transition: 0.3s;
+      transform: scale(115%);
     }
   }
 
@@ -143,9 +146,15 @@ const StyledMain = styled.main`
       display: flex;
       gap: 27px;
     }
-
-    img {
+    li {
       aspect-ratio: 280 / 230;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    a:hover > img {
+      transition: 0.3s;
+      transform: scale(110%);
     }
   }
 `;
