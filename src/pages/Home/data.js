@@ -42,8 +42,8 @@ const banners = [
   },
   {
     text: [
-      '친구도 나도 일석이조 30000 포인트 혜택',
-      '친구에게 강의를 소개하고, 초대해 주세요',
+      'NEW 이번달 신규강의 얼리버드 혜택과 만나기',
+      '이번달 신규 강의 가장 처음 만나보세요 !',
       '혜택 받으러 가기',
     ],
     img: banner2,
@@ -58,4 +58,11 @@ const banners = [
   },
 ];
 
-export { contents, banners };
+const best = [
+  { name: '루팡 스쿨 기초반', img: best1, link: '/' },
+  { name: '루팡 스쿨 주식반', img: best2, link: '/' },
+  { name: '루팡 스쿨 중급반', img: best3, link: '/' },
+  { name: '서울 투자 중급반', img: best4, link: '/' },
+];
+
+export { contents, banners, best };

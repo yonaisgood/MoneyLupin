@@ -52,11 +52,15 @@ const Header = () => {
 };
 
 const StyledHeader = styled.header`
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  background: white;
   border-bottom: 2px solid var(--gray-100); // 확인 필요
 
   div {
     position: relative;
-    padding: 34px 0 12px;
+    padding: 34px 40px 12px; // 좌우 패딩 임시
     max-width: 1185px;
     margin: auto;
     font-size: 16px;
@@ -75,12 +79,14 @@ const StyledHeader = styled.header`
   .hamburger {
     display: inline-block;
     margin-right: 7px;
+
     span {
       display: block;
       width: 18px;
       height: 2px;
       background: var(--black-color);
     }
+
     span + span {
       margin-top: 3px;
     }
@@ -98,6 +104,10 @@ const StyledHeader = styled.header`
   li {
     margin-left: 30px;
     display: inline-block;
+  }
+
+  a {
+    line-height: 2.3rem;
   }
 
   #login {
