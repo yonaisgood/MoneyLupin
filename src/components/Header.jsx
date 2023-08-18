@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <StyledHeader person={person}>
+    <StyledHeader $person={person}>
       <div>
         <h1>
           <Link to="/">
@@ -128,7 +128,7 @@ const StyledHeader = styled.header`
     width: 16px;
     aspect-ratio: 1/1;
     margin-right: 13px;
-    background: ${(props) => 'url(' + props.person + ')'} no-repeat center /
+    background: ${(props) => 'url(' + props.$person + ')'} no-repeat center /
       contain;
   }
 `;

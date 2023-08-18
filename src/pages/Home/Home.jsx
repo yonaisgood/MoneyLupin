@@ -8,6 +8,7 @@ const Home = () => {
   const [autoSlide, setAutoSlide] = useState(true);
   const [currBanner, setCurrBanner] = useState(0);
   const bannerList = useRef(null);
+  const bestList = useRef(null);
 
   const hideBanner = (currIndex) => {
     setCurrBanner(currIndex - 1);
@@ -109,6 +110,59 @@ const Home = () => {
     }
   };
 
+  // 이번 달 BEST 강의
+  const viewWidth = window.innerWidth;
+  let Start;
+  let End;
+
+  const slide = () => {
+    let x = (End - Start) * 2;
+    if (bestList.current.style.transform === '') {
+      if (-x + viewWidth > 1241) {
+        bestList.current.style.transform = `translateX(${-1241 + viewWidth}px)`;
+      } else if (x < 0) {
+        bestList.current.style.transform = `translateX(${x}px)`;
+      }
+    } else {
+      const currX = parseInt(
+        bestList.current.style.transform.replace(/[^\d-]/g, '')
+      );
+      if (-currX - x + viewWidth > 1241) {
+        bestList.current.style.transform = `translateX(${-1241 + viewWidth}px)`;
+      } else if (-currX < x) {
+        bestList.current.style.transform = '';
+      } else {
+        bestList.current.style.transform = `translateX(${currX + x}px)`;
+      }
+    }
+  };
+
+  const handleDragStart = (e) => {
+    if (viewWidth < 1241) {
+      Start = e.clientX;
+    }
+  };
+
+  const handleDragEnd = (e) => {
+    if (viewWidth < 1241) {
+      End = e.clientX;
+      slide();
+    }
+  };
+
+  const handleTouchStart = (e) => {
+    if (viewWidth < 1241) {
+      Start = e.changedTouches[0].pageX;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (viewWidth < 1241) {
+      End = e.changedTouches[0].pageX;
+      slide();
+    }
+  };
+
   return (
     <>
       <Header />
@@ -146,20 +200,7 @@ const Home = () => {
                 >
                   <Link tabIndex={currBanner === i ? '' : '-1'}>
                     <img src={banner.img} alt="" />
-                    <p className="a11y-hidden">
-                      {banner.text.map((text, i) => {
-                        if (!i) {
-                          return text;
-                        } else {
-                          return (
-                            <>
-                              <br />
-                              {text}
-                            </>
-                          );
-                        }
-                      })}
-                    </p>
+                    <p className="a11y-hidden">{banner.text.join(' ')}</p>
                     <br />
                     {`${banners.length}개의 슬라이드 중 ${i + 1}번`}
                   </Link>
@@ -191,10 +232,16 @@ const Home = () => {
 
         <section className="classes">
           <h2>이번 달 BEST 강의</h2>
-          <ul>
-            {best.map((v) => {
+          <ul
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            ref={bestList}
+          >
+            {best.map((v, i) => {
               return (
-                <li>
+                <li key={i}>
                   <Link to={v.link}>
                     <img src={v.img} alt={v.name} />
                   </Link>
@@ -302,14 +349,27 @@ const StyledMain = styled.main`
 
   .contents {
     margin: 50px 0 53px;
+    padding: 0 40px; // 임시
 
     ul {
-      text-align: center;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    @media (max-width: 1179px) {
+      ul {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+      }
+      li {
+        margin: auto;
+      }
     }
 
     li {
-      display: inline-block;
-      width: 92px;
+      flex-shrink: 0;
+      max-width: 92px;
       padding: 15px 0 13px;
       font-size: 1.6rem;
       line-height: 2.3rem;
@@ -318,10 +378,11 @@ const StyledMain = styled.main`
     }
 
     li + li {
-      margin-left: 20px;
+      /* margin-left: 20px; */
     }
 
     img {
+      height: auto;
       aspect-ratio: 92 / 80;
       margin-bottom: 18px;
     }
@@ -333,9 +394,10 @@ const StyledMain = styled.main`
   }
 
   .classes {
-    max-width: 1200px;
+    max-width: 1201px;
     padding-left: 40px; // 임시
     margin: auto;
+    overflow-x: hidden; // 임시
 
     h2 {
       margin-bottom: 20px;
@@ -347,11 +409,11 @@ const StyledMain = styled.main`
     ul {
       display: flex;
       gap: 27px;
-      overflow-x: scroll; // 임시
+      transition: 0.5s;
     }
 
     li {
-      min-width: 240px; // 임시
+      min-width: 270px;
       aspect-ratio: 280 / 230;
       overflow: hidden;
       border-radius: 10px;
