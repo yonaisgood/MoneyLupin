@@ -8,7 +8,7 @@ const StyledMain = styled.main`
     display: flex;
     gap: 42px;
   }
-  .basic {
+  .basicImg {
     width: 755px;
     height: 428px;
   }
