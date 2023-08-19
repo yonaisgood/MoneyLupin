@@ -1,6 +1,6 @@
 import StyledForm from '../../components/Form';
 import { Section, LeftSection, RightSection } from './SignUpStyle';
-import SignUpBack from '../../assets/images/signup-back.png';
+import SignUpBack from '../../assets/images/login,signup/signup-back.png';
 
 const SignUp = () => {
   return (
