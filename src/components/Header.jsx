@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import person from '../assets/icons/person.svg';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/header,footer/logo.png';
 import { Link } from 'react-router-dom';
 
 const Header = () => {

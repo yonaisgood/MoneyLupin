@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import logo from '../assets/images/logo.png';
-import githubIcon from '../assets/images/icon-github.png';
+import logo from '../assets/images/header,footer/logo-gray.png';
+import githubIcon from '../assets/images/header,footer/icon-github.png';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -11,7 +11,7 @@ const Footer = () => {
           <img className="logoGray" src={logo} alt="루팡로고" />
         </h1>
         <div className="footerText">
-          <p>상업적 목적이 없는 포트폴이오용 사이트 입니다.</p>
+          <p>상업적 목적이 없는 포트폴리오용 사이트 입니다.</p>
           <span>Lupin. &#169; 2023. All Right Reserved.</span>
         </div>
         <Link to="https://github.com/yonainthefish/MoneyLupin" target="_blank">
