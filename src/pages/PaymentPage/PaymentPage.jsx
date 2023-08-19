@@ -6,6 +6,7 @@ import {
   LeftSection,
 } from './PaymentPageStyle';
 import BasicClass from '../../assets/images/best/1.png';
+import Button from '../../components/Button';
 
 const PaymentPage = () => {
   return (
@@ -79,7 +80,7 @@ const PaymentPage = () => {
             <span>118,800 원</span>
           </div>
           <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
-          <button>결제하기</button>
+          <Button>결제하기</Button>
         </RightSection>
       </PaymentContainor>
       <Footer />

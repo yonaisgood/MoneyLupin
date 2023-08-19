@@ -10,7 +10,7 @@ const PaymentContainor = styled.div`
 `;
 
 const LeftSection = styled.section`
-  width: 70%;
+  width: 70rem;
   padding-top: 4rem;
   h1 {
     font-size: 30px;
@@ -56,7 +56,7 @@ const LeftSection = styled.section`
       }
       .paySelectBtn {
         background-color: var(--gray-100);
-        width: 18.3rem;
+        width: 15.3rem;
         height: 6.3rem;
         border-radius: 10px;
         margin-top: 26px;
@@ -80,7 +80,7 @@ const LeftSection = styled.section`
 
 const RightSection = styled.section`
   padding-top: 4rem;
-  width: 30%;
+  width: 38.8rem;
   font-size: 14px;
   margin-left: 3rem;
   h3 {
@@ -109,12 +109,12 @@ const RightSection = styled.section`
     margin-top: 1rem;
   }
   .installmentInfo {
-    /* border: 1px solid red; */
     display: block;
     text-align: right;
     color: var(--gray-200);
     font-weight: 500;
     font-size: 16px;
+    margin-bottom: 3.2rem;
   }
 `;
 
