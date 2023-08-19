@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import StyledForm from '../components/Form';
-import loginBg from '../assets/images/login-bg.png';
+import loginBg from '../assets/images/login,signup/login-bg.png';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
