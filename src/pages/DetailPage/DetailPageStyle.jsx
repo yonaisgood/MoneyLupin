@@ -76,7 +76,6 @@ const StyledMain = styled.main`
 
   .section2 {
     width: 70rem;
-    border: 1px solid red;
   }
 
   .section2 ul li:hover {
