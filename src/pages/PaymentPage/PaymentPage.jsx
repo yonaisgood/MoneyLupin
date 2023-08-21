@@ -11,8 +11,10 @@ import { collection, addDoc } from 'firebase/firestore';
 import { appFireStore, Timestamp } from '../../firebase/config';
 import { useContext } from 'react';
 import { PayContext } from '../../context/PayContext';
+import { useNavigate } from 'react-router-dom';
 
 const PaymentPage = () => {
+  const navigate = useNavigate();
   const { openTime } = useContext(PayContext);
 
   const nickname = localStorage.getItem('nickname');
@@ -26,6 +28,7 @@ const PaymentPage = () => {
       const myTime = Timestamp.fromDate(new Date());
       const docRef = await addDoc(colRef, { myTime, nickname, uid });
       console.log(docRef);
+      navigate('/ranking');
     } catch (error) {
       console.error(error);
     }

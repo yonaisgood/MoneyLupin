@@ -35,15 +35,15 @@ const DetailPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [payBtn, setPayBtn] = useState(false);
   const [time, setTime] = useState('');
-  const [timeData, setTimeData] = useState(null);
-  const [nextTestTime, setNextTestTime] = useState('');
+  const [data, setData] = useState(null);
+  const [nextPayTime, setNextPayTime] = useState('');
   const modal = useRef(null);
   const timeInp = useRef(null);
   const { setOpenTime } = useContext(PayContext);
 
   const uid = localStorage.getItem('uid');
 
-  // 시간 설정
+  // 시간 예약
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,8 +51,8 @@ const DetailPage = () => {
       alert('시간을 선택해주세요');
       return;
     }
-    for (const data of timeData) {
-      if (data.time === time) {
+    for (const v of data) {
+      if (v.time === time) {
         alert('이미 예약한 시간입니다');
         return;
       }
@@ -65,23 +65,23 @@ const DetailPage = () => {
         time: Timestamp.fromDate(new Date(time)),
       });
 
-      setTimeData([...timeData, { time, id: docRef.id }]);
+      setData([...data, { time, id: docRef.id }]);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // 시간 설정 버튼 클릭 시, 모달 open
+  // 오픈 시간 예약 버튼 클릭 시, 모달 open
   useEffect(() => {
     if (openModal) {
       modal.current.showModal();
     }
   }, [openModal]);
 
-  // 예약 시간 데이터 가져오기 및 버튼 활성화
-  const checkPay = (dataTime) => {
+  // 결제한 사용자 체크 및 버튼 활성화
+  const checkPay = (iso) => {
     onSnapshot(
-      collection(appFireStore, dataTime),
+      collection(appFireStore, 'time'),
       (snapshot) => {
         for (const doc of snapshot.docs) {
           if (uid === doc.data().uid) {
@@ -89,7 +89,7 @@ const DetailPage = () => {
           }
         }
         setPayBtn(true);
-        setOpenTime(dataTime);
+        setOpenTime(iso); // context
       },
       (error) => {
         console.error(error.message);
@@ -114,7 +114,7 @@ const DetailPage = () => {
       result[0].time.slice(8, 10) +
       `(${day}) ` +
       result[0].time.slice(11);
-    setNextTestTime(str);
+    setNextPayTime(str);
   };
 
   useEffect(() => {
@@ -122,12 +122,13 @@ const DetailPage = () => {
 
     (async () => {
       const currTime = new Date();
+      const currTimeCopy = new Date(currTime);
       const q = query(
         collection(appFireStore, 'time'),
         where(
           'time',
           '>=',
-          new Date(currTime.setMinutes(currTime.getMinutes() - 10))
+          new Date(currTimeCopy.setMinutes(currTimeCopy.getMinutes() - 10))
         )
       );
 
@@ -135,26 +136,25 @@ const DetailPage = () => {
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((document) => {
-        const dataTime = document.data().time;
-        const dataTimeObj = new Date(document.data().time);
-
-        // 600000밀리초 === 10분
-        if (0 <= currTime - dataTimeObj && currTime - dataTimeObj <= 600000) {
-          checkPay(dataTime);
-          open = true;
-        }
-
-        const date = new Date(dataTime.seconds * 1000);
-        const iso = new Date(date.setHours(date.getHours() + 9))
+        const date = new Date(document.data().time.seconds * 1000);
+        const dateCopy = new Date(date);
+        const iso = new Date(dateCopy.setHours(dateCopy.getHours() + 9))
           .toISOString()
           .slice(0, 16);
+
+        // 600000밀리초 === 10분
+        if (0 <= currTime - date && currTime - date <= 600000) {
+          checkPay(iso);
+          open = true;
+        }
 
         result.push({
           time: iso,
           id: document.id,
         });
       });
-      setTimeData(result);
+
+      setData(result);
 
       // 버튼 비활성화 상태 시, 예약 시간 렌더링
       if (!!result.length && !open) {
@@ -167,7 +167,7 @@ const DetailPage = () => {
     e.preventDefault();
     const id = e.currentTarget.dataset.id;
     await deleteDoc(doc(appFireStore, 'time', id));
-    setTimeData(timeData.filter((v) => v.id !== id));
+    setData(data.filter((v) => v.id !== id));
   };
 
   useEffect(() => {
@@ -192,7 +192,7 @@ const DetailPage = () => {
   return (
     <>
       <Header />
-      {timeData && (
+      {data && (
         <>
           <StyledMain>
             <section className="section1">
@@ -217,8 +217,8 @@ const DetailPage = () => {
                 </div>
                 <hr />
                 <p className="btnTxt">회원을 위한 혜택</p>
-                {nextTestTime && (
-                  <strong className="openTime">{nextTestTime} 오픈 예정</strong>
+                {nextPayTime && (
+                  <strong className="openTime">{nextPayTime} 오픈 예정</strong>
                 )}
                 <Link to="/payment">
                   <Button size="l" disabled={!payBtn}>
@@ -248,7 +248,7 @@ const DetailPage = () => {
                           value={time}
                           onChange={(e) => {
                             setTime(e.target.value);
-                            console.log(e.target.validity);
+
                             if (e.target.validity.rangeUnderflow) {
                               alert('현재 시간부터 선택할 수 있습니다');
                             } else if (e.target.validity.rangeOverflow) {
@@ -266,7 +266,7 @@ const DetailPage = () => {
                   <div className="list-wrap">
                     <strong>예약된 강의 시간</strong>
                     <ul>
-                      {timeData.map((v, i) => {
+                      {data.map((v, i) => {
                         return (
                           <li key={i}>
                             <span className="day">
