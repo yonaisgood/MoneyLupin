@@ -80,8 +80,9 @@ const DetailPage = () => {
 
   // 결제한 사용자 체크 및 버튼 활성화
   const checkPay = (iso) => {
+    let openTime = false;
     onSnapshot(
-      collection(appFireStore, 'time'),
+      collection(appFireStore, iso),
       (snapshot) => {
         for (const doc of snapshot.docs) {
           if (uid === doc.data().uid) {
@@ -90,11 +91,13 @@ const DetailPage = () => {
         }
         setPayBtn(true);
         setOpenTime(iso); // context
+        openTime = true;
       },
       (error) => {
         console.error(error.message);
       }
     );
+    return openTime;
   };
 
   const renderOpenTime = (result) => {
@@ -118,7 +121,7 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    let open = false;
+    let openTime = false;
 
     (async () => {
       const currTime = new Date();
@@ -144,8 +147,7 @@ const DetailPage = () => {
 
         // 600000밀리초 === 10분
         if (0 <= currTime - date && currTime - date <= 600000) {
-          checkPay(iso);
-          open = true;
+          openTime = checkPay(iso);
         }
 
         result.push({
@@ -157,7 +159,7 @@ const DetailPage = () => {
       setData(result);
 
       // 버튼 비활성화 상태 시, 예약 시간 렌더링
-      if (!!result.length && !open) {
+      if (!!result.length && !openTime) {
         renderOpenTime(result);
       }
     })();
