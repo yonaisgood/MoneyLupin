@@ -41,16 +41,24 @@ const DetailPage = () => {
           <h3>베스트 수강 후기</h3>
           <ul>
             <li>
-              <img src={review1} alt="리뷰 1" />
+              <a href="none">
+                <img src={review1} alt="리뷰 1" />
+              </a>
             </li>
             <li>
-              <img src={review2} alt="리뷰 2" />
+              <a href="none">
+                <img src={review2} alt="리뷰 2" />
+              </a>
             </li>
             <li>
-              <img src={review3} alt="리뷰 3" />
+              <a href="noen">
+                <img src={review3} alt="리뷰 3" />
+              </a>
             </li>
             <li>
-              <img src={review4} alt="리뷰 4" />
+              <a href="noen">
+                <img src={review4} alt="리뷰 4" />
+              </a>
             </li>
           </ul>
         </section>
