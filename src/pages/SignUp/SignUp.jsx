@@ -1,6 +1,7 @@
 import StyledForm from '../../components/Form';
 import { Section, LeftSection, RightSection } from './SignUpStyle';
-import SignUpBack from '../../assets/images/login,signup/signup-back.png';
+import Button from '../../components/Button';
+import SignUpBack from '../../assets/images/login,signup/signup-bg.png';
 
 const SignUp = () => {
   return (
@@ -27,7 +28,7 @@ const SignUp = () => {
               별명
               <input type="text" />
             </label>
-            <button>Sign Up</button>
+            <Button>Sign Up</Button>
           </StyledForm>
         </RightSection>
       </Section>

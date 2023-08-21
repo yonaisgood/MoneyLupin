@@ -12,35 +12,44 @@ const PaymentContainor = styled.div`
 const LeftSection = styled.section`
   width: 70rem;
   padding-top: 4rem;
+
   h1 {
     font-size: 30px;
     margin-bottom: 19px;
   }
+
   .className {
     display: flex;
     align-items: center;
     gap: 6px;
+
     .classImg {
       width: 231px;
     }
+
     .classInfo {
       font-size: 20px;
       font-weight: bold;
     }
+
     .classPrice {
       font-size: 25px;
       margin-top: -10px;
     }
   }
+
   .payMethod {
     margin-top: 3rem;
+
     .payBenefit {
       margin-bottom: 4rem;
+
       .payPoint {
         display: flex;
         justify-content: space-around;
         align-items: center;
       }
+
       .payAllBtn {
         border: 1px solid var(--gray-200);
         width: 14rem;
@@ -50,10 +59,12 @@ const LeftSection = styled.section`
         font-size: 14px;
         color: var(--black-color);
       }
+
       .paySelect {
         display: flex;
         justify-content: space-between;
       }
+
       .paySelectBtn {
         background-color: var(--gray-100);
         width: 15.3rem;
@@ -63,10 +74,12 @@ const LeftSection = styled.section`
         font-size: 16px;
       }
     }
+
     h3 {
       font-size: 20px;
       font-weight: bold;
     }
+
     p {
       width: 100%;
       background-color: var(--gray-100);
@@ -79,14 +92,16 @@ const LeftSection = styled.section`
 `;
 
 const RightSection = styled.section`
-  padding-top: 4rem;
+  padding-top: 5rem;
   width: 38.8rem;
   font-size: 14px;
   margin-left: 3rem;
+
   h3 {
     font-size: 20px;
     margin-bottom: 20px;
   }
+
   .payCost::after {
     content: '';
     display: block;
@@ -94,12 +109,14 @@ const RightSection = styled.section`
     width: 100%;
     margin-top: 4rem;
   }
+
   .payCost li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 32px;
   }
+
   .totalCost {
     display: flex;
     justify-content: space-between;
@@ -108,6 +125,7 @@ const RightSection = styled.section`
     font-weight: bold;
     margin-top: 1rem;
   }
+
   .installmentInfo {
     display: block;
     text-align: right;

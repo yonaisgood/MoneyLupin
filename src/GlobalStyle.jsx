@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     --black-color: #232323;
 
     --error-color: #EB5757;
+    --import-color: #d03b3f;
 
     --brand-color: #7754F3;
     --brand-color-light: #CEC2FD;
