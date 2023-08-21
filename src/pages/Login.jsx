@@ -22,7 +22,7 @@ const Login = () => {
           <button>Log in</button>
         </StyledForm>
         <span className="text">아직 회원이 아니신가요?</span>
-        <Link to="/join">회원가입</Link>
+        <Link to="/signup">회원가입</Link>
       </article>
     </StyledMain>
   );
