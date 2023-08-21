@@ -81,6 +81,11 @@ const DetailPage = () => {
   // 결제한 사용자 체크 및 버튼 활성화
   const checkPay = (iso) => {
     let openTime = false;
+
+    if (!uid) {
+      return openTime;
+    }
+
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
       (snapshot) => {
@@ -122,7 +127,6 @@ const DetailPage = () => {
 
   useEffect(() => {
     let openTime = false;
-
     (async () => {
       const currTime = new Date();
       const currTimeCopy = new Date(currTime);

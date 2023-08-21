@@ -2,8 +2,27 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { StyledMain, RightSection, LeftSection } from './RankingPageStyle';
 import rankImg from '../../assets/images/rank_man.png';
+import { useContext, useEffect } from 'react';
+import { PayContext } from '../../context/PayContext';
+import { useNavigate } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 const RankingPage = () => {
+  const navigate = useNavigate();
+  const history = createBrowserHistory();
+  const { openTime } = useContext(PayContext);
+
+  const nickname = localStorage.getItem('nickname');
+  const uid = localStorage.getItem('uid');
+
+  useEffect(() => {
+    history.listen(({ action, location }) => {
+      if (action === 'POP' && location.pathname === '/payment') {
+        navigate('/detail');
+      }
+    });
+  }, []);
+
   return (
     <>
       <Header />
