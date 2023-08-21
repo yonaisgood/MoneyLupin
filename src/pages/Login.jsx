@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import StyledForm from '../components/Form';
 import loginBg from '../assets/images/login,signup/login-bg.png';
 import { Link } from 'react-router-dom';
+import Button from '../components/Button';
 
 const Login = () => {
   return (
@@ -19,7 +20,7 @@ const Login = () => {
             Password
             <input type="password" />
           </label>
-          <button>Log in</button>
+          <Button size="m">Log in</Button>
         </StyledForm>
         <span className="text">아직 회원이 아니신가요?</span>
         <Link to="/signup">회원가입</Link>

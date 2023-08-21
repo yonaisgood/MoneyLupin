@@ -1,4 +1,5 @@
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
@@ -251,6 +252,7 @@ const Home = () => {
           </ul>
         </section>
       </StyledMain>
+      <Footer />
     </>
   );
 };
@@ -308,7 +310,7 @@ const StyledMain = styled.main`
       bottom: 8px;
       left: 18px;
     }
-    /* 임시 */
+    /* *** */
 
     ul {
       display: flex;
@@ -377,10 +379,6 @@ const StyledMain = styled.main`
       color: var(--black-color);
     }
 
-    li + li {
-      /* margin-left: 20px; */
-    }
-
     img {
       height: auto;
       aspect-ratio: 92 / 80;
@@ -396,8 +394,8 @@ const StyledMain = styled.main`
   .classes {
     max-width: 1201px;
     padding-left: 40px; // 임시
-    margin: auto;
-    overflow-x: hidden; // 임시
+    margin: 0 auto 100px;
+    overflow-x: hidden;
 
     h2 {
       margin-bottom: 20px;

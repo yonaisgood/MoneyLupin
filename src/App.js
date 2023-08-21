@@ -6,21 +6,24 @@ import Detail from './pages/DetailPage/DetailPage';
 import Payment from './pages/PaymentPage/PaymentPage';
 import Ranking from './pages/RankingPage/RankingPage';
 import GlobalStyle from './GlobalStyle';
+import PayProvider from './context/PayContext';
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" Component={Home}></Route>
-          <Route path="/login" Component={Login}></Route>
-          <Route path="/signup" Component={Signup}></Route>
-          <Route path="/detail" Component={Detail}></Route>
-          <Route path="/payment" Component={Payment}></Route>
-          <Route path="/ranking" Component={Ranking}></Route>
-        </Routes>
-      </BrowserRouter>
+      <PayProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" Component={Home}></Route>
+            <Route path="/login" Component={Login}></Route>
+            <Route path="/signup" Component={Signup}></Route>
+            <Route path="/detail" Component={Detail}></Route>
+            <Route path="/payment" Component={Payment}></Route>
+            <Route path="/ranking" Component={Ranking}></Route>
+          </Routes>
+        </BrowserRouter>
+      </PayProvider>
     </>
   );
 }

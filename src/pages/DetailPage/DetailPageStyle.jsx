@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 const StyledMain = styled.main`
   padding: 214px 0 100px;
-  max-width: 77%;
+  max-width: 1185px;
   margin: 0 auto;
 
   .section1 {
@@ -13,7 +13,7 @@ const StyledMain = styled.main`
   }
 
   .basicImg {
-    width: 70rem;
+    width: 755px;
   }
 
   .reviewBox {
@@ -96,13 +96,21 @@ const StyledMain = styled.main`
     background-color: var(--gray-100);
   }
 
-  ul {
+  .section2 ul {
     display: grid;
-    width: 70rem;
+    width: 755px;
     height: 460px;
     gap: 27px 15px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+  }
+
+  /* 임시 */
+  .openTime {
+    display: block;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
   }
 `;
 export default StyledMain;
