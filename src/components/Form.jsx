@@ -31,7 +31,6 @@ const StyledForm = styled.form`
 
   button {
     margin-top: 30px;
-    width: 240px;
   }
 `;
 

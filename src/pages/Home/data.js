@@ -59,7 +59,7 @@ const banners = [
 ];
 
 const best = [
-  { name: '루팡 스쿨 기초반', img: best1, link: '/' },
+  { name: '루팡 스쿨 기초반', img: best1, link: '/detail' },
   { name: '루팡 스쿨 주식반', img: best2, link: '/' },
   { name: '루팡 스쿨 중급반', img: best3, link: '/' },
   { name: '서울 투자 중급반', img: best4, link: '/' },

@@ -4,6 +4,14 @@ import logo from '../assets/images/header,footer/logo.png';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const uid = localStorage.getItem('uid');
+
+  const handleLog = () => {
+    if (uid) {
+      localStorage.removeItem('uid');
+    }
+  };
+
   return (
     <StyledHeader $person={person}>
       <div>
@@ -43,8 +51,8 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <Link to="/login" id="login">
-          로그인
+        <Link to="/login" id="log" onClick={handleLog}>
+          {uid ? '로그아웃' : '로그인'}
         </Link>
       </div>
     </StyledHeader>
@@ -60,7 +68,7 @@ const StyledHeader = styled.header`
 
   div {
     position: relative;
-    padding: 34px 40px 12px; // 좌우 패딩 임시
+    padding: 34px 0 12px;
     max-width: 1185px;
     margin: auto;
     font-size: 16px;
@@ -110,7 +118,7 @@ const StyledHeader = styled.header`
     line-height: 2.3rem;
   }
 
-  #login {
+  #log {
     position: absolute;
     display: flex;
     padding: 10px 11px;
@@ -122,7 +130,7 @@ const StyledHeader = styled.header`
     color: var(--gray-200);
   }
 
-  #login::before {
+  #log::before {
     content: '';
     display: inline-block;
     width: 16px;

@@ -7,8 +7,30 @@ import {
 } from './PaymentPageStyle';
 import BasicClass from '../../assets/images/best/1.png';
 import Button from '../../components/Button';
+import { collection, addDoc } from 'firebase/firestore';
+import { appFireStore, Timestamp } from '../../firebase/config';
+import { useContext } from 'react';
+import { PayContext } from '../../context/PayContext';
 
 const PaymentPage = () => {
+  const { openTime } = useContext(PayContext);
+
+  const nickname = localStorage.getItem('nickname');
+  const uid = localStorage.getItem('uid');
+
+  // 결제하기
+  const handleBuyBtn = async (e) => {
+    e.preventDefault();
+    const colRef = collection(appFireStore, openTime);
+    try {
+      const myTime = Timestamp.fromDate(new Date());
+      const docRef = await addDoc(colRef, { myTime, nickname, uid });
+      console.log(docRef);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -80,7 +102,7 @@ const PaymentPage = () => {
             <span>118,800 원</span>
           </div>
           <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
-          <Button>결제하기</Button>
+          <Button onClick={handleBuyBtn}>결제하기</Button>
         </RightSection>
       </PaymentContainor>
       <Footer />
