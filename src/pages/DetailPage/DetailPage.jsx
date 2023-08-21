@@ -82,7 +82,7 @@ const DetailPage = () => {
   const checkPay = (iso) => {
     let openTime = false;
     onSnapshot(
-      collection(appFireStore, iso),
+      collection(appFireStore, 'Ranking_' + iso),
       (snapshot) => {
         for (const doc of snapshot.docs) {
           if (uid === doc.data().uid) {
