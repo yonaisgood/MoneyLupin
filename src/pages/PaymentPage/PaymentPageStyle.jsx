@@ -92,7 +92,7 @@ const LeftSection = styled.section`
 `;
 
 const RightSection = styled.section`
-  padding-top: 4rem;
+  padding-top: 5rem;
   width: 38.8rem;
   font-size: 14px;
   margin-left: 3rem;
