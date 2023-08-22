@@ -1,13 +1,14 @@
 import { createContext, useState } from 'react';
 
 export const PayContext = createContext({
-  openTime: null,
+  openTime: localStorage.getItem('openTime') || null,
   setOpenTime: () => {},
 });
 
 const PayProvider = ({ children }) => {
-  const [openTime, setOpenTime] = useState(null);
-
+  const [openTime, setOpenTime] = useState(
+    localStorage.getItem('openTime') || null
+  );
   return (
     <PayContext.Provider
       value={{

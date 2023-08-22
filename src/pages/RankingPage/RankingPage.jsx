@@ -5,15 +5,11 @@ import rankImg from '../../assets/images/rank_man.png';
 import { collection, getFirestore, getDocs } from 'firebase/firestore';
 import { useContext, useEffect } from 'react';
 import { PayContext } from '../../context/PayContext';
-import { useNavigate } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import React, { useState } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { appFireStore, Timestamp } from '../../firebase/config';
+import { appFireStore } from '../../firebase/config';
 
 const RankingPage = () => {
-  const navigate = useNavigate();
-  const history = createBrowserHistory();
   const { openTime } = useContext(PayContext);
 
   const { user } = useAuthContext();
@@ -29,7 +25,6 @@ const RankingPage = () => {
     const fetchUserList = async () => {
       try {
         // const db = getFirestore();
-        console.log(openTime);
         const usersCollection = collection(appFireStore, 'Ranking_' + openTime); // Firestore 컬렉션 이름을 'users'로 가정합니다.
         const usersSnapshot = await getDocs(usersCollection);
         const fetchedUsers = [];
@@ -51,15 +46,7 @@ const RankingPage = () => {
     };
 
     fetchUserList();
-
-    // 결제 페이지로 돌아가는 것을 막음
-    history.listen(({ action, location }) => {
-      if (action === 'POP' && location.pathname === '/payment') {
-        navigate('/detail');
-      }
-    });
   }, []);
-  console.log(displayName);
 
   return (
     <>
