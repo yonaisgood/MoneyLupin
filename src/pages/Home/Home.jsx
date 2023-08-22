@@ -258,7 +258,7 @@ const Home = () => {
 };
 
 const StyledMain = styled.main`
-  padding-top: 122px; // 확인 필요
+  padding: 122px 0 0; // 확인 필요
 
   .banners {
     position: relative;
