@@ -95,7 +95,7 @@ const DetailPage = () => {
   }, [openModal]);
 
   // 결제한 사용자 체크 및 버튼 활성화
-  const checkPay = (iso) => {
+  const checkPaid = (iso) => {
     let ablePay = false;
 
     onSnapshot(
@@ -163,7 +163,7 @@ const DetailPage = () => {
 
         // 오픈 예정 시간 <= 현재 시간
         if (date <= currTime) {
-          ablePay = checkPay(iso);
+          ablePay = checkPaid(iso);
         } else {
           result.push({
             time: iso,

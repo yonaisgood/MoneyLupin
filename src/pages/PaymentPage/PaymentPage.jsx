@@ -44,7 +44,7 @@ const PaymentPage = () => {
   };
 
   // 버튼 활성화
-  const checkPay = (iso) => {
+  const checkPaid = (iso) => {
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
       (snapshot) => {
@@ -90,7 +90,7 @@ const PaymentPage = () => {
           const iso = new Date(dateCopy.setHours(dateCopy.getHours() + 9))
             .toISOString()
             .slice(0, 16);
-          checkPay(iso);
+          checkPaid(iso);
         }
       });
     })();
