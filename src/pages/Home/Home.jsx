@@ -393,7 +393,6 @@ const StyledMain = styled.main`
 
   .classes {
     max-width: 1201px;
-    padding-left: 40px; // 임시
     margin: 0 auto 100px;
     overflow-x: hidden;
 

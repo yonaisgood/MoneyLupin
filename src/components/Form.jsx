@@ -10,7 +10,8 @@ const StyledForm = styled.form`
   input {
     display: block;
     width: 408px;
-    padding: 12px 0;
+    padding: 10px 0;
+    line-height: 1;
     font-size: 1.6rem;
     color: var(--gray-300);
     border-bottom: 3px solid var(--black-color);
