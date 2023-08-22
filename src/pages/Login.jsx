@@ -1,24 +1,43 @@
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import StyledForm from '../components/Form';
 import loginBg from '../assets/images/login,signup/login-bg.png';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useLogin();
+
+  const handleData = (event) => {
+    if (event.target.type === 'email') {
+      setEmail(event.target.value);
+    } else if (event.target.type === 'password') {
+      setPassword(event.target.value);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(email, password);
+    login(email, password);
+  };
   return (
     <StyledMain url={loginBg}>
       <h1 className="a11y-hidden">Lupin</h1>
       <article>
         <StyledH2>Log in</StyledH2>
-        <StyledForm>
+        <StyledForm onSubmit={handleSubmit}>
           <label>
             Email
-            <input type="email" />
+            <input type="email" onChange={handleData} value={email} />
           </label>
           <strong>*올바른 이메일 형식이 아닙니다.</strong>
           <label>
             Password
-            <input type="password" />
+            <input type="password" onChange={handleData} value={password} />
           </label>
           <Button size="m">Log in</Button>
         </StyledForm>

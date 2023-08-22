@@ -2,15 +2,19 @@ import { styled } from 'styled-components';
 import person from '../assets/icons/person.svg';
 import logo from '../assets/images/header,footer/logo.png';
 import { Link } from 'react-router-dom';
+import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Header = () => {
-  const uid = localStorage.getItem('uid');
+  // const uid = localStorage.getItem('uid');
 
-  const handleLog = () => {
-    if (uid) {
-      localStorage.removeItem('uid');
-    }
-  };
+  // const handleLog = () => {
+  //   if (uid) {
+  //     localStorage.removeItem('uid');
+  //   }
+  // };
+  const { logout } = useLogout();
+  const { user } = useAuthContext();
 
   return (
     <StyledHeader $person={person}>
@@ -51,9 +55,20 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <Link to="/login" id="log" onClick={handleLog}>
-          {uid ? '로그아웃' : '로그인'}
-        </Link>
+        {user && (
+          <>
+            <Link to="/" id="log" onClick={logout}>
+              로그아웃
+            </Link>
+          </>
+        )}
+        {!user && (
+          <>
+            <Link to="/login" id="log">
+              로그인
+            </Link>
+          </>
+        )}
       </div>
     </StyledHeader>
   );
