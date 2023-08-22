@@ -6,13 +6,6 @@ import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const Header = () => {
-  // const uid = localStorage.getItem('uid');
-
-  // const handleLog = () => {
-  //   if (uid) {
-  //     localStorage.removeItem('uid');
-  //   }
-  // };
   const { logout } = useLogout();
   const { user } = useAuthContext();
 

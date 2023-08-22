@@ -32,18 +32,8 @@ function App() {
                     !user ? <Signup /> : <Navigate to="/" replace={true} />
                   }
                 ></Route>
-                <Route
-                  path="/detail"
-                  element={
-                    user ? <Detail /> : <Navigate to="/login" replace={true} />
-                  }
-                ></Route>
-                <Route
-                  path="/payment"
-                  element={
-                    user ? <Payment /> : <Navigate to="/login" replace={true} />
-                  }
-                ></Route>
+                <Route path="/detail" element={<Detail />}></Route>
+                <Route path="/payment" element={<Payment />}></Route>
                 <Route
                   path="/ranking"
                   element={

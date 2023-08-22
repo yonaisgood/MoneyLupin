@@ -12,13 +12,15 @@ import { appFireStore, Timestamp } from '../../firebase/config';
 import { useContext } from 'react';
 import { PayContext } from '../../context/PayContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const PaymentPage = () => {
   const navigate = useNavigate();
   const { openTime } = useContext(PayContext);
+  const { user } = useAuthContext();
 
-  const nickname = localStorage.getItem('nickname');
-  const uid = localStorage.getItem('uid');
+  const uid = user?.uid || null;
+  const displayName = user?.displayName || null;
 
   // 결제하기
   const handleBuyBtn = async (e) => {
@@ -26,7 +28,7 @@ const PaymentPage = () => {
     const colRef = collection(appFireStore, 'Ranking_' + openTime);
     try {
       const myTime = Timestamp.fromDate(new Date());
-      const docRef = await addDoc(colRef, { myTime, nickname, uid });
+      const docRef = await addDoc(colRef, { myTime, displayName, uid });
       console.log(docRef);
       navigate('/ranking');
     } catch (error) {

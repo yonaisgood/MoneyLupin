@@ -30,8 +30,11 @@ import deleteIcon from '../../assets/icons/x-gray.svg';
 import saveIcon from '../../assets/icons/save.svg';
 import closeIcon from '../../assets/icons/close.svg';
 import { styled } from 'styled-components';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const DetailPage = () => {
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [payBtn, setPayBtn] = useState(false);
   const [time, setTime] = useState('');
@@ -41,7 +44,9 @@ const DetailPage = () => {
   const timeInp = useRef(null);
   const { setOpenTime } = useContext(PayContext);
 
-  const uid = localStorage.getItem('uid');
+  const { user } = useAuthContext();
+
+  const uid = user?.uid || null;
 
   // 시간 예약
   const handleSubmit = async (e) => {
@@ -81,10 +86,6 @@ const DetailPage = () => {
   // 결제한 사용자 체크 및 버튼 활성화
   const checkPay = (iso) => {
     let openTime = false;
-
-    if (!uid) {
-      return openTime;
-    }
 
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
@@ -127,6 +128,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     let openTime = false;
+
     (async () => {
       const currTime = new Date();
       const currTimeCopy = new Date(currTime);
@@ -226,11 +228,24 @@ const DetailPage = () => {
                 {nextPayTime && (
                   <strong className="openTime">{nextPayTime} 오픈 예정</strong>
                 )}
-                <Link to="/payment">
-                  <Button size="l" disabled={!payBtn}>
-                    결제하기
-                  </Button>
-                </Link>
+                <Button
+                  size="l"
+                  disabled={!payBtn}
+                  onClick={() => {
+                    if (!user) {
+                      const answer = window.confirm(
+                        '로그인 후 이용 가능합니다.\n로그인 하시겠습니까?'
+                      );
+                      if (answer) {
+                        navigate('/login');
+                      }
+                    } else {
+                      navigate('/payment');
+                    }
+                  }}
+                >
+                  결제하기
+                </Button>
                 {uid === 'lBi6qOCVaWZCoYpHLEQQLVyctMf2' && (
                   <WhiteButton
                     onClick={() => setOpenModal(true)}
