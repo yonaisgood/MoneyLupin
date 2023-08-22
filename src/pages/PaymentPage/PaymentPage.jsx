@@ -23,7 +23,7 @@ const PaymentPage = () => {
   // 결제하기
   const handleBuyBtn = async (e) => {
     e.preventDefault();
-    const colRef = collection(appFireStore, openTime);
+    const colRef = collection(appFireStore, 'Ranking_' + openTime);
     try {
       const myTime = Timestamp.fromDate(new Date());
       const docRef = await addDoc(colRef, { myTime, nickname, uid });
