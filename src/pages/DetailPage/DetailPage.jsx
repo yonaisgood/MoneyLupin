@@ -42,7 +42,7 @@ const DetailPage = () => {
   const [nextPayTime, setNextPayTime] = useState('');
   const modal = useRef(null);
   const timeInp = useRef(null);
-  const { setOpenTime } = useContext(PayContext);
+  const { setOpenTime, openTime } = useContext(PayContext);
 
   const { user } = useAuthContext();
 
@@ -85,7 +85,7 @@ const DetailPage = () => {
 
   // 결제한 사용자 체크 및 버튼 활성화
   const checkPay = (iso) => {
-    let openTime = false;
+    let open = false;
 
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
@@ -96,14 +96,17 @@ const DetailPage = () => {
           }
         }
         setPayBtn(true);
+        // 임시
+        localStorage.setItem('openTime', iso);
         setOpenTime(iso); // context
-        openTime = true;
+        console.log(openTime);
+        open = true;
       },
       (error) => {
         console.error(error.message);
       }
     );
-    return openTime;
+    return open;
   };
 
   const renderOpenTime = (result) => {
@@ -127,7 +130,7 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    let openTime = false;
+    let open = false;
 
     (async () => {
       const currTime = new Date();
@@ -153,7 +156,7 @@ const DetailPage = () => {
 
         // 600000밀리초 === 10분
         if (0 <= currTime - date && currTime - date <= 600000) {
-          openTime = checkPay(iso);
+          open = checkPay(iso);
         }
 
         result.push({
@@ -165,7 +168,7 @@ const DetailPage = () => {
       setData(result);
 
       // 버튼 비활성화 상태 시, 예약 시간 렌더링
-      if (!!result.length && !openTime) {
+      if (!!result.length && !open) {
         renderOpenTime(result);
       }
     })();
@@ -208,7 +211,7 @@ const DetailPage = () => {
               <img className="basicImg" src={basicBig} alt="루팡스쿨 기초반" />
               <div className="txtWrapper">
                 <div className="mainTitle">[루팡스쿨 기초반]</div>
-                <p className="subTitle">월급모아 부자되는 가장 빠른 법</p>
+                <p className="subTitle">월급을 잘 투자하는 법</p>
                 <div className="reviewBox">
                   <img
                     className="reviewIcon"
@@ -246,7 +249,7 @@ const DetailPage = () => {
                 >
                   결제하기
                 </Button>
-                {uid === 'lBi6qOCVaWZCoYpHLEQQLVyctMf2' && (
+                {uid === 'tkJc97shDiYmR8hApmjpuzAr4aA2' && (
                   <WhiteButton
                     onClick={() => setOpenModal(true)}
                     $watchBlackIcon={watchBlackIcon}
