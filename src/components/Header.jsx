@@ -131,7 +131,7 @@ const StyledHeader = styled.header`
     display: flex;
     padding: 10px 11px;
     top: 22px;
-    right: 27px;
+    right: 0;
     border-radius: 10px;
     border: 1px solid var(--gray-200);
     line-height: 2.2rem;

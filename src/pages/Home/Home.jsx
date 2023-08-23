@@ -11,6 +11,14 @@ const Home = () => {
   const bannerList = useRef(null);
   const bestList = useRef(null);
 
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '홈 | Lupin';
+    };
+    setTitle();
+  }, []);
+
   const hideBanner = (currIndex) => {
     setCurrBanner(currIndex - 1);
   };
@@ -119,8 +127,8 @@ const Home = () => {
   const slide = () => {
     let x = (End - Start) * 2;
     if (bestList.current.style.transform === '') {
-      if (-x + viewWidth > 1241) {
-        bestList.current.style.transform = `translateX(${-1241 + viewWidth}px)`;
+      if (-x + viewWidth > 1225) {
+        bestList.current.style.transform = `translateX(${-1225 + viewWidth}px)`;
       } else if (x < 0) {
         bestList.current.style.transform = `translateX(${x}px)`;
       }
@@ -128,8 +136,8 @@ const Home = () => {
       const currX = parseInt(
         bestList.current.style.transform.replace(/[^\d-]/g, '')
       );
-      if (-currX - x + viewWidth > 1241) {
-        bestList.current.style.transform = `translateX(${-1241 + viewWidth}px)`;
+      if (-currX - x + viewWidth > 1225) {
+        bestList.current.style.transform = `translateX(${-1225 + viewWidth}px)`;
       } else if (-currX < x) {
         bestList.current.style.transform = '';
       } else {
@@ -139,26 +147,26 @@ const Home = () => {
   };
 
   const handleDragStart = (e) => {
-    if (viewWidth < 1241) {
+    if (viewWidth < 1225) {
       Start = e.clientX;
     }
   };
 
   const handleDragEnd = (e) => {
-    if (viewWidth < 1241) {
+    if (viewWidth < 1225) {
       End = e.clientX;
       slide();
     }
   };
 
   const handleTouchStart = (e) => {
-    if (viewWidth < 1241) {
+    if (viewWidth < 1225) {
       Start = e.changedTouches[0].pageX;
     }
   };
 
   const handleTouchEnd = (e) => {
-    if (viewWidth < 1241) {
+    if (viewWidth < 1225) {
       End = e.changedTouches[0].pageX;
       slide();
     }
@@ -392,7 +400,7 @@ const StyledMain = styled.main`
   }
 
   .classes {
-    max-width: 1201px;
+    max-width: 1185px;
     margin: 0 auto 100px;
     overflow-x: hidden;
 

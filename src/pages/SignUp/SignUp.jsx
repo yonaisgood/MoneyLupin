@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StyledForm from '../../components/Form';
 import { Section, LeftSection, RightSection } from './SignUpStyle';
 import Button from '../../components/Button';
@@ -10,6 +10,14 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const { signup } = useSignup();
+
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '회원가입 | Lupin';
+    };
+    setTitle();
+  }, []);
 
   const handleData = (event) => {
     if (event.target.type === 'email') {

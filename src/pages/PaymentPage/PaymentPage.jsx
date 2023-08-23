@@ -7,20 +7,36 @@ import {
 } from './PaymentPageStyle';
 import BasicClass from '../../assets/images/best/1.png';
 import Button from '../../components/Button';
-import { collection, addDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { appFireStore, Timestamp } from '../../firebase/config';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 const PaymentPage = () => {
   const navigate = useNavigate();
-  const { openTime } = useContext(PayContext);
+  const [ablePay, setAblePay] = useState(false);
+  const { openTime, setOpenTime } = useContext(PayContext);
   const { user } = useAuthContext();
 
   const uid = user?.uid || null;
   const displayName = user?.displayName || null;
+
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '결제 | Lupin';
+    };
+    setTitle();
+  }, []);
 
   // 결제하기
   const handleBuyBtn = async (e) => {
@@ -28,13 +44,65 @@ const PaymentPage = () => {
     const colRef = collection(appFireStore, 'Ranking_' + openTime);
     try {
       const myTime = Timestamp.fromDate(new Date());
-      const docRef = await addDoc(colRef, { myTime, displayName, uid });
-      console.log(docRef);
+      await addDoc(colRef, { myTime, displayName, uid });
       navigate('/ranking');
     } catch (error) {
       console.error(error);
     }
   };
+
+  // 버튼 활성화
+  const checkPaid = (iso) => {
+    onSnapshot(
+      collection(appFireStore, 'Ranking_' + iso),
+      (snapshot) => {
+        // 결제 이력 검사
+        for (const doc of snapshot.docs) {
+          if (uid === doc.data().uid) {
+            return;
+          }
+        }
+        // context에 저장
+        localStorage.setItem('openTime', iso);
+        setOpenTime(iso);
+
+        // 버튼 활성화
+        setAblePay(true);
+      },
+      (error) => {
+        console.error(error.message);
+      }
+    );
+  };
+
+  useEffect(() => {
+    (async () => {
+      const currTime = new Date();
+      const currTimeCopy = new Date(currTime);
+      const q = query(
+        collection(appFireStore, 'time'),
+        where(
+          'time',
+          '>=',
+          new Date(currTimeCopy.setMinutes(currTimeCopy.getMinutes() - 10))
+        )
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((document) => {
+        const date = new Date(document.data().time.seconds * 1000);
+
+        // 오픈 예정 시간 <= 현재 시간
+        if (date <= currTime) {
+          const dateCopy = new Date(date);
+          const iso = new Date(dateCopy.setHours(dateCopy.getHours() + 9))
+            .toISOString()
+            .slice(0, 16);
+          checkPaid(iso);
+        }
+      });
+    })();
+  }, []);
 
   return (
     <>
@@ -107,7 +175,9 @@ const PaymentPage = () => {
             <span>118,800 원</span>
           </div>
           <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
-          <Button onClick={handleBuyBtn}>결제하기</Button>
+          <Button onClick={handleBuyBtn} disabled={!ablePay}>
+            결제하기
+          </Button>
         </RightSection>
       </PaymentContainor>
       <Footer />

@@ -2,7 +2,6 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Button from '../../components/Button';
 import StyledDialog from './StyledDialog';
-import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState, useContext } from 'react';
 import { PayContext } from '../../context/PayContext';
 import {
@@ -42,11 +41,17 @@ const DetailPage = () => {
   const [nextPayTime, setNextPayTime] = useState('');
   const modal = useRef(null);
   const timeInp = useRef(null);
-  const { setOpenTime, openTime } = useContext(PayContext);
 
   const { user } = useAuthContext();
-
   const uid = user?.uid || null;
+
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '상세 | Lupin';
+    };
+    setTitle();
+  }, []);
 
   // 시간 예약
   const handleSubmit = async (e) => {
@@ -56,9 +61,23 @@ const DetailPage = () => {
       alert('시간을 선택해주세요');
       return;
     }
+    const inpDate = new Date(time);
     for (const v of data) {
       if (v.time === time) {
         alert('이미 예약한 시간입니다');
+        return;
+      }
+      const vDate = new Date(v.time);
+      const vDateCopy = new Date(vDate);
+      const disableDateMin = new Date(
+        vDate.setMinutes(vDate.getMinutes() - 10)
+      );
+      const disableDateMax = new Date(
+        vDateCopy.setMinutes(vDateCopy.getMinutes() + 10)
+      );
+
+      if (disableDateMin <= inpDate && inpDate <= disableDateMax) {
+        alert('10분 이내에 예약된 시간이 존재합니다');
         return;
       }
     }
@@ -85,7 +104,7 @@ const DetailPage = () => {
 
   // 결제한 사용자 체크 및 버튼 활성화
   const checkPay = (iso) => {
-    let open = false;
+    let openTime = false;
 
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
@@ -96,17 +115,13 @@ const DetailPage = () => {
           }
         }
         setPayBtn(true);
-        // 임시
-        localStorage.setItem('openTime', iso);
-        setOpenTime(iso); // context
-        console.log(openTime);
-        open = true;
+        ablePay = true;
       },
       (error) => {
         console.error(error.message);
       }
     );
-    return open;
+    return ablePay;
   };
 
   const renderOpenTime = (result) => {
@@ -130,7 +145,7 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    let open = false;
+    let ablePay = false;
 
     (async () => {
       const currTime = new Date();
@@ -154,21 +169,21 @@ const DetailPage = () => {
           .toISOString()
           .slice(0, 16);
 
-        // 600000밀리초 === 10분
-        if (0 <= currTime - date && currTime - date <= 600000) {
-          open = checkPay(iso);
+        // 오픈 예정 시간 <= 현재 시간
+        if (date <= currTime) {
+          ablePay = checkPaid(iso);
+        } else {
+          result.push({
+            time: iso,
+            id: document.id,
+          });
         }
-
-        result.push({
-          time: iso,
-          id: document.id,
-        });
       });
 
       setData(result);
 
       // 버튼 비활성화 상태 시, 예약 시간 렌더링
-      if (!!result.length && !open) {
+      if (result.length && !ablePay) {
         renderOpenTime(result);
       }
     })();
@@ -182,22 +197,25 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    setInterval(() => {
-      if (timeInp.current) {
-        const currTime = new Date();
-        const minIso = currTime.toISOString().slice(0, 16);
-        const timeInpMin =
-          minIso.slice(0, 11) +
-          (parseInt(minIso.slice(11, 13)) + 9).toString().padStart(2, '0') +
-          minIso.slice(13);
+    if (!openModal) {
+      return;
+    }
+    const interval = setInterval(() => {
+      const currTime = new Date();
+      const minIso = currTime.toISOString().slice(0, 16);
+      const timeInpMin =
+        minIso.slice(0, 11) +
+        (parseInt(minIso.slice(11, 13)) + 9).toString().padStart(2, '0') +
+        minIso.slice(13);
 
-        const timeInpMax =
-          parseInt(timeInpMin.slice(0, 4)) + 1 + timeInpMin.slice(4);
+      const timeInpMax =
+        parseInt(timeInpMin.slice(0, 4)) + 1 + timeInpMin.slice(4);
 
-        timeInp.current.setAttribute('min', timeInpMin);
-        timeInp.current.setAttribute('max', timeInpMax);
-      }
+      timeInp.current.setAttribute('min', timeInpMin);
+      timeInp.current.setAttribute('max', timeInpMax);
     }, 1000);
+
+    return () => clearInterval(interval);
   }, [openModal]);
 
   return (
