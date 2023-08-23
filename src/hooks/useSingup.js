@@ -42,7 +42,8 @@ export const useSignup = () => {
       .catch((err) => {
         setError(err.message);
         setPending(false);
-        if (error.includes('email-already-in-use')) {
+        console.log(error);
+        if (err.message.includes('email-already-in-use')) {
           alert('중복된 이메일이 존재합니다.');
         }
       });
