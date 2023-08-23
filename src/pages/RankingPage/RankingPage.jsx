@@ -49,6 +49,7 @@ const RankingPage = () => {
 
         // 시간순으로 사용자 리스트 정렬
         fetchedUsers.sort((a, b) => a.time.localeCompare(b.time));
+        console.log(fetchedUsers);
 
         // 사용자 리스트 업데이트
         setUserList(fetchedUsers);
@@ -58,13 +59,14 @@ const RankingPage = () => {
           (u) => u.nickname === displayName
         );
         if (userIndex !== -1) {
-          setUserRank(userIndex + 1); // 인덱스는 0부터 시작하므로 +1 해서 랭킹 계산
+          setUserRank(fetchedUsers.length);
           setUserTime(fetchedUsers[userIndex].time);
         }
       } catch (error) {
         console.error('사용자 데이터를 가져오는 중 오류 발생:', error);
       }
     };
+    // console.log(fetchedUsers);
 
     fetchUserList();
   }, [openTime, displayName]);
@@ -78,7 +80,6 @@ const RankingPage = () => {
             <img src={rankImg} alt="깃발을 든 우주비행사" />
             <div>
               <h2>{displayName} 님의 순위는?</h2>
-
               <strong>{userRank !== null && `${userRank}위`}</strong>
               <p>{userTime !== null && userTime}</p>
             </div>
