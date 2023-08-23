@@ -62,7 +62,7 @@ const RankingPage = () => {
           (u) => u.nickname === displayName
         );
         if (userIndex !== -1) {
-          setUserRank(fetchedUsers.length);
+          setUserRank(fetchedUsers[userIndex].rank);
           setUserTime(fetchedUsers[userIndex].time);
         }
       } catch (error) {
