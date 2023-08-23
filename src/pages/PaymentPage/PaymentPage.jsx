@@ -20,12 +20,16 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import closeIcon from '../../assets/icons/x-gray.svg';
+import StyledDialog from './StyledDialog';
+import closeIcon from '../../assets/icons/x-black.svg';
+import checkCheckedIcon from '../../assets/icons/check-checked.svg';
+import checkIcon from '../../assets/icons/check.svg';
 
 const PaymentPage = () => {
   const navigate = useNavigate();
   const [ablePay, setAblePay] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAgreed, setIsAgreed] = useState(false);
   const { openTime, setOpenTime } = useContext(PayContext);
   const { user } = useAuthContext();
   const modal = useRef(null);
@@ -211,18 +215,62 @@ const PaymentPage = () => {
             <span>118,800 원</span>
           </div>
           <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
-          <Button onClick={() => setIsModalOpen(true)} disabled={!ablePay}>
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            disabled={!ablePay || isModalOpen}
+          >
             결제하기
           </Button>
           {isModalOpen && (
-            <dialog ref={modal}>
-              <Button size="m" onClick={handleBuyBtn} disabled={!ablePay}>
+            <StyledDialog
+              ref={modal}
+              $checkCheckedIcon={checkCheckedIcon}
+              $checkIcon={checkIcon}
+            >
+              <span className="name">LUPIN</span>
+              <dl>
+                <dt>상품명</dt>
+                <dd>: 월급을 잘 투자하는 법</dd>
+                <dt className="price">상품금액</dt>
+                <dd>: 118,800</dd>
+                <dt className="total">최종 결제 금액</dt>
+                <dd>: 118,800</dd>
+              </dl>
+              <div>
+                <label htmlFor="checkbox">약관 및 이용동의</label>
+                <input
+                  id="checkbox"
+                  type="checkbox"
+                  onChange={(e) => setIsAgreed(e.target.checked)}
+                  aria-describedby="agreeAll"
+                  onKeyDown={(e) => {
+                    // 32 === 스페이스바
+                    if (e.keycode === 32 || e.key === 'Enter') {
+                      e.target.click();
+                    }
+                  }}
+                />
+                <span id="agreeAll">전체동의</span>
+              </div>
+              <p>
+                *수강신청 연습용 결제 페이지로 실제 결제를 비롯한 어떠한 효력도
+                발생하지 않는 페이지 입니다.
+              </p>
+              <Button
+                size="m"
+                onClick={handleBuyBtn}
+                disabled={!isAgreed || !ablePay}
+                className="pay-btn"
+              >
                 결제하기
               </Button>
-              <button onClick={() => setIsModalOpen(false)}>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="close-btn"
+              >
                 <img src={closeIcon} alt="닫기" />
               </button>
-            </dialog>
+            </StyledDialog>
           )}
         </RightSection>
       </PaymentContainor>

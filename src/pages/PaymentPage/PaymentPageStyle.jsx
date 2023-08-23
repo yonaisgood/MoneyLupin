@@ -73,6 +73,10 @@ const LeftSection = styled.section`
         margin-top: 26px;
         font-size: 16px;
       }
+      .paySelectBtn:hover:not(.selected) {
+        transition: 0.3s;
+        background-color: var(--gray-200);
+      }
       .selected {
         background: var(--black-color);
         color: white;
@@ -137,6 +141,10 @@ const RightSection = styled.section`
     font-weight: 500;
     font-size: 16px;
     margin-bottom: 3.2rem;
+  }
+
+  button {
+    transition: 0.1s;
   }
 `;
 

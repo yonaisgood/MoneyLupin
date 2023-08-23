@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
     
     --gray-100: #eee;
+    --gray-150: #cecece; //임의
     --gray-200: #a7a7a7;
     --gray-300: #7a7a7a;
     --black-color: #232323;
