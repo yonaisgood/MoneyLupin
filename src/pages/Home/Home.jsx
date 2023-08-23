@@ -1,27 +1,18 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
+import Modal from './Modal';
+import Derection from '../../assets/images/direction.png';
 
 const Home = () => {
   const [autoSlide, setAutoSlide] = useState(true);
+  const [slideBtn, setSlideBtn] = useState(true);
   const [currBanner, setCurrBanner] = useState(0);
   const bannerList = useRef(null);
   const bestList = useRef(null);
-
-  useEffect(() => {
-    const setTitle = () => {
-      const titleElement = document.getElementsByTagName('title')[0];
-      titleElement.innerHTML = '홈 | Lupin';
-    };
-    setTitle();
-  }, []);
-
-  const hideBanner = (currIndex) => {
-    setCurrBanner(currIndex - 1);
-  };
 
   const onLive = () => {
     bannerList.current.setAttribute('aria-live', 'polite');
@@ -31,44 +22,13 @@ const Home = () => {
     bannerList.current.setAttribute('aria-live', 'off');
   };
 
-  const rotateSlide = () => {
-    return setInterval(() => {
-      const bannersTransform = bannerList.current.style.transform;
-
-      if (bannersTransform === '') {
-        bannerList.current.style.transform = 'translateX(-100%)';
-        hideBanner(1);
-        return;
-      }
-
-      const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
-      const currBannerIndex = bannersX / -100;
-
-      if (currBannerIndex + 1 === banners.length) {
-        bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
-        hideBanner(3);
-        setTimeout(() => {
-          bannerList.current.style.transition = 'none';
-          bannerList.current.style.transform = '';
-        }, 300);
-        setTimeout(() => {
-          bannerList.current.style.transition = '0.3s';
-        }, 400);
-      } else if (currBannerIndex < banners.length) {
-        bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
-        hideBanner(currBannerIndex + 1);
-      }
-    }, 3000);
-  };
-
-  // 재생 / 정지
   useEffect(() => {
     let interval;
     if (autoSlide) {
-      offLive();
+      onLive();
       interval = rotateSlide();
     } else {
-      onLive();
+      offLive();
     }
     return () => clearInterval(interval);
   }, [autoSlide]);
@@ -88,34 +48,89 @@ const Home = () => {
     bannerList.current.style.transform = 'translateX(-100%)';
   }, []);
 
-  // 이전, 다음
-  const handlePrevBtn = (e) => {
-    e.preventDefault();
-    const bannersTransform = bannerList.current.style.transform;
-    if (bannersTransform !== '' && bannersTransform !== 'translateX(-100%)') {
-      const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
-      bannerList.current.style.transform = `translateX(${bannersX + 100}%)`;
-      const currIndex = bannersX / -100 - 1;
-      hideBanner(currIndex);
-    }
+  const slideLastToFirst = (bannersX) => {
+    bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
+    setCurrBanner(0);
+    setTimeout(() => {
+      bannerList.current.style.transition = 'none';
+      bannerList.current.style.transform = 'translateX(-100%)';
+    }, 300);
+    setTimeout(() => {
+      bannerList.current.style.transition = '0.3s';
+    }, 400);
   };
 
-  const handleNextBtn = (e) => {
-    e.preventDefault();
+  const slideFirstToLast = () => {
+    bannerList.current.style.transform = '';
+    setCurrBanner(banners.length - 1);
+    setTimeout(() => {
+      bannerList.current.style.transition = 'none';
+      bannerList.current.style.transform = `translateX(${
+        banners.length * -100
+      }%)`;
+    }, 300);
+    setTimeout(() => {
+      bannerList.current.style.transition = '0.3s';
+    }, 400);
+  };
+
+  const slideToNextEl = () => {
     const bannersTransform = bannerList.current.style.transform;
 
-    if (bannersTransform === '' && banners.length !== 1) {
-      bannerList.current.style.transform = 'translateX(-200%)';
-      hideBanner(2);
+    if (bannersTransform === '') {
+      bannerList.current.style.transform = 'translateX(-100%)';
+      setCurrBanner(0);
       return;
     }
 
     const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
-    const currBannerIndex = bannersX / -100 + 1;
+    const currBannerIndex = bannersX / -100;
 
-    if (currBannerIndex <= banners.length) {
+    if (currBannerIndex < banners.length) {
       bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
-      hideBanner(currBannerIndex);
+      setCurrBanner(currBannerIndex);
+    } else {
+      slideLastToFirst(bannersX);
+    }
+  };
+
+  const rotateSlide = () => {
+    return setInterval(() => {
+      slideToNextEl();
+    }, 3000);
+  };
+
+  // 연속 클릭 방지
+  const preventDoubleClick = () => {
+    setSlideBtn(false);
+    setTimeout(() => {
+      setSlideBtn(true);
+    }, 500);
+  };
+
+  const handleNextBtn = (e) => {
+    e.preventDefault();
+    if (!slideBtn) {
+      return;
+    }
+    preventDoubleClick(e.currentTarget);
+    slideToNextEl();
+  };
+
+  const handlePrevBtn = (e) => {
+    e.preventDefault();
+    if (!slideBtn) {
+      return;
+    }
+    preventDoubleClick(e.currentTarget);
+    const bannersTransform = bannerList.current.style.transform;
+    if (bannersTransform !== '' && bannersTransform !== 'translateX(-100%)') {
+      const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
+      bannerList.current.style.transform = `translateX(${bannersX + 100}%)`;
+      const currIndex = bannersX / -100 - 2;
+      setCurrBanner(currIndex);
+    } else {
+      slideFirstToLast();
     }
   };
 
@@ -175,6 +190,7 @@ const Home = () => {
   return (
     <>
       <Header />
+      <Modal />
       <StyledMain>
         <section
           className="banners"
@@ -241,6 +257,11 @@ const Home = () => {
 
         <section className="classes">
           <h2>이번 달 BEST 강의</h2>
+          <img
+            className="direction"
+            src={Derection}
+            alt="베스트 강의를 가리키는 손가락"
+          />
           <ul
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -403,12 +424,36 @@ const StyledMain = styled.main`
     max-width: 1185px;
     margin: 0 auto 100px;
     overflow-x: hidden;
+    position: relative;
 
     h2 {
       margin-bottom: 20px;
       font-size: 3rem;
       line-height: 4.3rem;
       font-weight: 700;
+    }
+
+    .direction {
+      width: 120px;
+      height: 120px;
+      position: absolute;
+      top: 50px;
+      left: 0px;
+      animation-name: finger;
+      animation-duration: 0.5s;
+      animation-duration: leaner;
+      animation-iteration-count: 1000000;
+      animation-direction: alternate;
+      z-index: 800;
+    }
+
+    @-webkit-keyframes finger {
+      0% {
+        top: 20px;
+      }
+      100% {
+        left: 10px;
+      }
     }
 
     ul {

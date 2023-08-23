@@ -73,6 +73,10 @@ const LeftSection = styled.section`
         margin-top: 26px;
         font-size: 16px;
       }
+
+      .selected {
+        box-shadow: inset 0 0 0 2px var(--black-color);
+      }
     }
 
     h3 {
@@ -133,6 +137,10 @@ const RightSection = styled.section`
     font-weight: 500;
     font-size: 16px;
     margin-bottom: 3.2rem;
+  }
+
+  button {
+    transition: 0.1s;
   }
 `;
 

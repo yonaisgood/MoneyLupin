@@ -69,7 +69,7 @@ const Header = () => {
 
 const StyledHeader = styled.header`
   position: fixed;
-  z-index: 1000;
+  z-index: 995;
   width: 100%;
   background: white;
   border-bottom: 2px solid var(--gray-100); // 확인 필요

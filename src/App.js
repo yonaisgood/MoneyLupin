@@ -33,11 +33,16 @@ function App() {
                   }
                 ></Route>
                 <Route path="/detail" element={<Detail />}></Route>
-                <Route path="/payment" element={<Payment />}></Route>
+                <Route
+                  path="/payment"
+                  element={
+                    user ? <Ranking /> : <Navigate to="/" replace={true} />
+                  }
+                ></Route>
                 <Route
                   path="/ranking"
                   element={
-                    user ? <Ranking /> : <Navigate to="/login" replace={true} />
+                    user ? <Ranking /> : <Navigate to="/" replace={true} />
                   }
                 ></Route>
               </Routes>

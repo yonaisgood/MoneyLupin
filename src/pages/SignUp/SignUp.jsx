@@ -21,7 +21,7 @@ const SignUp = () => {
   useEffect(() => {
     const setTitle = () => {
       const titleElement = document.getElementsByTagName('title')[0];
-      titleElement.innerHTML = '회원가입 | Lupin';
+      titleElement.innerHTML = '회원가입 | LUPIN';
     };
     setTitle();
   }, []);
