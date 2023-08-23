@@ -60,23 +60,10 @@ const DetailPage = () => {
       alert('시간을 선택해주세요');
       return;
     }
-    const inpDate = new Date(time);
+
     for (const v of data) {
       if (v.time === time) {
         alert('이미 예약한 시간입니다');
-        return;
-      }
-      const vDate = new Date(v.time);
-      const vDateCopy = new Date(vDate);
-      const disableDateMin = new Date(
-        vDate.setMinutes(vDate.getMinutes() - 10)
-      );
-      const disableDateMax = new Date(
-        vDateCopy.setMinutes(vDateCopy.getMinutes() + 10)
-      );
-
-      if (disableDateMin <= inpDate && inpDate <= disableDateMax) {
-        alert('10분 이내에 예약된 시간이 존재합니다');
         return;
       }
     }
