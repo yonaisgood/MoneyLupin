@@ -48,8 +48,11 @@ const RankingPage = () => {
         });
 
         // 시간순으로 사용자 리스트 정렬
-        fetchedUsers.sort((a, b) => a.time.localeCompare(b.time));
-        console.log(fetchedUsers);
+        fetchedUsers
+          .sort((a, b) => a.time.localeCompare(b.time))
+          .map((v, i) => {
+            v.rank = i + 1;
+          });
 
         // 사용자 리스트 업데이트
         setUserList(fetchedUsers);
