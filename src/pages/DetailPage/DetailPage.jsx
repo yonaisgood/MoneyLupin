@@ -45,6 +45,14 @@ const DetailPage = () => {
   const { user } = useAuthContext();
   const uid = user?.uid || null;
 
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '상세 | Lupin';
+    };
+    setTitle();
+  }, []);
+
   // 시간 예약
   const handleSubmit = async (e) => {
     e.preventDefault();

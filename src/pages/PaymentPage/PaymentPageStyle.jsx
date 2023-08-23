@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const PaymentContainor = styled.div`
   position: relative;
-  width: 77%;
+  max-width: 1185px;
   margin: 0 auto;
   padding-top: 12.2rem;
   display: flex;

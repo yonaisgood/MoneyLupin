@@ -30,6 +30,14 @@ const PaymentPage = () => {
   const uid = user?.uid || null;
   const displayName = user?.displayName || null;
 
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '결제 | Lupin';
+    };
+    setTitle();
+  }, []);
+
   // 결제하기
   const handleBuyBtn = async (e) => {
     e.preventDefault();
