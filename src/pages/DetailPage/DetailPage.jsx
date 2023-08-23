@@ -2,8 +2,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Button from '../../components/Button';
 import StyledDialog from './StyledDialog';
-import { useEffect, useRef, useState, useContext } from 'react';
-import { PayContext } from '../../context/PayContext';
+import { useEffect, useRef, useState } from 'react';
 import {
   collection,
   addDoc,
@@ -34,7 +33,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailPage = () => {
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [payBtn, setPayBtn] = useState(false);
   const [time, setTime] = useState('');
   const [data, setData] = useState(null);
@@ -97,10 +96,10 @@ const DetailPage = () => {
 
   // 오픈 시간 예약 버튼 클릭 시, 모달 open
   useEffect(() => {
-    if (openModal) {
+    if (isModalOpen) {
       modal.current.showModal();
     }
-  }, [openModal]);
+  }, [isModalOpen]);
 
   // 결제한 사용자 체크 및 버튼 활성화
   const checkPaid = (iso) => {
@@ -197,7 +196,7 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    if (!openModal) {
+    if (!isModalOpen) {
       return;
     }
     const interval = setInterval(() => {
@@ -216,7 +215,7 @@ const DetailPage = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [openModal]);
+  }, [isModalOpen]);
 
   return (
     <>
@@ -269,14 +268,14 @@ const DetailPage = () => {
                 </Button>
                 {uid === '7I6W5SDVtxYb2jlCDlBTqbD4Xmq1' && (
                   <WhiteButton
-                    onClick={() => setOpenModal(true)}
+                    onClick={() => setIsModalOpen(true)}
                     $watchBlackIcon={watchBlackIcon}
                   >
                     오픈 시간 예약
                   </WhiteButton>
                 )}
               </div>
-              {openModal && (
+              {isModalOpen && (
                 <StyledDialog ref={modal}>
                   <div>
                     <strong>강의 오픈 시간 예약</strong>
@@ -332,7 +331,7 @@ const DetailPage = () => {
                       })}
                     </ul>
                   </div>
-                  <button onClick={() => setOpenModal(false)}>
+                  <button onClick={() => setIsModalOpen(false)}>
                     <img src={closeIcon} alt="닫기" />
                   </button>
                 </StyledDialog>
