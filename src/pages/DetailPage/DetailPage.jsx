@@ -103,8 +103,8 @@ const DetailPage = () => {
   }, [openModal]);
 
   // 결제한 사용자 체크 및 버튼 활성화
-  const checkPay = (iso) => {
-    let openTime = false;
+  const checkPaid = (iso) => {
+    let ablePay = false;
 
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
@@ -267,7 +267,7 @@ const DetailPage = () => {
                 >
                   결제하기
                 </Button>
-                {uid === 'tkJc97shDiYmR8hApmjpuzAr4aA2' && (
+                {uid === '7I6W5SDVtxYb2jlCDlBTqbD4Xmq1' && (
                   <WhiteButton
                     onClick={() => setOpenModal(true)}
                     $watchBlackIcon={watchBlackIcon}
