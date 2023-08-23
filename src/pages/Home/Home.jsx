@@ -1,9 +1,10 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
+import Modal from './Modal'; // 위에서 작성한 모달 컴포넌트 임포트
 
 const Home = () => {
   const [autoSlide, setAutoSlide] = useState(true);
@@ -196,6 +197,7 @@ const Home = () => {
   return (
     <>
       <Header />
+      <Modal />
       <StyledMain>
         <section
           className="banners"
