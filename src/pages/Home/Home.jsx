@@ -31,6 +31,32 @@ const Home = () => {
     bannerList.current.setAttribute('aria-live', 'off');
   };
 
+  const slideLastToFirst = (bannersX) => {
+    bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
+    hideBanner(1);
+    setTimeout(() => {
+      bannerList.current.style.transition = 'none';
+      bannerList.current.style.transform = 'translateX(-100%)';
+    }, 300);
+    setTimeout(() => {
+      bannerList.current.style.transition = '0.3s';
+    }, 400);
+  };
+
+  const slideFirstToLast = () => {
+    bannerList.current.style.transform = '';
+    hideBanner(banners.length);
+    setTimeout(() => {
+      bannerList.current.style.transition = 'none';
+      bannerList.current.style.transform = `translateX(${
+        banners.length * -100
+      }%)`;
+    }, 300);
+    setTimeout(() => {
+      bannerList.current.style.transition = '0.3s';
+    }, 400);
+  };
+
   const rotateSlide = () => {
     return setInterval(() => {
       const bannersTransform = bannerList.current.style.transform;
@@ -44,16 +70,8 @@ const Home = () => {
       const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
       const currBannerIndex = bannersX / -100;
 
-      if (currBannerIndex + 1 === banners.length) {
-        bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
-        hideBanner(3);
-        setTimeout(() => {
-          bannerList.current.style.transition = 'none';
-          bannerList.current.style.transform = '';
-        }, 300);
-        setTimeout(() => {
-          bannerList.current.style.transition = '0.3s';
-        }, 400);
+      if (currBannerIndex === banners.length) {
+        slideLastToFirst(bannersX);
       } else if (currBannerIndex < banners.length) {
         bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
         hideBanner(currBannerIndex + 1);
@@ -88,20 +106,34 @@ const Home = () => {
     bannerList.current.style.transform = 'translateX(-100%)';
   }, []);
 
+  // 연속 클릭 방지
+  const preventDoubleClick = (target) => {
+    target.setAttribute('disabled', true);
+    setTimeout(() => {
+      target.removeAttribute('disabled');
+    }, 500);
+  };
+
   // 이전, 다음
   const handlePrevBtn = (e) => {
     e.preventDefault();
+    preventDoubleClick(e.currentTarget);
+
     const bannersTransform = bannerList.current.style.transform;
     if (bannersTransform !== '' && bannersTransform !== 'translateX(-100%)') {
       const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
       bannerList.current.style.transform = `translateX(${bannersX + 100}%)`;
       const currIndex = bannersX / -100 - 1;
       hideBanner(currIndex);
+    } else {
+      slideFirstToLast();
     }
   };
 
   const handleNextBtn = (e) => {
     e.preventDefault();
+    preventDoubleClick(e.currentTarget);
+
     const bannersTransform = bannerList.current.style.transform;
 
     if (bannersTransform === '' && banners.length !== 1) {
@@ -116,6 +148,8 @@ const Home = () => {
     if (currBannerIndex <= banners.length) {
       bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
       hideBanner(currBannerIndex);
+    } else {
+      slideLastToFirst(bannersX);
     }
   };
 
