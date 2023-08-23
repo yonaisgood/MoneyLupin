@@ -73,6 +73,10 @@ const LeftSection = styled.section`
         margin-top: 26px;
         font-size: 16px;
       }
+      .selected {
+        background: var(--black-color);
+        color: white;
+      }
     }
 
     h3 {

@@ -16,16 +16,19 @@ import {
   where,
 } from 'firebase/firestore';
 import { appFireStore, Timestamp } from '../../firebase/config';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import closeIcon from '../../assets/icons/x-gray.svg';
 
 const PaymentPage = () => {
   const navigate = useNavigate();
   const [ablePay, setAblePay] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { openTime, setOpenTime } = useContext(PayContext);
   const { user } = useAuthContext();
+  const modal = useRef(null);
 
   const uid = user?.uid || null;
   const displayName = user?.displayName || null;
@@ -37,6 +40,12 @@ const PaymentPage = () => {
     };
     setTitle();
   }, []);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      modal.current.showModal();
+    }
+  }, [isModalOpen]);
 
   // 결제하기
   const handleBuyBtn = async (e) => {
@@ -104,6 +113,13 @@ const PaymentPage = () => {
     })();
   }, []);
 
+  const handlePaySelectBtn = (e) => {
+    e.preventDefault();
+    const sibling = e.target.parentNode.children;
+    [...sibling].forEach((el) => el.classList.remove('selected'));
+    e.target.classList.add('selected');
+  };
+
   return (
     <>
       <Header />
@@ -138,16 +154,36 @@ const PaymentPage = () => {
               <h2 className="a11y-hidden">결제수단</h2>
               <h3>결제수단</h3>
               <div className="paySelect">
-                <button className="paySelectBtn" type="button">
+                <button
+                  className="paySelectBtn selected"
+                  type="button"
+                  disabled={!ablePay}
+                  onClick={handlePaySelectBtn}
+                >
                   신용카드
                 </button>
-                <button className="paySelectBtn" type="button">
+                <button
+                  className="paySelectBtn"
+                  type="button"
+                  disabled={!ablePay}
+                  onClick={handlePaySelectBtn}
+                >
                   A페이
                 </button>
-                <button className="paySelectBtn" type="button">
+                <button
+                  className="paySelectBtn"
+                  type="button"
+                  disabled={!ablePay}
+                  onClick={handlePaySelectBtn}
+                >
                   B페이
                 </button>
-                <button className="paySelectBtn" type="button">
+                <button
+                  className="paySelectBtn"
+                  type="button"
+                  disabled={!ablePay}
+                  onClick={handlePaySelectBtn}
+                >
                   C페이
                 </button>
               </div>
@@ -175,9 +211,19 @@ const PaymentPage = () => {
             <span>118,800 원</span>
           </div>
           <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
-          <Button onClick={handleBuyBtn} disabled={!ablePay}>
+          <Button onClick={() => setIsModalOpen(true)} disabled={!ablePay}>
             결제하기
           </Button>
+          {isModalOpen && (
+            <dialog ref={modal}>
+              <Button size="m" onClick={handleBuyBtn} disabled={!ablePay}>
+                결제하기
+              </Button>
+              <button onClick={() => setIsModalOpen(false)}>
+                <img src={closeIcon} alt="닫기" />
+              </button>
+            </dialog>
+          )}
         </RightSection>
       </PaymentContainor>
       <Footer />
