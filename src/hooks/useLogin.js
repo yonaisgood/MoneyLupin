@@ -33,7 +33,9 @@ export const useLogin = () => {
       .catch((err) => {
         setError(err.message);
         setPending(false);
-        console.log(err.message);
+        if (error.includes('auth/user-not-found')) {
+          alert('아이디가 존재하지 않습니다.');
+        }
       });
   };
   return { error, isPending, login };

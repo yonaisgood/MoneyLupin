@@ -9,7 +9,7 @@ import { useLogin } from '../hooks/useLogin';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useLogin();
+  const { error, login } = useLogin();
 
   useEffect(() => {
     const setTitle = () => {
@@ -29,7 +29,6 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
     login(email, password);
   };
 
@@ -41,14 +40,21 @@ const Login = () => {
         <StyledForm onSubmit={handleSubmit}>
           <label>
             Email
-            <input type="email" onChange={handleData} value={email} />
+            <input type="email" required onChange={handleData} value={email} />
           </label>
-          <strong>*올바른 이메일 형식이 아닙니다.</strong>
+
           <label>
             Password
-            <input type="password" onChange={handleData} value={password} />
+            <input
+              type="password"
+              required
+              onChange={handleData}
+              value={password}
+            />
           </label>
-          <Button size="m">Log in</Button>
+          <Button size="m" disabled={!email || password.length < 5}>
+            Log in
+          </Button>
         </StyledForm>
         <span className="text">아직 회원이 아니신가요?</span>
         <Link to="/signup">회원가입</Link>
