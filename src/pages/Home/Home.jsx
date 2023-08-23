@@ -127,8 +127,8 @@ const Home = () => {
   const slide = () => {
     let x = (End - Start) * 2;
     if (bestList.current.style.transform === '') {
-      if (-x + viewWidth > 1225) {
-        bestList.current.style.transform = `translateX(${-1225 + viewWidth}px)`;
+      if (-x + viewWidth > 1185) {
+        bestList.current.style.transform = `translateX(${-1185 + viewWidth}px)`;
       } else if (x < 0) {
         bestList.current.style.transform = `translateX(${x}px)`;
       }
@@ -136,8 +136,8 @@ const Home = () => {
       const currX = parseInt(
         bestList.current.style.transform.replace(/[^\d-]/g, '')
       );
-      if (-currX - x + viewWidth > 1225) {
-        bestList.current.style.transform = `translateX(${-1225 + viewWidth}px)`;
+      if (-currX - x + viewWidth > 1185) {
+        bestList.current.style.transform = `translateX(${-1185 + viewWidth}px)`;
       } else if (-currX < x) {
         bestList.current.style.transform = '';
       } else {
@@ -147,26 +147,26 @@ const Home = () => {
   };
 
   const handleDragStart = (e) => {
-    if (viewWidth < 1225) {
+    if (viewWidth < 1185) {
       Start = e.clientX;
     }
   };
 
   const handleDragEnd = (e) => {
-    if (viewWidth < 1225) {
+    if (viewWidth < 1185) {
       End = e.clientX;
       slide();
     }
   };
 
   const handleTouchStart = (e) => {
-    if (viewWidth < 1225) {
+    if (viewWidth < 1185) {
       Start = e.changedTouches[0].pageX;
     }
   };
 
   const handleTouchEnd = (e) => {
-    if (viewWidth < 1225) {
+    if (viewWidth < 1185) {
       End = e.changedTouches[0].pageX;
       slide();
     }
@@ -418,7 +418,8 @@ const StyledMain = styled.main`
     }
 
     li {
-      min-width: 270px;
+      width: calc((1185px - 27px * 3) / 4);
+      flex-shrink: 0;
       aspect-ratio: 280 / 230;
       overflow: hidden;
       border-radius: 10px;
