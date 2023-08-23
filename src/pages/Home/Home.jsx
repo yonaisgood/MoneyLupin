@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
-import Modal from './Modal'; // 위에서 작성한 모달 컴포넌트 임포트
+import Modal from './Modal';
+import Derection from '../../assets/images/direction.png';
 
 const Home = () => {
   const [autoSlide, setAutoSlide] = useState(true);
@@ -256,6 +257,11 @@ const Home = () => {
 
         <section className="classes">
           <h2>이번 달 BEST 강의</h2>
+          <img
+            className="direction"
+            src={Derection}
+            alt="베스트 강의를 가리키는 손가락"
+          />
           <ul
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -418,12 +424,36 @@ const StyledMain = styled.main`
     max-width: 1185px;
     margin: 0 auto 100px;
     overflow-x: hidden;
+    position: relative;
 
     h2 {
       margin-bottom: 20px;
       font-size: 3rem;
       line-height: 4.3rem;
       font-weight: 700;
+    }
+
+    .direction {
+      width: 120px;
+      height: 120px;
+      position: absolute;
+      top: 50px;
+      left: 0px;
+      animation-name: finger;
+      animation-duration: 0.5s;
+      animation-duration: leaner;
+      animation-iteration-count: 1000000;
+      animation-direction: alternate;
+      z-index: 800;
+    }
+
+    @-webkit-keyframes finger {
+      0% {
+        top: 20px;
+      }
+      100% {
+        left: 10px;
+      }
     }
 
     ul {
