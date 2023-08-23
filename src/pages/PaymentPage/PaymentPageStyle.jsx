@@ -73,13 +73,9 @@ const LeftSection = styled.section`
         margin-top: 26px;
         font-size: 16px;
       }
-      .paySelectBtn:hover:not(.selected) {
-        transition: 0.3s;
-        background-color: var(--gray-200);
-      }
+
       .selected {
-        background: var(--black-color);
-        color: white;
+        box-shadow: inset 0 0 0 2px var(--black-color);
       }
     }
 
