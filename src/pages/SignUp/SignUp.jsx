@@ -9,7 +9,14 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const { signup } = useSignup();
+  const [isEmailError, setIsEmailError] = useState(true);
+  const [isPasswordError, setIsPasswordError] = useState(true);
+  const [isDisplayNameError, setIsDisplayNameError] = useState(true);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState('');
+  const emailPattern = /^[a-zA-Z0-9+_.-]+@[a-z0-9.-]+\.[a-z0-9.-]+$/;
+  const { error, signup } = useSignup();
 
   useEffect(() => {
     const setTitle = () => {
@@ -22,18 +29,44 @@ const SignUp = () => {
   const handleData = (event) => {
     if (event.target.type === 'email') {
       setEmail(event.target.value);
+
+      if (emailPattern.test(email)) {
+        setIsEmailError(false);
+        setEmailErrorMessage('');
+      } else {
+        setIsEmailError(true);
+        setEmailErrorMessage('*이메일 형식이 맞지 않습니다.');
+      }
+      console.log(emailErrorMessage);
     } else if (event.target.type === 'password') {
       setPassword(event.target.value);
+      if (password.length < 5) {
+        setIsPasswordError(true);
+        setPasswordErrorMessage('*비밀번호는 6자 이상이어야 합니다.');
+      } else {
+        setIsPasswordError(false);
+        setPasswordErrorMessage('');
+      }
+      console.log(passwordErrorMessage);
     } else if (event.target.type === 'text') {
       setDisplayName(event.target.value);
+      if (displayName.length < 1) {
+        setIsDisplayNameError(true);
+        setDisplayNameErrorMessage('*별명은 2자 이상이어야 합니다.');
+      } else {
+        setIsDisplayNameError(false);
+        setDisplayNameErrorMessage('');
+      }
+      console.log(displayNameErrorMessage);
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password, displayName);
+    if (isEmailError || isPasswordError || isDisplayNameError) return;
     signup(email, password, displayName);
   };
+
   return (
     <>
       <Section>
@@ -47,18 +80,40 @@ const SignUp = () => {
           <StyledForm onSubmit={handleSubmit}>
             <label htmlFor="">
               Email
-              <input type="email" onChange={handleData} value={email} />
+              <input
+                type="email"
+                required
+                onChange={handleData}
+                value={email}
+              />
             </label>
-            <strong>*올바른 이메일 형식이 아닙니다.</strong>
+            {isEmailError && <strong>{emailErrorMessage}</strong>}
+
             <label htmlFor="">
               Password
-              <input type="password" onChange={handleData} value={password} />
+              <input
+                type="password"
+                required
+                onChange={handleData}
+                value={password}
+              />
             </label>
+            {isPasswordError && <strong>{passwordErrorMessage}</strong>}
             <label htmlFor="">
               별명
-              <input type="text" onChange={handleData} value={displayName} />
+              <input
+                type="text"
+                required
+                onChange={handleData}
+                value={displayName}
+              />
             </label>
-            <Button>Sign Up</Button>
+            {isDisplayNameError && <strong>{displayNameErrorMessage}</strong>}
+            <Button
+              disabled={isEmailError || isPasswordError || isDisplayNameError}
+            >
+              Sign Up
+            </Button>
           </StyledForm>
         </RightSection>
       </Section>
