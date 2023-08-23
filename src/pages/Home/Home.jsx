@@ -13,14 +13,6 @@ const Home = () => {
   const bannerList = useRef(null);
   const bestList = useRef(null);
 
-  useEffect(() => {
-    const setTitle = () => {
-      const titleElement = document.getElementsByTagName('title')[0];
-      titleElement.innerHTML = '홈 | Lupin';
-    };
-    setTitle();
-  }, []);
-
   const onLive = () => {
     bannerList.current.setAttribute('aria-live', 'polite');
   };

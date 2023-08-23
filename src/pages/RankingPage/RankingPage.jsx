@@ -27,7 +27,7 @@ const RankingPage = () => {
   useEffect(() => {
     const setTitle = () => {
       const titleElement = document.getElementsByTagName('title')[0];
-      titleElement.innerHTML = '랭킹 | Lupin';
+      titleElement.innerHTML = '랭킹 | LUPIN';
     };
     setTitle();
 

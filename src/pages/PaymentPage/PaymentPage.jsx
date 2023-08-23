@@ -40,7 +40,7 @@ const PaymentPage = () => {
   useEffect(() => {
     const setTitle = () => {
       const titleElement = document.getElementsByTagName('title')[0];
-      titleElement.innerHTML = '결제 | Lupin';
+      titleElement.innerHTML = '결제 | LUPIN';
     };
     setTitle();
   }, []);

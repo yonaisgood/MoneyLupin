@@ -14,7 +14,7 @@ const Login = () => {
   useEffect(() => {
     const setTitle = () => {
       const titleElement = document.getElementsByTagName('title')[0];
-      titleElement.innerHTML = '로그인 | Lupin';
+      titleElement.innerHTML = '로그인 | LUPIN';
     };
     setTitle();
   }, []);
