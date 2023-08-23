@@ -33,8 +33,12 @@ export const useLogin = () => {
       .catch((err) => {
         setError(err.message);
         setPending(false);
-        if (error.includes('auth/user-not-found')) {
+        console.log(err.message);
+        if (err.message.includes('auth/user-not-found')) {
           alert('아이디가 존재하지 않습니다.');
+        }
+        if (err.message.includes('auth/wrong-password')) {
+          alert('비밀번호가 일치하지 않습니다.');
         }
       });
   };

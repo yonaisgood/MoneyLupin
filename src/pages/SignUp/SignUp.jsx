@@ -110,6 +110,7 @@ const SignUp = () => {
             </label>
             {isDisplayNameError && <strong>{displayNameErrorMessage}</strong>}
             <Button
+              size="m"
               disabled={isEmailError || isPasswordError || isDisplayNameError}
             >
               Sign Up

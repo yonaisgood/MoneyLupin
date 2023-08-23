@@ -114,7 +114,7 @@ const PaymentPage = () => {
           <div className="className">
             <img className="classImg" src={BasicClass} alt="" />
             <div className="classInfo">
-              <p>[루팡스쿨 기초반] 월급모아 부자되는 가장 빠른 법</p>
+              <p>[루팡스쿨 기초반] 월급을 잘 투자하는 법</p>
               <p className="classPrice">월 9,900 원</p>
             </div>
           </div>
