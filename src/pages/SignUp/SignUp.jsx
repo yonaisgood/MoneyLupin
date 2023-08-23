@@ -50,9 +50,9 @@ const SignUp = () => {
       console.log(passwordErrorMessage);
     } else if (event.target.type === 'text') {
       setDisplayName(event.target.value);
-      if (displayName.length < 1) {
+      if (displayName.trim().length < 2 || displayName.trim().length > 8) {
         setIsDisplayNameError(true);
-        setDisplayNameErrorMessage('*별명은 2자 이상이어야 합니다.');
+        setDisplayNameErrorMessage('*별명은 2자 이상 8자 이하이어야 합니다.');
       } else {
         setIsDisplayNameError(false);
         setDisplayNameErrorMessage('');
