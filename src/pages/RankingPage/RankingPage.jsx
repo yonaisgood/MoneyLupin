@@ -10,8 +10,9 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { appFireStore } from '../../firebase/config';
 
 const RankingPage = () => {
+  // const navigate = useNavigate();
+  // const history = createBrowserHistory();
   const { openTime } = useContext(PayContext);
-
   const { user } = useAuthContext();
 
   const uid = user?.uid || null;
@@ -19,6 +20,8 @@ const RankingPage = () => {
 
   // 사용자 리스트를 보여줄 상태 변수 초기화
   const [userList, setUserList] = useState([]);
+  const [userRank, setUserRank] = useState(null); // 로그인한 사용자의 랭킹
+  const [userTime, setUserTime] = useState(null); // 로그인한 사용자의 시간
 
   // 컴포넌트가 마운트될 때 사용자 리스트 업데이트
   useEffect(() => {
@@ -42,17 +45,29 @@ const RankingPage = () => {
             nickname: userData.displayName,
             time: userData.myTime.toDate().toLocaleTimeString(), // 타임스탬프를 읽을 수 있는 형태로 변환
           });
-          console.log(userData);
         });
-        console.log(fetchedUsers);
+
+        // 시간순으로 사용자 리스트 정렬
+        fetchedUsers.sort((a, b) => a.time.localeCompare(b.time));
+
+        // 사용자 리스트 업데이트
         setUserList(fetchedUsers);
+
+        // 로그인한 사용자의 랭킹과 시간 찾기
+        const userIndex = fetchedUsers.findIndex(
+          (u) => u.nickname === displayName
+        );
+        if (userIndex !== -1) {
+          setUserRank(userIndex + 1); // 인덱스는 0부터 시작하므로 +1 해서 랭킹 계산
+          setUserTime(fetchedUsers[userIndex].time);
+        }
       } catch (error) {
         console.error('사용자 데이터를 가져오는 중 오류 발생:', error);
       }
     };
 
     fetchUserList();
-  }, []);
+  }, [openTime, displayName]);
 
   return (
     <>
@@ -64,8 +79,8 @@ const RankingPage = () => {
             <div>
               <h2>{displayName} 님의 순위는?</h2>
 
-              <strong>{userList.length > 0 && `${userList[0].rank}위`}</strong>
-              <p>{userList.length > 0 && userList[0].time}</p>
+              <strong>{userRank !== null && `${userRank}위`}</strong>
+              <p>{userTime !== null && userTime}</p>
             </div>
           </article>
         </LeftSection>
