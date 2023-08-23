@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import StyledForm from '../components/Form';
 import loginBg from '../assets/images/login,signup/login-bg.png';
@@ -10,6 +10,14 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useLogin();
+
+  useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '로그인 | Lupin';
+    };
+    setTitle();
+  }, []);
 
   const handleData = (event) => {
     if (event.target.type === 'email') {
@@ -24,6 +32,7 @@ const Login = () => {
     console.log(email, password);
     login(email, password);
   };
+
   return (
     <StyledMain url={loginBg}>
       <h1 className="a11y-hidden">Lupin</h1>

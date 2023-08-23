@@ -22,6 +22,12 @@ const RankingPage = () => {
 
   // 컴포넌트가 마운트될 때 사용자 리스트 업데이트
   useEffect(() => {
+    const setTitle = () => {
+      const titleElement = document.getElementsByTagName('title')[0];
+      titleElement.innerHTML = '랭킹 | Lupin';
+    };
+    setTitle();
+
     const fetchUserList = async () => {
       try {
         // const db = getFirestore();
