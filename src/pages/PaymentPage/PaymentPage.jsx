@@ -90,6 +90,7 @@ const PaymentPage = () => {
 
   useEffect(() => {
     (async () => {
+      const openedTiemList = [];
       const currTime = new Date();
       const currTimeCopy = new Date(currTime);
       const q = query(
@@ -111,9 +112,10 @@ const PaymentPage = () => {
           const iso = new Date(dateCopy.setHours(dateCopy.getHours() + 9))
             .toISOString()
             .slice(0, 16);
-          checkPaid(iso);
+          openedTiemList.push(iso);
         }
       });
+      checkPaid(openedTiemList[openedTiemList.length - 1]);
     })();
   }, []);
 
