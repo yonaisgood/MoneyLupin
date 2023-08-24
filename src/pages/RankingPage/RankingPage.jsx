@@ -43,15 +43,22 @@ const RankingPage = () => {
           fetchedUsers.push({
             rank: fetchedUsers.length + 1, // 스냅샷에서의 순서에 따른 랭크 설정
             nickname: userData.displayName,
-            time: userData.myTime.toDate().toLocaleTimeString(), // 타임스탬프를 읽을 수 있는 형태로 변환
+            time: userData.myTime, // 타임스탬프를 읽을 수 있는 형태로 변환
           });
         });
 
         // 시간순으로 사용자 리스트 정렬
         fetchedUsers
-          .sort((a, b) => a.time.localeCompare(b.time))
+          .sort((a, b) => {
+            if (a.time > b.time) {
+              return 1;
+            } else {
+              return -1;
+            }
+          })
           .map((v, i) => {
             v.rank = i + 1;
+            v.time = v.time.toDate().toLocaleTimeString();
           });
 
         // 사용자 리스트 업데이트

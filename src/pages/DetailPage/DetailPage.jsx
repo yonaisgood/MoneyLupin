@@ -266,7 +266,7 @@ const DetailPage = () => {
                 >
                   결제하기
                 </Button>
-                {uid === '7I6W5SDVtxYb2jlCDlBTqbD4Xmq1' && (
+                {uid === 'iK1qfdhkJaZHEHxnVgjDboB0mJX2' && (
                   <WhiteButton
                     onClick={() => setIsModalOpen(true)}
                     $watchBlackIcon={watchBlackIcon}
