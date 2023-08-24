@@ -9,8 +9,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 10px;
     font-family: 'Noto Sans KR', sans-serif;
     
-    --gray-100: #eee;
+    --gray-100: #EEEEEE;
+    --gray-150: #F0F0F2;
     --gray-200: #a7a7a7;
+    --gray-250: #e1e5f4;
     --gray-300: #7a7a7a;
     --black-color: #232323;
     --white-color: #ffffff;
@@ -19,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
     --import-color: #d03b3f;
 
     --brand-color: #7754F3;
+    --brand-sub-color: #687de9;
     --brand-color-light: #CEC2FD;
   }
 
