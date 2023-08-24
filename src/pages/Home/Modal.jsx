@@ -79,26 +79,29 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* 어둡게 처리된 배경색 */
+  background-color: rgba(0, 0, 0, 0.8); /* 어둡게 처리된 배경색 */
   z-index: 999;
 `;
 
 const Modal = ({ onClose, children }) => {
-  const [showModal, setShowModal] = useState(true);
-  const [hideToday, setHideToday] = useState(false);
+  const [showModal, setShowModal] = useState(false); // 모달 초기에는 보이지 않도록 설정
+  const [lastModalTime, setLastModalTime] = useState(0); // 마지막 모달 표시 시간 저장
 
   useEffect(() => {
-    const shouldHide = localStorage.getItem('hideTodayModal');
-    if (shouldHide) {
-      setShowModal(false);
+    const storedTime = parseInt(localStorage.getItem('lastModalTime')) || 0;
+    setLastModalTime(storedTime);
+
+    const currentTime = Date.now();
+    if (currentTime - storedTime >= 600000) {
+      setShowModal(true); // 10분 이상 경과한 경우 모달 표시
     }
   }, []);
 
   const handleCloseModal = () => {
     setShowModal(false);
-    if (!hideToday) {
-      localStorage.setItem('hideTodayModal', 'true');
-    }
+    setLastModalTime(Date.now()); // 현재 타임스탬프 저장
+
+    localStorage.setItem('lastModalTime', Date.now().toString()); // 타임스탬프 저장
   };
 
   return (

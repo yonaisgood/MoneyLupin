@@ -4,7 +4,7 @@ const StyledDialog = styled.dialog`
   border: none;
   padding: 0;
   border-radius: 25px;
-  background: #f0f0f2;
+  background: var(--gray-150);
 
   strong {
     display: block;
@@ -15,10 +15,10 @@ const StyledDialog = styled.dialog`
 
   div:first-child {
     border-radius: 25px;
-    background: #687de9;
+    background: var(--brand-sub-color);
     padding: 47px 0 56px;
     font-size: 3rem;
-    color: white;
+    color: var(--white-color);
 
     div {
       position: relative;
@@ -35,7 +35,7 @@ const StyledDialog = styled.dialog`
       top: 50%;
       transform: translateY(-50%);
       width: calc(50% - 36px);
-      background: white;
+      background: var(--white-color);
       height: 1px;
     }
     div::before {
@@ -45,7 +45,7 @@ const StyledDialog = styled.dialog`
       right: 0;
       transform: translateY(-50%);
       width: calc(50% - 36px);
-      background: white;
+      background: var(--white-color);
       height: 1px;
     }
 
@@ -61,7 +61,7 @@ const StyledDialog = styled.dialog`
       right: 75px;
       width: 50px;
       height: 50px;
-      border: 1px solid white;
+      border: 1px solid var(--white-color);
       border-radius: 10px;
       img {
         margin: auto;
@@ -80,7 +80,7 @@ const StyledDialog = styled.dialog`
     }
 
     li {
-      background: white;
+      background: var(--white-color);
       position: relative;
       border-radius: 20px;
       box-shadow: 4px 5px 9px 4px rgba(186, 186, 186, 0.25);
