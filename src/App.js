@@ -36,7 +36,7 @@ function App() {
                 <Route
                   path="/payment"
                   element={
-                    user ? <Ranking /> : <Navigate to="/" replace={true} />
+                    user ? <Payment /> : <Navigate to="/" replace={true} />
                   }
                 ></Route>
                 <Route
