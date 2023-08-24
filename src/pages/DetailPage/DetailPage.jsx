@@ -5,7 +5,7 @@ import StyledDialog from './StyledDialog';
 import { useEffect, useRef, useState } from 'react';
 import {
   collection,
-  addDoc,
+  setDoc,
   doc,
   deleteDoc,
   onSnapshot,
@@ -36,7 +36,7 @@ const DetailPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [payBtn, setPayBtn] = useState(false);
   const [time, setTime] = useState('');
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [nextPayTime, setNextPayTime] = useState('');
   const modal = useRef(null);
   const timeInp = useRef(null);
@@ -68,14 +68,12 @@ const DetailPage = () => {
       }
     }
 
-    const colRef = collection(appFireStore, 'time');
-
     try {
-      const docRef = await addDoc(colRef, {
+      await setDoc(doc(appFireStore, 'time', time), {
         time: Timestamp.fromDate(new Date(time)),
       });
 
-      setData([...data, { time, id: docRef.id }]);
+      setData([...data, { time: time }]);
     } catch (error) {
       console.error(error);
     }
@@ -89,25 +87,37 @@ const DetailPage = () => {
   }, [isModalOpen]);
 
   // 결제한 사용자 체크 및 버튼 활성화
-  const checkPaid = (iso) => {
-    let ablePay = false;
+  const checkPaid = async (iso) => {
+    const docs = await getDocs(collection(appFireStore, 'Ranking_' + iso));
+    const uidList = [];
+    docs.forEach((doc) => {
+      uidList.push(doc.data().uid);
+    });
 
-    onSnapshot(
-      collection(appFireStore, 'Ranking_' + iso),
-      (snapshot) => {
-        for (const doc of snapshot.docs) {
-          if (uid === doc.data().uid) {
-            return;
-          }
-        }
-        setPayBtn(true);
-        ablePay = true;
-      },
-      (error) => {
-        console.error(error.message);
+    for (const docUid of uidList) {
+      if (uid === docUid) {
+        return false;
       }
-    );
-    return ablePay;
+    }
+
+    setPayBtn(true);
+    return true;
+
+    // onSnapshot(
+    //   collection(appFireStore, 'Ranking_' + iso),
+    //   async (snapshot) => {
+    //     for (const doc of snapshot.docs) {
+    //       if (uid === (await doc.data().uid)) {
+    //         return;
+    //       }
+    //     }
+    //     setPayBtn(true);
+    //     ablePay = true;
+    //   },
+    //   (error) => {
+    //     console.error(error.message);
+    //   }
+    // );
   };
 
   const renderOpenTime = (result) => {
@@ -146,6 +156,7 @@ const DetailPage = () => {
       );
 
       const result = [];
+      const openedTiemList = [];
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((document) => {
@@ -157,29 +168,31 @@ const DetailPage = () => {
 
         // 오픈 예정 시간 <= 현재 시간
         if (date <= currTime) {
-          ablePay = checkPaid(iso);
+          openedTiemList.push(iso);
         } else {
           result.push({
             time: iso,
-            id: document.id,
           });
         }
       });
-
-      setData(result);
+      if (openedTiemList.length) {
+        ablePay = await checkPaid(openedTiemList[openedTiemList.length - 1]);
+      }
 
       // 버튼 비활성화 상태 시, 예약 시간 렌더링
       if (result.length && !ablePay) {
         renderOpenTime(result);
       }
+
+      setData(result);
     })();
   }, []);
 
   const deleteTime = async (e) => {
     e.preventDefault();
-    const id = e.currentTarget.dataset.id;
-    await deleteDoc(doc(appFireStore, 'time', id));
-    setData(data.filter((v) => v.id !== id));
+    const time = e.currentTarget.dataset.time;
+    await deleteDoc(doc(appFireStore, 'time', time));
+    setData(data.filter((v) => v.time !== time));
   };
 
   useEffect(() => {
@@ -310,7 +323,7 @@ const DetailPage = () => {
                                 ' ' +
                                 (v.time.slice(11, 13) > 12 ? 'PM' : 'AM')}
                             </span>
-                            <button onClick={deleteTime} data-id={v.id}>
+                            <button onClick={deleteTime} data-time={v.time}>
                               <img src={deleteIcon} alt="삭제" />
                             </button>
                           </li>
