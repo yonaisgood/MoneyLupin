@@ -8,7 +8,6 @@ import {
   setDoc,
   doc,
   deleteDoc,
-  onSnapshot,
   getDocs,
   query,
   where,
@@ -73,7 +72,15 @@ const DetailPage = () => {
         time: Timestamp.fromDate(new Date(time)),
       });
 
-      setData([...data, { time: time }]);
+      const newData = [...data, { time: time }].sort((a, b) => {
+        if (new Date(a.time) > new Date(b.time)) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setData(newData);
+      // renderOpenTime(newData[0].time);
     } catch (error) {
       console.error(error);
     }
@@ -102,25 +109,9 @@ const DetailPage = () => {
 
     setPayBtn(true);
     return true;
-
-    // onSnapshot(
-    //   collection(appFireStore, 'Ranking_' + iso),
-    //   async (snapshot) => {
-    //     for (const doc of snapshot.docs) {
-    //       if (uid === (await doc.data().uid)) {
-    //         return;
-    //       }
-    //     }
-    //     setPayBtn(true);
-    //     ablePay = true;
-    //   },
-    //   (error) => {
-    //     console.error(error.message);
-    //   }
-    // );
   };
 
-  const renderOpenTime = (result) => {
+  const renderOpenTime = (time) => {
     const dayList = {
       Sun: '일',
       Mon: '월',
@@ -130,13 +121,9 @@ const DetailPage = () => {
       Fri: '금',
       Sat: '토',
     };
-    const day = dayList[new Date(result[0].time).toString().slice(0, 3)];
+    const day = dayList[new Date(time).toString().slice(0, 3)];
     const str =
-      result[0].time.slice(5, 7) +
-      '/' +
-      result[0].time.slice(8, 10) +
-      `(${day}) ` +
-      result[0].time.slice(11);
+      time.slice(5, 7) + '/' + time.slice(8, 10) + `(${day}) ` + time.slice(11);
     setNextPayTime(str);
   };
 
@@ -181,7 +168,7 @@ const DetailPage = () => {
 
       // 버튼 비활성화 상태 시, 예약 시간 렌더링
       if (result.length && !ablePay) {
-        renderOpenTime(result);
+        renderOpenTime(result[0].time);
       }
 
       setData(result);

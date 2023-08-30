@@ -115,7 +115,10 @@ const PaymentPage = () => {
           openedTiemList.push(iso);
         }
       });
-      checkPaid(openedTiemList[openedTiemList.length - 1]);
+
+      if (openedTiemList.length) {
+        checkPaid(openedTiemList[openedTiemList.length - 1]);
+      }
     })();
   }, []);
 
