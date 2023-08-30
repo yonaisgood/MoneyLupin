@@ -30,7 +30,7 @@ const SignUp = () => {
     if (event.target.type === 'email') {
       setEmail(event.target.value);
 
-      if (emailPattern.test(email)) {
+      if (emailPattern.test(event.target.value)) {
         setIsEmailError(false);
         setEmailErrorMessage('');
       } else {
@@ -40,7 +40,7 @@ const SignUp = () => {
       console.log(emailErrorMessage);
     } else if (event.target.type === 'password') {
       setPassword(event.target.value);
-      if (password.length < 5) {
+      if (event.target.value.length < 5) {
         setIsPasswordError(true);
         setPasswordErrorMessage('*비밀번호는 6자 이상이어야 합니다.');
       } else {
@@ -50,7 +50,10 @@ const SignUp = () => {
       console.log(passwordErrorMessage);
     } else if (event.target.type === 'text') {
       setDisplayName(event.target.value);
-      if (displayName.trim().length < 2 || displayName.trim().length > 8) {
+      if (
+        event.target.value.trim().length < 2 ||
+        event.target.value.trim().length > 8
+      ) {
         setIsDisplayNameError(true);
         setDisplayNameErrorMessage('*별명은 2자 이상 8자 이하이어야 합니다.');
       } else {
