@@ -11,9 +11,9 @@ const StyledForm = styled.form`
     display: block;
     width: 408px;
     padding: 10px 0;
-    line-height: 1;
+    line-height: 2.2rem;
     font-size: 1.6rem;
-    color: var(--gray-300);
+    color: var(--black-color);
     border-bottom: 3px solid var(--black-color);
   }
 
@@ -32,6 +32,27 @@ const StyledForm = styled.form`
 
   button {
     margin-top: 30px;
+  }
+
+  @media (max-width: 768px) {
+    strong {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 430px) {
+    label {
+      font-size: 1.5rem;
+      line-height: 2.3rem;
+    }
+    input {
+      width: 100%;
+      font-size: 1.5rem;
+      line-height: 1.8rem;
+    }
+    label:not(:first-child) {
+      margin-top: 20px;
+    }
   }
 `;
 
