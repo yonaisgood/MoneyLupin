@@ -40,7 +40,7 @@ const SignUp = () => {
       console.log(emailErrorMessage);
     } else if (event.target.type === 'password') {
       setPassword(event.target.value);
-      if (event.target.value.length < 5) {
+      if (event.target.value.length < 6) {
         setIsPasswordError(true);
         setPasswordErrorMessage('*비밀번호는 6자 이상이어야 합니다.');
       } else {
