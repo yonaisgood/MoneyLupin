@@ -379,27 +379,18 @@ const StyledMain = styled.main`
   }
 
   .contents {
-    margin: 50px 0 53px;
-    padding: 0 40px; // 임시
+    margin: 50px auto 53px;
+    padding: 0 25px;
 
     ul {
-      display: flex;
-      gap: 20px;
+      margin: 0 -10px;
       justify-content: center;
-    }
-
-    @media (max-width: 1179px) {
-      ul {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-      }
-      li {
-        margin: auto;
-      }
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 94px);
     }
 
     li {
-      flex-shrink: 0;
+      margin: 10px;
       max-width: 92px;
       padding: 15px 0 13px;
       font-size: 1.6rem;
@@ -422,6 +413,8 @@ const StyledMain = styled.main`
 
   .classes {
     max-width: 1185px;
+    box-sizing: content-box;
+    padding-left: 25px;
     margin: 0 auto 100px;
     overflow-x: hidden;
     position: relative;
@@ -473,6 +466,22 @@ const StyledMain = styled.main`
     a:hover > img {
       transition: 0.3s;
       transform: scale(110%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 94px 0 0;
+
+    .contents {
+      margin: 50px auto 53px;
+    }
+  }
+
+  @media (max-width: 430px) {
+    padding: 105px 0 0;
+
+    .classes {
+      padding-left: 20px;
     }
   }
 `;
