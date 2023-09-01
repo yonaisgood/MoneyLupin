@@ -17,7 +17,6 @@ const Header = () => {
             <img src={logo} alt="lupin 로고" />
           </Link>
         </h1>
-
         <button>
           <span className="hamburger">
             <span></span>
@@ -76,11 +75,10 @@ const StyledHeader = styled.header`
 
   div {
     position: relative;
-    padding: 34px 0 12px;
+    box-sizing: content-box;
+    padding: 34px 25px 12px;
     max-width: 1185px;
     margin: auto;
-    font-size: 16px;
-    color: var(--black-color);
   }
 
   h1 {
@@ -92,6 +90,9 @@ const StyledHeader = styled.header`
     aspect-ratio: 94 / 20;
   }
 
+  button {
+    margin-right: 30px;
+  }
   .hamburger {
     display: inline-block;
     margin-right: 7px;
@@ -113,28 +114,33 @@ const StyledHeader = styled.header`
   }
 
   ul {
+    display: flex;
+    gap: 10px 30px;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
   }
 
-  li {
-    margin-left: 30px;
-    display: inline-block;
+  a,
+  button {
+    color: var(--black-color);
   }
 
-  a {
+  a,
+  button,
+  #log {
+    font-size: 1.6rem;
     line-height: 2.3rem;
   }
 
   #log {
     position: absolute;
     display: flex;
-    padding: 10px 11px;
+    padding: 9px 10px 9px 14px;
     top: 22px;
-    right: 0;
+    right: 25px;
     border-radius: 10px;
     border: 1px solid var(--gray-200);
-    line-height: 2.2rem;
     color: var(--gray-200);
   }
 
@@ -146,6 +152,63 @@ const StyledHeader = styled.header`
     margin-right: 13px;
     background: ${(props) => 'url(' + props.$person + ')'} no-repeat center /
       contain;
+    line-height: 0;
+  }
+
+  @media (max-width: 768px) {
+    div {
+      padding: 28px 25px 22px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    button {
+      margin-right: 16px;
+    }
+    a,
+    button {
+      font-size: 1.4rem;
+      line-height: 2rem;
+    }
+    #log {
+      padding: 9px;
+      font-size: 0;
+      line-height: 0;
+    }
+    #log::before {
+      margin-right: 0;
+    }
+    ul {
+      gap: 16px;
+    }
+  }
+
+  /* 중단점 컨펌 */
+  @media (max-width: 609px) {
+    div {
+      position: relative;
+      padding: 41px 22px;
+      line-height: 0;
+    }
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+    }
+    button {
+      margin: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+    nav {
+      display: none;
+    }
+    #log {
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 `;
 
