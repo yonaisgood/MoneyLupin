@@ -25,18 +25,20 @@ const Footer = () => {
 const StyledFooter = styled.footer`
   background-color: var(--gray-100);
   width: 100%;
+
   .footerContainer {
-    background-color: var(--gray-100);
     max-width: 1185px;
+    background-color: var(--gray-100);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 52px 0px;
+    padding: 52px 10px;
     margin: 0 auto;
   }
 
   h1 {
     width: 110px;
+
     .logoGray {
       object-fit: contain;
     }
@@ -46,11 +48,14 @@ const StyledFooter = styled.footer`
     width: 100%;
     color: var(--gray-300);
     padding-left: 11.8rem;
-    line-height: 1rem;
+    line-height: 2rem;
+
     p {
       font-size: 1.8rem;
       font-weight: bold;
+      margin: 0;
     }
+
     span {
       font-size: 1.3rem;
     }
@@ -62,6 +67,58 @@ const StyledFooter = styled.footer`
     transition: all ease 0.3s;
     &:hover {
       transform: rotate(20deg);
+    }
+  }
+
+  //테블릿 사이즈
+  @media (max-width: 768px) {
+    .footerContainer {
+      max-width: 768px;
+      padding: 30px 25px;
+      position: relative;
+    }
+
+    .footerText {
+      padding-left: 3.5rem;
+      p {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footerContainer {
+      max-width: 560px;
+      padding: 30px 25px;
+      position: relative;
+    }
+
+    .footerText {
+      padding-left: 3.5rem;
+      position: absolute;
+      left: 0;
+
+      p {
+        font-size: 1.6rem;
+      }
+    }
+
+    .logoGray {
+      visibility: hidden;
+    }
+  }
+
+  //모바일 사이즈
+  @media (max-width: 430px) {
+    .footerContainer {
+      max-width: 768px;
+      padding: 30px 25px;
+    }
+
+    .footerText {
+      p {
+        font-size: 1.5rem;
+      }
     }
   }
 `;
