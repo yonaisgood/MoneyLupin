@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import StyledForm from '../../components/Form';
-import { Section, LeftSection, RightSection } from './SignUpStyle';
+import {
+  Section,
+  LeftSection,
+  RightSection,
+  FormContainer,
+} from './SignUpStyle';
 import Button from '../../components/Button';
 import SignUpBack from '../../assets/images/login,signup/signup-bg.png';
 import { useSignup } from '../../hooks/useSingup';
@@ -80,45 +85,47 @@ const SignUp = () => {
         <RightSection>
           <h2 className="a11y-hidden">create account</h2>
           <h1>Create Account</h1>
-          <StyledForm onSubmit={handleSubmit}>
-            <label htmlFor="">
-              Email
-              <input
-                type="email"
-                required
-                onChange={handleData}
-                value={email}
-              />
-            </label>
-            {isEmailError && <strong>{emailErrorMessage}</strong>}
+          <FormContainer>
+            <StyledForm onSubmit={handleSubmit}>
+              <label htmlFor="">
+                Email
+                <input
+                  type="email"
+                  required
+                  onChange={handleData}
+                  value={email}
+                />
+              </label>
+              {isEmailError && <strong>{emailErrorMessage}</strong>}
 
-            <label htmlFor="">
-              Password
-              <input
-                type="password"
-                required
-                onChange={handleData}
-                value={password}
-              />
-            </label>
-            {isPasswordError && <strong>{passwordErrorMessage}</strong>}
-            <label htmlFor="">
-              별명
-              <input
-                type="text"
-                required
-                onChange={handleData}
-                value={displayName}
-              />
-            </label>
-            {isDisplayNameError && <strong>{displayNameErrorMessage}</strong>}
-            <Button
-              size="m"
-              disabled={isEmailError || isPasswordError || isDisplayNameError}
-            >
-              Sign Up
-            </Button>
-          </StyledForm>
+              <label htmlFor="">
+                Password
+                <input
+                  type="password"
+                  required
+                  onChange={handleData}
+                  value={password}
+                />
+              </label>
+              {isPasswordError && <strong>{passwordErrorMessage}</strong>}
+              <label htmlFor="">
+                별명
+                <input
+                  type="text"
+                  required
+                  onChange={handleData}
+                  value={displayName}
+                />
+              </label>
+              {isDisplayNameError && <strong>{displayNameErrorMessage}</strong>}
+              <Button
+                size="m"
+                disabled={isEmailError || isPasswordError || isDisplayNameError}
+              >
+                Sign Up
+              </Button>
+            </StyledForm>
+          </FormContainer>
         </RightSection>
       </Section>
     </>
