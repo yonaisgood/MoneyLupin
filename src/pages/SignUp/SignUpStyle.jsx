@@ -41,11 +41,11 @@ const RightSection = styled.section`
   }
 
   h1 {
-    width: 100%;
     font-size: 4.5rem;
     margin-bottom: 9rem;
 
     @media screen and (max-width: 900px) {
+      width: 100%;
       font-size: 4rem;
     }
 
