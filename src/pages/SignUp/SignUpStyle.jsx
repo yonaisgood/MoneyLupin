@@ -45,11 +45,13 @@ const RightSection = styled.section`
     margin-bottom: 9rem;
 
     @media screen and (max-width: 900px) {
-      width: 100%;
+      width: 408px;
       font-size: 4rem;
+      margin-bottom: 6rem;
     }
 
     @media screen and (max-width: 430px) {
+      width: 100%;
       font-size: 3rem;
       margin-bottom: 4rem;
     }
