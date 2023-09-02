@@ -9,14 +9,27 @@ import content8 from '../../assets/icons/contents/8.png';
 import content9 from '../../assets/icons/contents/9.png';
 import content10 from '../../assets/icons/contents/10.png';
 
-import banner1 from '../../assets/images/banners/1.png';
-import banner2 from '../../assets/images/banners/2.png';
-import banner3 from '../../assets/images/banners/3.png';
+import bannerPc1 from '../../assets/images/banners/pc/1.png';
+import bannerPc2 from '../../assets/images/banners/pc/2.png';
+import bannerPc3 from '../../assets/images/banners/pc/3.png';
+
+import bannerTablet1 from '../../assets/images/banners/tablet/1.png';
+import bannerTablet2 from '../../assets/images/banners/tablet/2.png';
+import bannerTablet3 from '../../assets/images/banners/tablet/3.png';
+
+import bannerMobile1 from '../../assets/images/banners/mobile/1.png';
+import bannerMobile2 from '../../assets/images/banners/mobile/2.png';
+import bannerMobile3 from '../../assets/images/banners/mobile/3.png';
 
 import best1 from '../../assets/images/best/1.png';
 import best2 from '../../assets/images/best/2.png';
 import best3 from '../../assets/images/best/3.png';
 import best4 from '../../assets/images/best/4.png';
+
+import bestSmall1 from '../../assets/images/best-small/1.png';
+import bestSmall2 from '../../assets/images/best-small/2.png';
+import bestSmall3 from '../../assets/images/best-small/3.png';
+import bestSmall4 from '../../assets/images/best-small/4.png';
 
 const contents = [
   { name: '1:1 코칭', img: content1 },
@@ -38,7 +51,9 @@ const banners = [
       '친구에게 강의를 소개하고, 초대해 주세요',
       '친구 초대하기',
     ],
-    img: banner1,
+    img: bannerPc1,
+    imgTablet: bannerTablet1,
+    imgMobile: bannerMobile1,
   },
   {
     text: [
@@ -46,7 +61,9 @@ const banners = [
       '이번달 신규 강의 가장 처음 만나보세요 !',
       '혜택 받으러 가기',
     ],
-    img: banner2,
+    img: bannerPc2,
+    imgTablet: bannerTablet2,
+    imgMobile: bannerMobile2,
   },
   {
     text: [
@@ -54,15 +71,22 @@ const banners = [
       '이번달 신규 강의 가장 처음 만나보세요 !',
       '혜택 받으러 가기',
     ],
-    img: banner3,
+    img: bannerPc3,
+    imgTablet: bannerTablet3,
+    imgMobile: bannerMobile3,
   },
 ];
 
 const best = [
-  { name: '루팡 스쿨 기초반', img: best1, link: '/detail' },
-  { name: '루팡 스쿨 주식반', img: best2, link: '/' },
-  { name: '루팡 스쿨 중급반', img: best3, link: '/' },
-  { name: '서울 투자 중급반', img: best4, link: '/' },
+  {
+    name: '루팡 스쿨 기초반',
+    img: best1,
+    imgSmall: bestSmall1,
+    link: '/detail',
+  },
+  { name: '루팡 스쿨 주식반', img: best2, imgSmall: bestSmall2, link: '/' },
+  { name: '루팡 스쿨 중급반', img: best3, imgSmall: bestSmall3, link: '/' },
+  { name: '서울 투자 중급반', img: best4, imgSmall: bestSmall4, link: '/' },
 ];
 
 export { contents, banners, best };
