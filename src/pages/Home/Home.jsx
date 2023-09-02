@@ -135,15 +135,23 @@ const Home = () => {
   };
 
   // 이번 달 BEST 강의
-  const viewWidth = window.innerWidth;
+  const viewWidth = document.documentElement.clientWidth;
   let Start;
   let End;
+  let classesWidth;
+  if (viewWidth > 430) {
+    classesWidth = 1210;
+  } else {
+    classesWidth = 1088;
+  }
 
   const slide = () => {
     let x = (End - Start) * 2;
     if (bestList.current.style.transform === '') {
-      if (-x + viewWidth > 1185) {
-        bestList.current.style.transform = `translateX(${-1185 + viewWidth}px)`;
+      if (-x + viewWidth > classesWidth) {
+        bestList.current.style.transform = `translateX(${
+          -classesWidth + viewWidth
+        }px)`;
       } else if (x < 0) {
         bestList.current.style.transform = `translateX(${x}px)`;
       }
@@ -151,8 +159,10 @@ const Home = () => {
       const currX = parseInt(
         bestList.current.style.transform.replace(/[^\d-]/g, '')
       );
-      if (-currX - x + viewWidth > 1185) {
-        bestList.current.style.transform = `translateX(${-1185 + viewWidth}px)`;
+      if (-currX - x + viewWidth > classesWidth) {
+        bestList.current.style.transform = `translateX(${
+          -classesWidth + viewWidth
+        }px)`;
       } else if (-currX < x) {
         bestList.current.style.transform = '';
       } else {
@@ -162,26 +172,26 @@ const Home = () => {
   };
 
   const handleDragStart = (e) => {
-    if (viewWidth < 1185) {
+    if (viewWidth < classesWidth) {
       Start = e.clientX;
     }
   };
 
   const handleDragEnd = (e) => {
-    if (viewWidth < 1185) {
+    if (viewWidth < classesWidth) {
       End = e.clientX;
       slide();
     }
   };
 
   const handleTouchStart = (e) => {
-    if (viewWidth < 1185) {
+    if (viewWidth < classesWidth) {
       Start = e.changedTouches[0].pageX;
     }
   };
 
   const handleTouchEnd = (e) => {
-    if (viewWidth < 1185) {
+    if (viewWidth < classesWidth) {
       End = e.changedTouches[0].pageX;
       slide();
     }
@@ -273,7 +283,10 @@ const Home = () => {
               return (
                 <li key={i}>
                   <Link to={v.link}>
-                    <img src={v.img} alt={v.name} />
+                    <img
+                      src={viewWidth > 430 ? v.img : v.imgSmall}
+                      alt={v.name}
+                    />
                   </Link>
                 </li>
               );
@@ -383,15 +396,13 @@ const StyledMain = styled.main`
     padding: 0 25px;
 
     ul {
-      margin: 0 -10px;
       justify-content: center;
       display: grid;
       grid-template-columns: repeat(auto-fit, 94px);
+      gap: 10px;
     }
 
     li {
-      margin: 10px;
-      max-width: 92px;
       padding: 15px 0 13px;
       font-size: 1.6rem;
       line-height: 2.3rem;
@@ -415,7 +426,7 @@ const StyledMain = styled.main`
     max-width: 1185px;
     box-sizing: content-box;
     padding-left: 25px;
-    margin: 0 auto 100px;
+    margin: 0 auto 60px;
     overflow-x: hidden;
     position: relative;
 
@@ -463,6 +474,10 @@ const StyledMain = styled.main`
       border-radius: 10px;
     }
 
+    img {
+      object-fit: cover;
+    }
+
     a:hover > img {
       transition: 0.3s;
       transform: scale(110%);
@@ -470,18 +485,61 @@ const StyledMain = styled.main`
   }
 
   @media (max-width: 768px) {
-    padding: 94px 0 0;
+    padding: 107px 0 0;
 
     .contents {
-      margin: 50px auto 53px;
+      margin: 60px auto;
+
+      ul {
+        grid-template-columns: repeat(auto-fit, 80px);
+        gap: 45px 35px;
+        line-height: 2rem;
+        font-size: 1.4rem;
+      }
+
+      li {
+        padding: 0;
+      }
     }
+
+    .classes h2 {
+      margin-bottom: 24px;
+      font-size: 2.5rem;
+      line-height: 3.6rem;
+    }
+  }
+  @media (max-width: 609px) {
+    padding: 96px 0 0;
   }
 
   @media (max-width: 430px) {
-    padding: 105px 0 0;
+    margin: 0 auto 60px;
+
+    .contents {
+      margin: 50px auto;
+
+      ul {
+        gap: 30px 23px;
+      }
+    }
 
     .classes {
       padding-left: 20px;
+
+      ul {
+        gap: 20px;
+      }
+
+      li {
+        width: 252px;
+        aspect-ratio: 252 / 157;
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+        line-height: 1.7rem;
+      }
     }
   }
 `;

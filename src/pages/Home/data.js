@@ -18,6 +18,11 @@ import best2 from '../../assets/images/best/2.png';
 import best3 from '../../assets/images/best/3.png';
 import best4 from '../../assets/images/best/4.png';
 
+import bestSmall1 from '../../assets/images/best-small/1.png';
+import bestSmall2 from '../../assets/images/best-small/2.png';
+import bestSmall3 from '../../assets/images/best-small/3.png';
+import bestSmall4 from '../../assets/images/best-small/4.png';
+
 const contents = [
   { name: '1:1 코칭', img: content1 },
   { name: 'NEW', img: content2 },
@@ -59,10 +64,15 @@ const banners = [
 ];
 
 const best = [
-  { name: '루팡 스쿨 기초반', img: best1, link: '/detail' },
-  { name: '루팡 스쿨 주식반', img: best2, link: '/' },
-  { name: '루팡 스쿨 중급반', img: best3, link: '/' },
-  { name: '서울 투자 중급반', img: best4, link: '/' },
+  {
+    name: '루팡 스쿨 기초반',
+    img: best1,
+    imgSmall: bestSmall1,
+    link: '/detail',
+  },
+  { name: '루팡 스쿨 주식반', img: best2, imgSmall: bestSmall2, link: '/' },
+  { name: '루팡 스쿨 중급반', img: best3, imgSmall: bestSmall3, link: '/' },
+  { name: '서울 투자 중급반', img: best4, imgSmall: bestSmall4, link: '/' },
 ];
 
 export { contents, banners, best };
