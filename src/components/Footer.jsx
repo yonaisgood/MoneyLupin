@@ -45,9 +45,8 @@ const StyledFooter = styled.footer`
   }
 
   .footerText {
-    width: 100%;
+    width: 70%;
     color: var(--gray-300);
-    padding-left: 11.8rem;
     line-height: 2rem;
 
     p {
@@ -70,7 +69,6 @@ const StyledFooter = styled.footer`
     }
   }
 
-  //테블릿 사이즈
   @media (max-width: 768px) {
     .footerContainer {
       max-width: 768px;
@@ -79,9 +77,10 @@ const StyledFooter = styled.footer`
     }
 
     .footerText {
-      padding-left: 3.5rem;
+      width: 70%;
+      padding-left: 2rem;
       p {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
       }
     }
   }
@@ -94,7 +93,7 @@ const StyledFooter = styled.footer`
     }
 
     .footerText {
-      padding-left: 3.5rem;
+      width: 90%;
       position: absolute;
       left: 0;
 
@@ -116,8 +115,18 @@ const StyledFooter = styled.footer`
     }
 
     .footerText {
+      width: 83%;
       p {
         font-size: 1.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 410px) {
+    .footerText {
+      width: 83%;
+      p {
+        font-size: 1.3rem;
       }
     }
   }
