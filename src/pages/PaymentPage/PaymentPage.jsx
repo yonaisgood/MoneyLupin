@@ -4,8 +4,10 @@ import {
   PaymentContainor,
   RightSection,
   LeftSection,
+  PaymentSection,
 } from './PaymentPageStyle';
-import BasicClass from '../../assets/images/best/1.png';
+import ClassBack from '../../assets/images/payment/ClassBack.png';
+import ClassBoys from '../../assets/images/payment/ClassBoys.png';
 import Button from '../../components/Button';
 import {
   collection,
@@ -18,7 +20,7 @@ import {
 import { appFireStore, Timestamp } from '../../firebase/config';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import StyledDialog from './StyledDialog';
 import closeIcon from '../../assets/icons/x-black.svg';
@@ -133,27 +135,67 @@ const PaymentPage = () => {
     <>
       <Header />
       <PaymentContainor>
-        <LeftSection>
-          <h2 className="a11y-hidden">주문결제</h2>
-          <h1>주문결제</h1>
-          <div className="className">
-            <img className="classImg" src={BasicClass} alt="" />
-            <div className="classInfo">
-              <p>[루팡스쿨 기초반] 월급을 잘 투자하는 법</p>
-              <p className="classPrice">월 9,900 원</p>
+        <h2 className="a11y-hidden">주문결제</h2>
+        <h1>주문결제</h1>
+        <div className="leftBox">
+          <LeftSection>
+            <div className="classCategory">
+              <div className="imgBox">
+                <img className="classBack" src={ClassBack} alt="루팡기초반" />
+                <div className="imgText">
+                  <img className="classBoys" src={ClassBoys} alt="루팡기초반" />
+                  <p className="basicText">루팡스쿨 기초반</p>
+                </div>
+              </div>
+              <div className="classInfo">
+                <p>[루팡스쿨 기초반] 월급을 잘 투자하는 법</p>
+                <p className="classPrice">월 9,900 원</p>
+              </div>
             </div>
-          </div>
-          <section className="payMethod">
+          </LeftSection>
+          <RightSection>
+            <h3 className="smallTitle">결제금액</h3>
+            <div className="payBox">
+              <ul className="payCost">
+                <li>
+                  <p>총 강의 금액</p>
+                  <strong>118,800 원</strong>
+                </li>
+                <li>
+                  <p>총 강의 금액</p>
+                  <span>118,800 원</span>
+                </li>
+                <li>
+                  <p>총 강의 금액</p>
+                  <span>0 원</span>
+                </li>
+              </ul>
+              <div className="totalCost">
+                <p>총 결제금액</p>
+                <span>118,800 원</span>
+              </div>
+              <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
+            </div>
+            <Button
+              className="payBtn"
+              size="l"
+              onClick={() => setIsModalOpen(true)}
+              disabled={!ablePay || isModalOpen}
+            >
+              결제하기
+            </Button>
+          </RightSection>
+          <PaymentSection>
             <div className="payBenefit">
               <h2 className="a11y-hidden">쿠폰</h2>
-              <h3>쿠폰</h3>
-              <p>사용가능한 쿠폰이 없습니다.</p>
+              <h3 className="smallTitle">쿠폰</h3>
+              <p className="pointBox">사용가능한 쿠폰이 없습니다.</p>
             </div>
             <div className="payBenefit">
               <h2 className="a11y-hidden">포인트</h2>
-              <h3>포인트</h3>
+              <h3 className="smallTitle">포인트</h3>
               <div className="payPoint">
-                <p>0</p>
+                <p className="pointBox">0</p>
                 <button className="payAllBtn" type="submit">
                   전액사용
                 </button>
@@ -161,7 +203,7 @@ const PaymentPage = () => {
             </div>
             <div className="payBenefit">
               <h2 className="a11y-hidden">결제수단</h2>
-              <h3>결제수단</h3>
+              <h3 className="smallTitle">결제수단</h3>
               <div className="paySelect">
                 <button
                   className="paySelectBtn selected"
@@ -197,88 +239,68 @@ const PaymentPage = () => {
                 </button>
               </div>
             </div>
-          </section>
-        </LeftSection>
-        <RightSection>
-          <h3>결제금액</h3>
-          <ul className="payCost">
-            <li>
-              <p>총 강의 금액</p>
-              <strong>118,800 원</strong>
-            </li>
-            <li>
-              <p>총 강의 금액</p>
-              <span>118,800 원</span>
-            </li>
-            <li>
-              <p>총 강의 금액</p>
-              <span>0 원</span>
-            </li>
-          </ul>
-          <div className="totalCost">
-            <p>총 결제금액</p>
-            <span>118,800 원</span>
-          </div>
-          <span className="installmentInfo">12개월 할부 시 월 9,900원</span>
+          </PaymentSection>
+        </div>
+        <div className="mobileStickyBtn">
           <Button
+            className="mobilePayBtn"
+            size="l"
             onClick={() => setIsModalOpen(true)}
             disabled={!ablePay || isModalOpen}
           >
             결제하기
           </Button>
-          {isModalOpen && (
-            <StyledDialog
-              ref={modal}
-              $checkCheckedIcon={checkCheckedIcon}
-              $checkIcon={checkIcon}
-            >
-              <span className="name">LUPIN</span>
-              <dl>
-                <dt>상품명</dt>
-                <dd>: 월급을 잘 투자하는 법</dd>
-                <dt className="price">상품금액</dt>
-                <dd>: 118,800</dd>
-                <dt className="total">최종 결제 금액</dt>
-                <dd>: 118,800</dd>
-              </dl>
-              <div>
-                <label htmlFor="checkbox">약관 및 이용동의</label>
-                <input
-                  id="checkbox"
-                  type="checkbox"
-                  onChange={(e) => setIsAgreed(e.target.checked)}
-                  aria-describedby="agreeAll"
-                  onKeyDown={(e) => {
-                    // 32 === 스페이스바
-                    if (e.keycode === 32 || e.key === 'Enter') {
-                      e.target.click();
-                    }
-                  }}
-                />
-                <span id="agreeAll">전체동의</span>
-              </div>
-              <p>
-                *수강신청 연습용 결제 페이지로 실제 결제를 비롯한 어떠한 효력도
-                발생하지 않는 페이지 입니다.
-              </p>
-              <Button
-                size="m"
-                onClick={handleBuyBtn}
-                disabled={!isAgreed || !ablePay}
-                className="pay-btn"
-              >
-                결제하기
-              </Button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="close-btn"
-              >
-                <img src={closeIcon} alt="닫기" />
-              </button>
-            </StyledDialog>
-          )}
-        </RightSection>
+        </div>
       </PaymentContainor>
+
+      {isModalOpen && (
+        <StyledDialog
+          ref={modal}
+          $checkCheckedIcon={checkCheckedIcon}
+          $checkIcon={checkIcon}
+        >
+          <span className="name">LUPIN</span>
+          <dl>
+            <dt>상품명</dt>
+            <dd>: 월급을 잘 투자하는 법</dd>
+            <dt className="price">상품금액</dt>
+            <dd>: 118,800</dd>
+            <dt className="total">최종 결제 금액</dt>
+            <dd>: 118,800</dd>
+          </dl>
+          <div>
+            <label htmlFor="checkbox">약관 및 이용동의</label>
+            <input
+              id="checkbox"
+              type="checkbox"
+              onChange={(e) => setIsAgreed(e.target.checked)}
+              aria-describedby="agreeAll"
+              onKeyDown={(e) => {
+                // 32 === 스페이스바
+                if (e.keycode === 32 || e.key === 'Enter') {
+                  e.target.click();
+                }
+              }}
+            />
+            <span id="agreeAll">전체동의</span>
+          </div>
+          <p>
+            *수강신청 연습용 결제 페이지로 실제 결제를 비롯한 어떠한 효력도
+            발생하지 않는 페이지 입니다.
+          </p>
+          <Button
+            size="m"
+            onClick={handleBuyBtn}
+            disabled={!isAgreed || !ablePay}
+            className="pay-btn"
+          >
+            결제하기
+          </Button>
+          <button onClick={() => setIsModalOpen(false)} className="close-btn">
+            <img src={closeIcon} alt="닫기" />
+          </button>
+        </StyledDialog>
+      )}
       <Footer />
     </>
   );
