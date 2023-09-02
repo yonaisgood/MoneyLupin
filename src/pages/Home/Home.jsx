@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
 import Modal from './Modal';
 import Derection from '../../assets/images/direction.png';
+import arrowLeft from '../../assets/icons/arrow-left.svg';
 
 const Home = () => {
   const [autoSlide, setAutoSlide] = useState(true);
@@ -213,18 +214,16 @@ const Home = () => {
         >
           <h2 className="a11y-hidden">메인 배너</h2>
 
-          <button
-            className="prev-btn"
-            aria-label="이전"
-            onClick={handlePrevBtn}
-          ></button>
-          <button
-            className="next-btn"
-            aria-label="다음"
-            onClick={handleNextBtn}
-          ></button>
+          <div className="btn-wrap">
+            <button className="prev-btn" onClick={handlePrevBtn}>
+              <img src={arrowLeft} alt="이전" />
+            </button>
+            <button className="next-btn" onClick={handleNextBtn}>
+              <img src={arrowLeft} alt="다음" />
+            </button>
+          </div>
 
-          <ul ref={bannerList} aria-live="off">
+          <ul ref={bannerList} aria-live="off" className="banner-list">
             {banners.map((banner, i) => {
               return (
                 <li
@@ -234,7 +233,16 @@ const Home = () => {
                   key={i}
                 >
                   <Link tabIndex={currBanner === i ? '' : '-1'}>
-                    <img src={banner.img} alt="" />
+                    <img
+                      src={
+                        viewWidth <= 430
+                          ? banner.imgMobile
+                          : viewWidth <= 768
+                          ? banner.imgTablet
+                          : banner.img
+                      }
+                      alt=""
+                    />
                     <p className="a11y-hidden">{banner.text.join(' ')}</p>
                     <br />
                     {`${banners.length}개의 슬라이드 중 ${i + 1}번`}
@@ -244,9 +252,15 @@ const Home = () => {
             })}
           </ul>
 
-          <div>
-            {currBanner + 1} / {banners.length}
-          </div>
+          <ul className="indicator">
+            {banners.map((_, i) => {
+              if (currBanner === i) {
+                return <li className="current"></li>;
+              } else {
+                return <li></li>;
+              }
+            })}
+          </ul>
         </section>
 
         <section className="contents">
@@ -306,88 +320,70 @@ const StyledMain = styled.main`
     position: relative;
     overflow: hidden;
 
-    button {
+    .btn-wrap {
       position: absolute;
+      display: flex;
+      justify-content: space-between;
       top: 50%;
-      transform: translate(0, -50%);
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 2px var(--gray-300);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% - 50px);
+      max-width: 1394px;
+      box-sizing: content-box;
       z-index: 100;
-      border-radius: 50px;
     }
-    .prev-btn {
-      left: 60px;
+
+    button {
+      width: 30px;
+      aspect-ratio: 1/1;
     }
+
     .next-btn {
-      right: 60px;
+      transform: rotate(180deg);
     }
 
-    /* 임시 */
-    button::before,
-    button::after {
-      content: '';
-      position: absolute;
-      width: 2px;
-      height: 14px;
-      border-radius: 2px;
-      background: var(--black-color);
-    }
-    .next-btn::after {
-      transform: rotate(45deg);
-      bottom: 8px;
-    }
-    .next-btn::before {
-      transform: rotate(-45deg);
-      top: 9px;
-    }
-    .prev-btn::after {
-      transform: rotate(45deg);
-      top: 9px;
-      left: 18px;
-    }
-    .prev-btn::before {
-      transform: rotate(-45deg);
-      bottom: 8px;
-      left: 18px;
-    }
-    /* *** */
-
-    ul {
+    .banner-list {
       display: flex;
       height: 400px;
       transition: 0.3s;
-    }
-    li {
-      flex-shrink: 0;
-      width: 100%;
-    }
 
-    a:focus {
-      outline-offset: -2px;
-    }
+      li {
+        flex-shrink: 0;
+        width: 100%;
+      }
 
-    img {
-      object-fit: cover;
-      object-position: 36% top;
+      a:focus {
+        outline-offset: -2px;
+      }
+
+      img {
+        object-fit: cover;
+      }
     }
 
     /* 인디케이터 */
-    div {
-      width: 80px;
-      padding: 11px 0;
+    .indicator {
       position: absolute;
-      bottom: 24px;
+      bottom: 23px;
       left: 50%;
       transform: translate(-50%);
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: var(--black-color);
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 2px rgba(35, 35, 35, 0.25);
-      border-radius: 20px;
+      line-height: 0;
+
+      li {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        background: white;
+        border-radius: 5px;
+      }
+
+      li:not(:first-child) {
+        margin-left: 8px;
+      }
+
+      .current {
+        background: var(--gray-300);
+      }
     }
   }
 
@@ -484,36 +480,80 @@ const StyledMain = styled.main`
     }
   }
 
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .banners li img {
+      object-position: -360px top;
+    }
+  }
+
   @media (max-width: 768px) {
     padding: 107px 0 0;
 
-    .contents {
-      margin: 60px auto;
-
-      ul {
-        grid-template-columns: repeat(auto-fit, 80px);
-        gap: 45px 35px;
-        line-height: 2rem;
-        font-size: 1.4rem;
+    .banners {
+      .banner-list {
+        aspect-ratio: 768 / 300;
+        height: auto;
       }
 
-      li {
-        padding: 0;
+      .btn-wrap {
+        button {
+          width: 20px;
+        }
       }
-    }
 
-    .classes h2 {
-      margin-bottom: 24px;
-      font-size: 2.5rem;
-      line-height: 3.6rem;
+      .indicator {
+        li {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          background: white;
+          border-radius: 5px;
+        }
+
+        li:not(:first-child) {
+          margin-left: 7px;
+        }
+      }
     }
   }
+
+  .contents {
+    margin: 60px auto;
+
+    ul {
+      grid-template-columns: repeat(auto-fit, 80px);
+      gap: 45px 35px;
+      line-height: 2rem;
+      font-size: 1.4rem;
+    }
+
+    li {
+      padding: 0;
+    }
+  }
+
+  .classes h2 {
+    margin-bottom: 24px;
+    font-size: 2.5rem;
+    line-height: 3.6rem;
+  }
+
   @media (max-width: 609px) {
     padding: 96px 0 0;
   }
 
   @media (max-width: 430px) {
     margin: 0 auto 60px;
+
+    .banners {
+      .banner-list {
+        aspect-ratio: 430 / 249;
+      }
+
+      .btn-wrap {
+        width: calc(100% - 40px);
+      }
+    }
 
     .contents {
       margin: 50px auto;
