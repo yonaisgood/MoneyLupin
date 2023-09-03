@@ -310,7 +310,11 @@ const DetailPage = () => {
                                 ' ' +
                                 (v.time.slice(11, 13) > 12 ? 'PM' : 'AM')}
                             </span>
-                            <button onClick={deleteTime} data-time={v.time}>
+                            <button
+                              onClick={deleteTime}
+                              data-time={v.time}
+                              className="delete-btn"
+                            >
                               <img src={deleteIcon} alt="삭제" />
                             </button>
                           </li>
@@ -318,7 +322,10 @@ const DetailPage = () => {
                       })}
                     </ul>
                   </div>
-                  <button onClick={() => setIsModalOpen(false)}>
+                  <button
+                    className="close-btn"
+                    onClick={() => setIsModalOpen(false)}
+                  >
                     <img src={closeIcon} alt="닫기" />
                   </button>
                 </StyledDialog>
