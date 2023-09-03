@@ -4,7 +4,7 @@ import modalPerson from '../../assets/icons/modal-person.svg';
 
 const GuideDialog = styled.section`
   width: 74rem;
-  padding: 40px 30px;
+  padding: 4rem 3rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,31 +13,31 @@ const GuideDialog = styled.section`
   border-radius: 20px;
   z-index: 999;
 
-  h1 {
-    margin-bottom: 15px;
-    font-size: 45px;
+  .modalTitle h1 {
+    margin-bottom: 1.5rem;
+    font-size: 4.5rem;
   }
 
-  h1 span {
-    font-size: 45px;
+  .modalTitle h1 span {
+    font-size: 4.5rem;
     -webkit-text-stroke: 1.5px var(--black-color);
     color: var(--white-color);
   }
 
-  h2 {
-    font-size: 20px;
-    margin-bottom: -10px;
+  .modalTitle h2 {
+    font-size: 2rem;
+    margin-bottom: -1rem;
   }
 
   .modalTitle p {
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: bold;
   }
 
   .modalText {
     width: 50rem;
-    font-size: 16px;
-    margin-top: 60px;
+    font-size: 1.6rem;
+    margin-top: 6rem;
   }
 
   .modalList li {
@@ -49,8 +49,8 @@ const GuideDialog = styled.section`
   .modalList strong {
     outline: 2px solid var(--brand-color-light);
     border-radius: 50%;
-    padding: 4px 8px;
-    margin-right: 13px;
+    padding: 0.4rem 0.8rem;
+    margin-right: 1.3rem;
   }
 
   .modalList p span {
@@ -60,16 +60,103 @@ const GuideDialog = styled.section`
 
   .open-modal-btn svg {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 3rem;
+    right: 3rem;
   }
 
   .modalPerson {
     width: 28rem;
     height: 28rem;
     position: absolute;
-    bottom: 40px;
+    bottom: 4rem;
     right: 0px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 58.4rem;
+    padding: 2.4rem 2rem;
+
+    .modalTitle h1 {
+      font-size: 3.5rem;
+    }
+
+    .modalTitle h1 span {
+      font-size: 3.5rem;
+    }
+
+    .modalTitle h2 {
+      font-size: 1.6rem;
+    }
+
+    .modalText {
+      width: 38rem;
+      font-size: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .modalTitle p {
+      font-size: 1.4rem;
+    }
+
+    .modalList li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .modalList strong {
+      margin-right: 1rem;
+    }
+
+    .open-modal-btn svg {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .modalPerson {
+      width: 25rem;
+      height: 25rem;
+      bottom: 2rem;
+      right: 0px;
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    width: 40rem;
+    padding: 2rem 2rem;
+
+    .modalTitle h1 {
+      font-size: 2.5rem;
+    }
+
+    .modalTitle h1 span {
+      font-size: 2.5rem;
+    }
+
+    .modalTitle h2 {
+      font-size: 1.3rem;
+    }
+
+    .modalText {
+      width: 100%;
+      font-size: 1.15rem;
+      margin-top: 2rem;
+    }
+
+    .modalTitle p {
+      font-size: 1.2rem;
+    }
+
+    .open-modal-btn svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      top: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .modalPerson {
+      visibility: hidden;
+    }
   }
 `;
 
@@ -84,8 +171,8 @@ const ModalOverlay = styled.div`
 `;
 
 const Modal = ({ onClose, children }) => {
-  const [showModal, setShowModal] = useState(false); // 모달 초기에는 보이지 않도록 설정
-  const [lastModalTime, setLastModalTime] = useState(0); // 마지막 모달 표시 시간 저장
+  const [showModal, setShowModal] = useState(false);
+  const [lastModalTime, setLastModalTime] = useState(0);
 
   useEffect(() => {
     const storedTime = parseInt(localStorage.getItem('lastModalTime')) || 0;
@@ -99,9 +186,9 @@ const Modal = ({ onClose, children }) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setLastModalTime(Date.now()); // 현재 타임스탬프 저장
+    setLastModalTime(Date.now());
 
-    localStorage.setItem('lastModalTime', Date.now().toString()); // 타임스탬프 저장
+    localStorage.setItem('lastModalTime', Date.now().toString());
   };
 
   return (
