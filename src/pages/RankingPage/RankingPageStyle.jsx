@@ -6,12 +6,21 @@ const StyledMain = styled.main`
   max-width: 1160px;
   margin: 0 auto;
   background-color: var(--gray-250);
+  @media (max-width: 768px) {
+    padding: 105px 0 0;
+  }
+  @media (max-width: 609px) {
+    padding: 94px 0 0;
+    flex-direction: column;
+  }
+  @media (max-width: 430px) {
+    flex-direction: column;
+  }
 `;
 const LeftSection = styled.section`
   position: relative;
   background-color: var(--brand-sub-color);
   width: 580px;
-
   border-top-right-radius: 30px;
   article {
     position: absolute;
@@ -42,6 +51,45 @@ const LeftSection = styled.section`
       margin: 0;
     }
   }
+  @media (max-width: 768px) {
+    article {
+      position: static;
+    }
+    article img {
+      width: 225px;
+      height: 280px;
+      position: absolute;
+      top: 47px;
+    }
+    article div {
+      position: absolute;
+      top: 266px;
+      left: 105px;
+    }
+  }
+  @media (max-width: 609px) {
+    width: 100%;
+    height: 462px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 30px;
+
+    article {
+      position: absolute;
+      top: 100px;
+    }
+    article img {
+      width: 160px;
+      height: 210px;
+      position: static;
+    }
+    article div {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
 `;
 const RightSection = styled.section`
   width: 580px;
@@ -53,7 +101,6 @@ const RightSection = styled.section`
   }
   ul {
     height: 750px;
-
     overflow: scroll;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -89,6 +136,26 @@ const RightSection = styled.section`
   }
   ul li p:last-child {
     margin-left: auto;
+  }
+  @media (max-width: 768px) {
+    padding: 60px 10px 60px 40px;
+    li {
+      padding: 0;
+      margin-right: 30px;
+    }
+    h2 {
+      font-size: 1.8rem;
+    }
+    ul li p {
+      font-size: 1.4rem;
+    }
+  }
+  @media (max-width: 609px) {
+    width: 100%;
+  }
+  @media (max-width: 430px) {
+    padding: 25px 10px 25px 37px;
+    width: 100%;
   }
 `;
 export { StyledMain, RightSection, LeftSection };
