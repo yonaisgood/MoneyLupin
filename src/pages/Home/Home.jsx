@@ -227,7 +227,6 @@ const Home = () => {
             {banners.map((banner, i) => {
               return (
                 <li
-                  role="group"
                   aria-roledescription="slide"
                   aria-hidden={currBanner !== i}
                   key={i}
