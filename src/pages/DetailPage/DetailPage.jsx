@@ -13,8 +13,9 @@ import {
   where,
 } from 'firebase/firestore';
 import { appFireStore, Timestamp } from '../../firebase/config';
-import StyledMain from './DetailPageStyle';
+import { StyledMain, WhiteButton } from './DetailPageStyle';
 import basicBig from '../../assets/images/basic_big.png';
+import basicMid from '../../assets/images/basic_mid.png';
 import reviewIcon from '../../assets/images/reviews.svg';
 import review1 from '../../assets/images/review/review1.png';
 import review2 from '../../assets/images/review/review2.png';
@@ -26,7 +27,7 @@ import watchIcon from '../../assets/icons/watch.svg';
 import deleteIcon from '../../assets/icons/x-gray.svg';
 import saveIcon from '../../assets/icons/save.svg';
 import closeIcon from '../../assets/icons/close.svg';
-import { styled } from 'styled-components';
+
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,11 +38,20 @@ const DetailPage = () => {
   const [time, setTime] = useState('');
   const [data, setData] = useState([]);
   const [nextPayTime, setNextPayTime] = useState('');
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth
+  );
   const modal = useRef(null);
   const timeInp = useRef(null);
 
   const { user } = useAuthContext();
   const uid = user?.uid || null;
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   useEffect(() => {
     const setTitle = () => {
@@ -212,7 +222,11 @@ const DetailPage = () => {
           <StyledMain>
             <section className="section1">
               <h2 className="a11y-hidden">강의 상세 페이지</h2>
-              <img className="basicImg" src={basicBig} alt="루팡스쿨 기초반" />
+              <img
+                className="basicImg"
+                src={clientWitch <= 768 ? basicMid : basicBig}
+                alt="루팡스쿨 기초반"
+              />
               <div className="txtWrapper">
                 <div className="mainTitle">[루팡스쿨 기초반]</div>
                 <p className="subTitle">월급을 잘 투자하는 법</p>
@@ -357,35 +371,10 @@ const DetailPage = () => {
               </ul>
             </section>
           </StyledMain>
-          <Footer />
+          {/* <Footer /> */}
         </>
       )}
     </>
   );
 };
 export default DetailPage;
-
-const WhiteButton = styled.button`
-  margin-top: 57px;
-  padding: 16px 0;
-  width: 100%;
-  font-size: 1.6rem;
-  line-height: 2.9rem;
-  font-weight: 700;
-  border-radius: 10px;
-  border: 1px solid var(--black-color);
-  color: var(--black-color);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::before {
-    content: '';
-    margin-right: 10px;
-    width: 24px;
-    aspect-ratio: 1/1;
-    background: ${(props) => 'url(' + props.$watchBlackIcon + ')'} no-repeat
-      center / contain;
-  }
-`;
