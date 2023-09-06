@@ -11,9 +11,18 @@ import arrowLeft from '../../assets/icons/arrow-left.svg';
 const Home = () => {
   const [autoSlide, setAutoSlide] = useState(true);
   const [slideBtn, setSlideBtn] = useState(true);
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth
+  );
   const [currBanner, setCurrBanner] = useState(0);
   const bannerList = useRef(null);
   const bestList = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   const onLive = () => {
     bannerList.current.setAttribute('aria-live', 'polite');
@@ -36,6 +45,8 @@ const Home = () => {
 
   // 첫번째, 마지막 배너 클론
   useEffect(() => {
+    bannerList.current.style.transform = 'translateX(-100%)';
+
     const cloneFirstBanner =
       bannerList.current.firstElementChild.cloneNode(true);
     const cloneLastBanner = bannerList.current.lastChild.cloneNode(true);
@@ -46,7 +57,6 @@ const Home = () => {
 
     bannerList.current.appendChild(cloneFirstBanner);
     bannerList.current.prepend(cloneLastBanner);
-    bannerList.current.style.transform = 'translateX(-100%)';
   }, []);
 
   const slideLastToFirst = (bannersX) => {
@@ -136,11 +146,10 @@ const Home = () => {
   };
 
   // 이번 달 BEST 강의
-  const viewWidth = document.documentElement.clientWidth;
   let Start;
   let End;
   let classesWidth;
-  if (viewWidth > 430) {
+  if (clientWitch > 430) {
     classesWidth = 1210;
   } else {
     classesWidth = 1088;
@@ -149,9 +158,9 @@ const Home = () => {
   const slide = () => {
     let x = (End - Start) * 2;
     if (bestList.current.style.transform === '') {
-      if (-x + viewWidth > classesWidth) {
+      if (-x + clientWitch > classesWidth) {
         bestList.current.style.transform = `translateX(${
-          -classesWidth + viewWidth
+          -classesWidth + clientWitch
         }px)`;
       } else if (x < 0) {
         bestList.current.style.transform = `translateX(${x}px)`;
@@ -160,9 +169,9 @@ const Home = () => {
       const currX = parseInt(
         bestList.current.style.transform.replace(/[^\d-]/g, '')
       );
-      if (-currX - x + viewWidth > classesWidth) {
+      if (-currX - x + clientWitch > classesWidth) {
         bestList.current.style.transform = `translateX(${
-          -classesWidth + viewWidth
+          -classesWidth + clientWitch
         }px)`;
       } else if (-currX < x) {
         bestList.current.style.transform = '';
@@ -173,26 +182,26 @@ const Home = () => {
   };
 
   const handleDragStart = (e) => {
-    if (viewWidth < classesWidth) {
+    if (clientWitch < classesWidth) {
       Start = e.clientX;
     }
   };
 
   const handleDragEnd = (e) => {
-    if (viewWidth < classesWidth) {
+    if (clientWitch < classesWidth) {
       End = e.clientX;
       slide();
     }
   };
 
   const handleTouchStart = (e) => {
-    if (viewWidth < classesWidth) {
+    if (clientWitch < classesWidth) {
       Start = e.changedTouches[0].pageX;
     }
   };
 
   const handleTouchEnd = (e) => {
-    if (viewWidth < classesWidth) {
+    if (clientWitch < classesWidth) {
       End = e.changedTouches[0].pageX;
       slide();
     }
@@ -227,7 +236,6 @@ const Home = () => {
             {banners.map((banner, i) => {
               return (
                 <li
-                  role="group"
                   aria-roledescription="slide"
                   aria-hidden={currBanner !== i}
                   key={i}
@@ -235,9 +243,9 @@ const Home = () => {
                   <Link tabIndex={currBanner === i ? '' : '-1'}>
                     <img
                       src={
-                        viewWidth <= 430
+                        clientWitch <= 430
                           ? banner.imgMobile
-                          : viewWidth <= 768
+                          : clientWitch <= 768
                           ? banner.imgTablet
                           : banner.img
                       }
@@ -298,7 +306,7 @@ const Home = () => {
                 <li key={i}>
                   <Link to={v.link}>
                     <img
-                      src={viewWidth > 430 ? v.img : v.imgSmall}
+                      src={clientWitch > 430 ? v.img : v.imgSmall}
                       alt={v.name}
                     />
                   </Link>

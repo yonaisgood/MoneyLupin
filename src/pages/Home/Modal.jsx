@@ -244,7 +244,11 @@ const Modal = ({ onClose, children }) => {
                 </li>
               </ul>
             </div>
-            <button className="open-modal-btn" onClick={handleCloseModal}>
+            <button
+              className="open-modal-btn"
+              onClick={handleCloseModal}
+              aria-label="닫기"
+            >
               <svg
                 width="40"
                 height="40"
