@@ -30,7 +30,7 @@ import checkIcon from '../../assets/icons/check.svg';
 const PaymentPage = () => {
   const navigate = useNavigate();
   const [ablePay, setAblePay] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [isAgreed, setIsAgreed] = useState(false);
   const { openTime, setOpenTime } = useContext(PayContext);
   const { user } = useAuthContext();
@@ -45,6 +45,10 @@ const PaymentPage = () => {
       titleElement.innerHTML = '결제 | LUPIN';
     };
     setTitle();
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -261,14 +265,16 @@ const PaymentPage = () => {
         >
           <span className="name">LUPIN</span>
           <dl>
-            <dt>상품명</dt>
-            <dd>: 월급을 잘 투자하는 법</dd>
+            <div>
+              <dt>상품명</dt>
+              <dd>: 월급을 잘 투자하는 법</dd>
+            </div>
             <dt className="price">상품금액</dt>
             <dd>: 118,800</dd>
             <dt className="total">최종 결제 금액</dt>
-            <dd>: 118,800</dd>
+            <dd className="totalPrice">: 118,800</dd>
           </dl>
-          <div>
+          <div className="box">
             <label htmlFor="checkbox">약관 및 이용동의</label>
             <input
               id="checkbox"
@@ -284,7 +290,7 @@ const PaymentPage = () => {
             />
             <span id="agreeAll">전체동의</span>
           </div>
-          <p>
+          <p className="notification">
             *수강신청 연습용 결제 페이지로 실제 결제를 비롯한 어떠한 효력도
             발생하지 않는 페이지 입니다.
           </p>
