@@ -107,12 +107,13 @@ const StyledMain = styled.main`
   .section2 ul li img {
     border-radius: 2rem;
     box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 366/223;
   }
 
   .section2 ul {
     display: grid;
     width: 755px;
-    height: 460px;
+    /* height: 460px; */
     gap: 27px 15px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -254,9 +255,9 @@ const StyledMain = styled.main`
   } */
 
   @media (max-width: 430px) {
-    padding: 0 20px;
+    padding: 124px 20px 35px;
     max-width: 390px;
-    padding-top: 124px;
+
     .section1 {
       gap: 30px;
       margin-bottom: 30px;
@@ -294,11 +295,15 @@ const WhiteButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 390px) {
-    width: 200px;
-    padding: 10px 0;
-    font-size: 1.6rem;
+  @media (max-width: 768px) {
+    margin-top: 15px;
+    padding: 9px 0;
+    font-size: 1.4rem;
   }
+  @media (max-width: 430px) {
+    margin-top: 17px;
+  }
+
   &::before {
     content: '';
     margin-right: 10px;

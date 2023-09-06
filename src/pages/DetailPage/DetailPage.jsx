@@ -371,7 +371,7 @@ const DetailPage = () => {
               </ul>
             </section>
           </StyledMain>
-          {/* <Footer /> */}
+          <Footer />
         </>
       )}
     </>
