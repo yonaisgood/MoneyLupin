@@ -27,8 +27,14 @@ const size = {
     line-height: 3.5rem;
     font-size: 2.4rem;
 
-    @media (max-width: 430px) {
+    @media (max-width: 780px) {
       width: 200px;
+      padding: 5px 0;
+      font-size: 1.6rem;
+    }
+
+    @media (max-width: 430px) {
+      width: 250px;
       padding: 10px 0;
       font-size: 2rem;
     }
