@@ -54,6 +54,10 @@ const DetailPage = () => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const setTitle = () => {
       const titleElement = document.getElementsByTagName('title')[0];
       titleElement.innerHTML = '상세 | Lupin';
