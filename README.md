@@ -1,43 +1,45 @@
 <div align=center>
 
-<h1> LUPIN  |  루팡 </h1><br>
+<h1> LUPIN  |  루팡 </h1>
+
+<br>
 
 <h3> "내가 너무 느린가봐 강의신청은 항상 실패해..." 라는 친구의 고충을 듣고 <br>친구에게 강의신청을 연습할 수 있는 사이트를 만들어 주고 싶어서 기획한 프로젝트 입니다.👩🏻‍💻👨🏻‍💻</h3>
-<br>
+<br><br>
+
 </div>
 
-![Mask group](https://github.com/yonainthefish/MoneyLupin/assets/124084624/6f2f3a49-b860-403d-aa24-7c514e319800)
-
-
-<br>
-
 <div align=center>
-<h3> 📍 프로젝트 기간 : 2023.08.12 - 2023.08.23  </h3> 
-<h3> 📍 프로젝트 소개 : 선착순 수강신청? 연습한자를 따라 올 수 없지!.  </h3> 
-<h3> 📍 프로젝트 링크 : [LUPIN 바로가기] : https://lupin-a4f4e.web.app/  </h3> 
+
+|프로젝트 기간|2023.08.12 - 2023.08.23|
+|:--:|:--|
+|**프로젝트 소개**|**선착순 수강신청? 연습한자를 따라 올 수 없지! - 선착순 수강신청 연습 서비스**|
+|**프로젝트 링크**|**프로젝트 링크 : [LUPIN 바로가기] 👉 https://lupin-a4f4e.web.app/**|
+
+  <br>
   
 <details>
-<summary> <h3>👀 기능 미리 보기 </h3></summary>
+<summary> <h3>👀 기능 미리 보기 (반응형) </h3></summary>
 
-1.로그인 <br>
-2.회원가입 <br>
-3.홈 <br>
-4.강의 상세 (강의시간 예약하기) <br>
-5.결제페이지 <br>
-6.랭킹페이지 <br>
+|      |PC|Tablet|Mobile|
+|:------:|---|---|---|
+|로그인|![2-](https://github.com/yonainthefish/MoneyLupin/assets/124084624/c7aaca53-1eaa-4f55-9b71-5ba3dd8b8e94)|![테블릿-로그인](https://github.com/yonainthefish/MoneyLupin/assets/124084624/38c048ec-9cce-46ff-a258-e4bbdd7169d6)|![모바일-로그인](https://github.com/yonainthefish/MoneyLupin/assets/124084624/dd270cc2-abb8-4466-8a73-755a7e8f2578)|
+|회원가입|![da3fba8b76fb0a0a](https://github.com/yonainthefish/MoneyLupin/assets/124084624/1528aed4-dcad-4e5a-97ad-42e6d7ded104)|![테블릿-회원가입](https://github.com/yonainthefish/MoneyLupin/assets/124084624/cf4f9714-14eb-4da5-a47a-b7627fb3c7f6)|![모바일-회원가입](https://github.com/yonainthefish/MoneyLupin/assets/124084624/f92e6f2c-89b7-4453-98d7-f8a1d67adef0)|
+|오픈예약|![93335b3bc41eabab](https://github.com/yonainthefish/MoneyLupin/assets/124084624/8de0475b-6ddb-4320-ae4f-51b3a248742e)|![테블릿-강의예약](https://github.com/yonainthefish/MoneyLupin/assets/124084624/492b78e6-950a-4a81-bf5d-b6e50a34d30a)|![모바일-강의예약](https://github.com/yonainthefish/MoneyLupin/assets/124084624/0f847380-cc7d-4c88-ac77-ad6fcb232170)|
+|결제 <br> -> <br> 랭킹|![Screen_Recording_2023-08-30_at_8 01 19_PM](https://github.com/yonainthefish/MoneyLupin/assets/124084624/fb1dd597-fc0d-4191-b735-1ce0f9746dbd)|![테블릿-강의결제- 랭킹](https://github.com/yonainthefish/MoneyLupin/assets/124084624/079e973c-5956-4b0d-b000-bfbec93362d7)|![모바일-강의결제- 랭킹](https://github.com/yonainthefish/MoneyLupin/assets/124084624/6a7fcc1a-0869-441c-bfb5-2e01737c8f21)|
+
 
 </details>
-
 </div>
 
 <br><br>
-<br><br>
 
-## ✍🏻 팀원 
+## 1. ✍🏻 팀원 
 
 <div align=center>
 
-![리드미팀(수정)](https://github.com/yonainthefish/MoneyLupin/assets/124084624/56d568f3-b172-4ff4-b7d5-eebb01fc1754)
+![Group 55](https://github.com/yonainthefish/MoneyLupin/assets/124084624/b848fd14-fa55-4f65-90d7-95d9255fb0c0)
+
   
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/KimHayeon1"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="//github.com/suminson97"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="//github.com/yonainthefish"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |:---:|:---:|:---:|
@@ -46,12 +48,41 @@
 
 <br><br>
 <br><br>
+
+## 2. 📈 일/월간 활성 사용자 수
+
+<br>
+
+<div align=center>
+ <p> 카카오톡 오픈채팅방을 활용해서 80명 이상의 사용자가 서비스를 이용했습니다.  💻 <br>
+ 서비스를 이용한 사용자로 부터 받은 피드백을 기반으로 버그를 수정하여 서비스 완성도를 높였습니다. 
+ </p>
+ </div>
+
+<br>
+
+***
+
 <br><br>
 
-## <span id="dev">🛠️ 기술 및 개발 환경</span>
+<div align=center>
+📍일간 활성 유저 수 (DAU: Daily Active User)  
+  
+![Mask group (4)](https://github.com/yonainthefish/MoneyLupin/assets/124084624/67cdc2b8-4316-4e0e-bc40-5edc41e25326)
 
-<br>
-<br>
+<br><br>
+
+📍월간 활성 유저 수 (MAU: Monthly Active User)
+
+![Mask group (3)](https://github.com/yonainthefish/MoneyLupin/assets/124084624/77b5f4b8-f230-4e35-b395-bb5af4b595c1)
+  
+<br><br>
+
+</div>
+  
+## 3. 🛠️ 기술 및 개발 환경
+
+<br><br>
 
 <div align="center">
 
@@ -64,44 +95,11 @@
 
 <br><br>
 <br><br>
-<br><br>
 
-## <span id="dev">📈 일, 월간 활성 사용자 수</span>
-
-<br>
-
-<div align=center>
- <h3> 카카오톡 오픈채팅방을 활용해서 사용자를 모집하였습니다. 💻 <br>
- <월 평균 00명> 의 유저가 저희 사이트를 이용했고, 사용자 피드백을 기반으로 버그를 수정하여 서비스 완성도를 높였습니다. 
- </h3>
- </div>
-
-<br>
-
-***
-
-<br><br>
-
-📍일간 활성 유저 수 (DAU: Daily Active User)
-<br>
-
-![Mask group (4)](https://github.com/yonainthefish/MoneyLupin/assets/124084624/67cdc2b8-4316-4e0e-bc40-5edc41e25326)
-
-<br><br>
-
-📍월간 활성 유저 수 (MAU: Monthly Active User)
-<br>
-
-![Mask group (3)](https://github.com/yonainthefish/MoneyLupin/assets/124084624/77b5f4b8-f230-4e35-b395-bb5af4b595c1)
-  
-<br><br>
-<br><br>
-<br><br>
-
-## <span id="dev">📝 핵심코드 </span>
+## 4. 📝 핵심코드 
 
 <details>
-<summary> <b> 결제하기 버튼 활성화 </b> </summary>
+<summary> <b> 1. 결제하기 버튼 활성화 </b> </summary>
 <br>
   
 - 1. 강의 오픈 후 10분 간 결제 가능하므로, 현재 시간으로부터 10분 전까지의 모든 예약 시간 데이터를 불러온다.
@@ -166,7 +164,7 @@
 
 
 <details>
-<summary> <b> 오픈 예정 시간 렌더링 </b> </summary>
+<summary> <b> 2. 오픈 예정 시간 렌더링 </b> </summary>
 <br>
 
 - 1. 결제하기 버튼 활성화 1에서 불러온 데이터 중, 현재 시간 이후의 예약 시간을 result 배열에 추가
@@ -224,7 +222,7 @@
 
 
 <details>
-<summary> <b> 랭킹 리스트 렌더링 </b> </summary>
+<summary> <b> 3. 랭킹 리스트 렌더링 </b> </summary>
 <br>
 
 - 1. 강의 오픈 시간과 user 정보 데이터를 가져온다.
@@ -311,7 +309,7 @@
 
 
 <details>
-<summary> <b> 회원가입 로그인 유효성 검사 </b> </summary>
+<summary> <b> 4. 회원가입 로그인 유효성 검사 </b> </summary>
 <br>
 
 
@@ -444,10 +442,8 @@
 </details>
 
 <br><br>
-<br><br>
-<br><br>
   
-## <span id="dev">🐛 트러블 슈팅 </span>
+## 5. 🐛 트러블 슈팅 
 
 <details>
 <summary> <b> 1. 랭킹 페이지 랭킹 순서 오류 </b> </summary>
