@@ -2,7 +2,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
 import Modal from './Modal';
 import Derection from '../../assets/images/direction.png';
@@ -44,19 +44,20 @@ const Home = () => {
   }, [autoSlide]);
 
   // 첫번째, 마지막 배너 클론
-  useEffect(() => {
-    bannerList.current.style.transform = 'translateX(-100%)';
+  const cloneBanners = useCallback((node) => {
+    bannerList.current = node;
 
-    const cloneFirstBanner =
-      bannerList.current.firstElementChild.cloneNode(true);
-    const cloneLastBanner = bannerList.current.lastChild.cloneNode(true);
+    node.style.transform = 'translateX(-100%)';
+
+    const cloneFirstBanner = node.firstElementChild.cloneNode(true);
+    const cloneLastBanner = node.lastChild.cloneNode(true);
     cloneFirstBanner.setAttribute('aria-hidden', 'true');
     cloneLastBanner.setAttribute('aria-hidden', 'true');
     cloneFirstBanner.firstElementChild.setAttribute('tabindex', '-1');
     cloneLastBanner.firstElementChild.setAttribute('tabindex', '-1');
 
-    bannerList.current.appendChild(cloneFirstBanner);
-    bannerList.current.prepend(cloneLastBanner);
+    node.appendChild(cloneFirstBanner);
+    node.prepend(cloneLastBanner);
   }, []);
 
   const slideLastToFirst = (bannersX) => {
@@ -232,7 +233,15 @@ const Home = () => {
             </button>
           </div>
 
-          <ul ref={bannerList} aria-live="off" className="banner-list">
+          <ul
+            ref={(node) => {
+              if (node) {
+                cloneBanners(node);
+              }
+            }}
+            aria-live="off"
+            className="banner-list"
+          >
             {banners.map((banner, i) => {
               return (
                 <li
@@ -263,9 +272,9 @@ const Home = () => {
           <ul className="indicator">
             {banners.map((_, i) => {
               if (currBanner === i) {
-                return <li className="current"></li>;
+                return <li key={i} className="current"></li>;
               } else {
-                return <li></li>;
+                return <li key={i}></li>;
               }
             })}
           </ul>
