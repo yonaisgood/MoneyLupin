@@ -60,6 +60,7 @@ const PaymentPage = () => {
   // 결제하기
   const handleBuyBtn = async (e) => {
     e.preventDefault();
+    e.target.disabled = true; // 더블 클릭 방지
     const colRef = collection(appFireStore, 'Ranking_' + openTime);
     try {
       const myTime = Timestamp.fromDate(new Date());
