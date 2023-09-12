@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import StyledForm from '../components/Form';
-import loginBg from '../assets/images/login,signup/login-bg.png';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
-import { useLogin } from '../hooks/useLogin';
+import StyledForm from '../components/Form.jsx';
+import loginBg from '../assets/images/login,signup/login-bg.png';
+import Button from '../components/Button.jsx';
+import { useLogin } from '../hooks/useLogin.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ const Login = () => {
     setTitle();
   }, []);
 
-  const handleData = (event) => {
+  const handleData = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.type === 'email') {
       setEmail(event.target.value);
     } else if (event.target.type === 'password') {
@@ -27,7 +27,7 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     login(email, password);
   };
@@ -62,7 +62,12 @@ const Login = () => {
     </StyledMain>
   );
 };
-const StyledMain = styled.main`
+
+interface props {
+  url: string;
+}
+
+const StyledMain = styled.main<props>`
   min-height: 100vh;
   display: flex;
 

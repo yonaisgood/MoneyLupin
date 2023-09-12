@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, Form } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import Login from './pages/Login';
+import Login from './pages/Login.tsx';
 import Signup from './pages/SignUp/SignUp';
 import Detail from './pages/DetailPage/DetailPage';
 import Payment from './pages/PaymentPage/PaymentPage';
