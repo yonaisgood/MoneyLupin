@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import StyledForm from '../../components/Form';
+import StyledForm from '../../components/Form.jsx';
 import {
   Section,
   LeftSection,
   RightSection,
   FormContainer,
-} from './SignUpStyle';
-import Button from '../../components/Button';
+} from './SignUpStyle.jsx';
+import Button from '../../components/Button.jsx';
 import SignUpBack from '../../assets/images/login,signup/signup-bg.png';
-import { useSignup } from '../../hooks/useSingup';
+import { useSignup } from '../../hooks/useSingup.js';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -31,7 +31,7 @@ const SignUp = () => {
     setTitle();
   }, []);
 
-  const handleData = (event) => {
+  const handleData = (event:React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.type === 'email') {
       setEmail(event.target.value);
 
@@ -69,7 +69,7 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isEmailError || isPasswordError || isDisplayNameError) return;
     signup(email, password, displayName);
