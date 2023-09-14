@@ -3,13 +3,13 @@ import Footer from '../../components/Footer.jsx';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { contents, banners, best } from './data.js';
+import { contents, banners, best } from './data';
 import Modal from './Modal.jsx';
 import Derection from '../../assets/images/direction.png';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 
 const Home = () => {
-  const [autoSlide, setAutoSlide] = useState(false);
+  const [autoSlide, setAutoSlide] = useState(true);
   const [slideBtn, setSlideBtn] = useState(true);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth
@@ -31,26 +31,6 @@ const Home = () => {
   const offLive = () => {
     bannerList.current?.setAttribute('aria-live', 'off');
   };
-
-  // 첫번째, 마지막 배너 클론
-  const cloneBanners = useCallback((node: HTMLUListElement) => {
-    bannerList.current = node;
-    setAutoSlide(true);
-    node.style.transform = 'translateX(-100%)';
-    if (!node.firstElementChild || !node.lastChild) {
-      return;
-    }
-    const cloneFirstBanner = node.firstElementChild.cloneNode(
-      true
-    ) as HTMLLIElement;
-    const cloneLastBanner = node.lastChild.cloneNode(true) as HTMLLIElement;
-    cloneFirstBanner.setAttribute('aria-hidden', 'true');
-    cloneLastBanner.setAttribute('aria-hidden', 'true');
-    cloneFirstBanner.firstElementChild?.setAttribute('tabindex', '-1');
-    cloneLastBanner.firstElementChild?.setAttribute('tabindex', '-1');
-    node.appendChild(cloneFirstBanner);
-    node.prepend(cloneLastBanner);
-  }, []);
 
   const slideLastToFirst = (bannersX: number) => {
     if (bannerList.current) {
@@ -260,31 +240,23 @@ const Home = () => {
           </div>
 
           <ul
-            ref={(node) => {
-              if (node) {
-                cloneBanners(node);
-              }
-            }}
+            ref={bannerList}
             aria-live="off"
             className="banner-list"
+            style={{ transform: 'translateX(-100%)' }}
           >
-            {banners.map(
-              (
-                banner: {
-                  text: string[];
-                  img: string;
-                  imgTablet: string;
-                  imgMobile: string;
-                },
-                i: number
-              ) => {
+            {[banners[banners.length - 1], ...banners, banners[0]].map(
+              (banner, i) => {
                 return (
                   <li
                     aria-roledescription="slide"
-                    aria-hidden:Boolean={currBanner !== i}
+                    aria-hidden={currBanner + 1 !== i}
                     key={i}
                   >
-                    <Link to="/" tabIndex={currBanner === i ? 0 : -1}>
+                    <Link
+                      to="/"
+                      tabIndex={currBanner + 1 === i ? undefined : -1}
+                    >
                       <img
                         src={
                           clientWitch <= 430
@@ -306,7 +278,7 @@ const Home = () => {
           </ul>
 
           <ul className="indicator">
-            {banners.map((_: object, i: number) => {
+            {banners.map((_, i) => {
               if (currBanner === i) {
                 return <li key={i} className="current"></li>;
               } else {
@@ -319,18 +291,16 @@ const Home = () => {
         <section className="contents">
           <h2 className="a11y-hidden">콘텐츠</h2>
           <ul>
-            {contents.map(
-              (content: { name: string; img: string }, i: number) => {
-                return (
-                  <li key={i}>
-                    <Link to="/">
-                      <img src={content.img} alt="" />
-                      {content.name}
-                    </Link>
-                  </li>
-                );
-              }
-            )}
+            {contents.map((content, i) => {
+              return (
+                <li key={i}>
+                  <Link to="/">
+                    <img src={content.img} alt="" />
+                    {content.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
 
@@ -348,28 +318,18 @@ const Home = () => {
             onTouchEnd={handleTouchEnd}
             ref={bestList}
           >
-            {best.map(
-              (
-                v: {
-                  name: string;
-                  img: string;
-                  imgSmall: string;
-                  link: string;
-                },
-                i: number
-              ) => {
-                return (
-                  <li key={i}>
-                    <Link to={v.link}>
-                      <img
-                        src={clientWitch > 430 ? v.img : v.imgSmall}
-                        alt={v.name}
-                      />
-                    </Link>
-                  </li>
-                );
-              }
-            )}
+            {best.map((v, i) => {
+              return (
+                <li key={i}>
+                  <Link to={v.link}>
+                    <img
+                      src={clientWitch > 430 ? v.img : v.imgSmall}
+                      alt={v.name}
+                    />
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </StyledMain>
