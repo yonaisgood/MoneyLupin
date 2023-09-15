@@ -1,10 +1,10 @@
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import Header from '../../components/Header.jsx';
+import Footer from '../../components/Footer.jsx';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
-import Modal from './Modal';
+import Modal from './Modal.jsx';
 import Derection from '../../assets/images/direction.png';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 
@@ -15,8 +15,8 @@ const Home = () => {
     document.documentElement.clientWidth
   );
   const [currBanner, setCurrBanner] = useState(0);
-  const bannerList = useRef(null);
-  const bestList = useRef(null);
+  const bannerList = useRef<HTMLUListElement | null>(null);
+  const bestList = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -25,68 +25,55 @@ const Home = () => {
   }, []);
 
   const onLive = () => {
-    bannerList.current.setAttribute('aria-live', 'polite');
+    bannerList.current?.setAttribute('aria-live', 'polite');
   };
 
   const offLive = () => {
-    bannerList.current.setAttribute('aria-live', 'off');
+    bannerList.current?.setAttribute('aria-live', 'off');
   };
 
-  useEffect(() => {
-    let interval;
-    if (autoSlide) {
-      onLive();
-      interval = rotateSlide();
-    } else {
-      offLive();
+  const slideLastToFirst = (bannersX: number) => {
+    if (bannerList.current) {
+      bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
     }
-    return () => clearInterval(interval);
-  }, [autoSlide]);
-
-  // 첫번째, 마지막 배너 클론
-  const cloneBanners = useCallback((node) => {
-    bannerList.current = node;
-
-    node.style.transform = 'translateX(-100%)';
-
-    const cloneFirstBanner = node.firstElementChild.cloneNode(true);
-    const cloneLastBanner = node.lastChild.cloneNode(true);
-    cloneFirstBanner.setAttribute('aria-hidden', 'true');
-    cloneLastBanner.setAttribute('aria-hidden', 'true');
-    cloneFirstBanner.firstElementChild.setAttribute('tabindex', '-1');
-    cloneLastBanner.firstElementChild.setAttribute('tabindex', '-1');
-
-    node.appendChild(cloneFirstBanner);
-    node.prepend(cloneLastBanner);
-  }, []);
-
-  const slideLastToFirst = (bannersX) => {
-    bannerList.current.style.transform = `translateX(${bannersX - 100}%)`;
     setCurrBanner(0);
     setTimeout(() => {
-      bannerList.current.style.transition = 'none';
-      bannerList.current.style.transform = 'translateX(-100%)';
+      if (bannerList.current) {
+        bannerList.current.style.transition = 'none';
+        bannerList.current.style.transform = 'translateX(-100%)';
+      }
     }, 300);
     setTimeout(() => {
-      bannerList.current.style.transition = '0.3s';
+      if (bannerList.current) {
+        bannerList.current.style.transition = '0.3s';
+      }
     }, 400);
   };
 
   const slideFirstToLast = () => {
-    bannerList.current.style.transform = '';
+    if (bannerList.current) {
+      bannerList.current.style.transform = '';
+    }
     setCurrBanner(banners.length - 1);
     setTimeout(() => {
-      bannerList.current.style.transition = 'none';
-      bannerList.current.style.transform = `translateX(${
-        banners.length * -100
-      }%)`;
+      if (bannerList.current) {
+        bannerList.current.style.transition = 'none';
+        bannerList.current.style.transform = `translateX(${
+          banners.length * -100
+        }%)`;
+      }
     }, 300);
     setTimeout(() => {
-      bannerList.current.style.transition = '0.3s';
+      if (bannerList.current) {
+        bannerList.current.style.transition = '0.3s';
+      }
     }, 400);
   };
 
   const slideToNextEl = () => {
+    if (!bannerList.current) {
+      return;
+    }
     const bannersTransform = bannerList.current.style.transform;
 
     if (bannersTransform === '') {
@@ -106,11 +93,22 @@ const Home = () => {
     }
   };
 
-  const rotateSlide = () => {
-    return setInterval(() => {
+  const rotateSlide = (): number => {
+    return window.setInterval(() => {
       slideToNextEl();
     }, 3000);
   };
+
+  useEffect(() => {
+    let interval: number;
+    if (autoSlide) {
+      onLive();
+      interval = rotateSlide();
+    } else {
+      offLive();
+    }
+    return () => clearInterval(interval);
+  }, [autoSlide]);
 
   // 연속 클릭 방지
   const preventDoubleClick = () => {
@@ -120,21 +118,25 @@ const Home = () => {
     }, 500);
   };
 
-  const handleNextBtn = (e) => {
+  const handleNextBtn = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (!slideBtn) {
       return;
     }
-    preventDoubleClick(e.currentTarget);
+    preventDoubleClick();
     slideToNextEl();
   };
 
-  const handlePrevBtn = (e) => {
+  const handlePrevBtn = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
-    if (!slideBtn) {
+    if (!slideBtn || !bannerList.current) {
       return;
     }
-    preventDoubleClick(e.currentTarget);
+    preventDoubleClick();
     const bannersTransform = bannerList.current.style.transform;
     if (bannersTransform !== '' && bannersTransform !== 'translateX(-100%)') {
       const bannersX = parseInt(bannersTransform.replace(/[^\d-]/g, ''));
@@ -147,9 +149,9 @@ const Home = () => {
   };
 
   // 이번 달 BEST 강의
-  let Start;
-  let End;
-  let classesWidth;
+  let Start: number;
+  let End: number;
+  let classesWidth: number;
   if (clientWitch > 430) {
     classesWidth = 1210;
   } else {
@@ -157,6 +159,10 @@ const Home = () => {
   }
 
   const slide = () => {
+    if (!bestList.current) {
+      return;
+    }
+
     let x = (End - Start) * 2;
     if (bestList.current.style.transform === '') {
       if (-x + clientWitch > classesWidth) {
@@ -182,26 +188,26 @@ const Home = () => {
     }
   };
 
-  const handleDragStart = (e) => {
+  const handleDragStart = (e: React.DragEvent) => {
     if (clientWitch < classesWidth) {
       Start = e.clientX;
     }
   };
 
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (e: React.DragEvent) => {
     if (clientWitch < classesWidth) {
       End = e.clientX;
       slide();
     }
   };
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     if (clientWitch < classesWidth) {
       Start = e.changedTouches[0].pageX;
     }
   };
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (clientWitch < classesWidth) {
       End = e.changedTouches[0].pageX;
       slide();
@@ -225,48 +231,50 @@ const Home = () => {
           <h2 className="a11y-hidden">메인 배너</h2>
 
           <div className="btn-wrap">
-            <button className="prev-btn" onClick={handlePrevBtn}>
+            <button type="button" className="prev-btn" onClick={handlePrevBtn}>
               <img src={arrowLeft} alt="이전" />
             </button>
-            <button className="next-btn" onClick={handleNextBtn}>
+            <button type="button" className="next-btn" onClick={handleNextBtn}>
               <img src={arrowLeft} alt="다음" />
             </button>
           </div>
 
           <ul
-            ref={(node) => {
-              if (node) {
-                cloneBanners(node);
-              }
-            }}
+            ref={bannerList}
             aria-live="off"
             className="banner-list"
+            style={{ transform: 'translateX(-100%)' }}
           >
-            {banners.map((banner, i) => {
-              return (
-                <li
-                  aria-roledescription="slide"
-                  aria-hidden={currBanner !== i}
-                  key={i}
-                >
-                  <Link tabIndex={currBanner === i ? '' : '-1'}>
-                    <img
-                      src={
-                        clientWitch <= 430
-                          ? banner.imgMobile
-                          : clientWitch <= 768
-                          ? banner.imgTablet
-                          : banner.img
-                      }
-                      alt=""
-                    />
-                    <p className="a11y-hidden">{banner.text.join(' ')}</p>
-                    <br />
-                    {`${banners.length}개의 슬라이드 중 ${i + 1}번`}
-                  </Link>
-                </li>
-              );
-            })}
+            {[banners[banners.length - 1], ...banners, banners[0]].map(
+              (banner, i) => {
+                return (
+                  <li
+                    aria-roledescription="slide"
+                    aria-hidden={currBanner + 1 !== i}
+                    key={i}
+                  >
+                    <Link
+                      to="/"
+                      tabIndex={currBanner + 1 === i ? undefined : -1}
+                    >
+                      <img
+                        src={
+                          clientWitch <= 430
+                            ? banner.imgMobile
+                            : clientWitch <= 768
+                            ? banner.imgTablet
+                            : banner.img
+                        }
+                        alt=""
+                      />
+                      <p className="a11y-hidden">{banner.text.join(' ')}</p>
+                      <br />
+                      {`${banners.length}개의 슬라이드 중 ${i + 1}번`}
+                    </Link>
+                  </li>
+                );
+              }
+            )}
           </ul>
 
           <ul className="indicator">
@@ -286,7 +294,7 @@ const Home = () => {
             {contents.map((content, i) => {
               return (
                 <li key={i}>
-                  <Link>
+                  <Link to="/">
                     <img src={content.img} alt="" />
                     {content.name}
                   </Link>
