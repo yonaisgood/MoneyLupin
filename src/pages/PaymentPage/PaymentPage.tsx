@@ -1,14 +1,14 @@
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import Header from '../../components/Header.jsx';
+import Footer from '../../components/Footer.jsx';
 import {
-  PaymentContainor,
+  PaymentContainer,
   RightSection,
   LeftSection,
   PaymentSection,
-} from './PaymentPageStyle';
+} from './PaymentPageStyle.jsx';
 import ClassBack from '../../assets/images/payment/ClassBack.png';
 import ClassBoys from '../../assets/images/payment/ClassBoys.png';
-import Button from '../../components/Button';
+import Button from '../../components/Button.jsx';
 import {
   collection,
   addDoc,
@@ -17,24 +17,24 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { appFireStore, Timestamp } from '../../firebase/config';
+import { appFireStore, Timestamp } from '../../firebase/config.js';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
-import StyledDialog from './StyledDialog';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext.js';
+import StyledDialog from './StyledDialog.jsx';
 import closeIcon from '../../assets/icons/x-black.svg';
 import checkCheckedIcon from '../../assets/icons/check-checked.svg';
 import checkIcon from '../../assets/icons/check.svg';
 
-const PaymentPage = () => {
+const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   const [ablePay, setAblePay] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
   const { openTime, setOpenTime } = useContext(PayContext);
   const { user } = useAuthContext();
-  const modal = useRef(null);
+  const modal = useRef<HTMLDialogElement | null>(null);
 
   const uid = user?.uid || null;
   const displayName = user?.displayName || null;
@@ -52,15 +52,16 @@ const PaymentPage = () => {
   }, []);
 
   useEffect(() => {
-    if (isModalOpen) {
+    if (isModalOpen && modal.current) {
       modal.current.showModal();
     }
   }, [isModalOpen]);
 
   // 결제하기
-  const handleBuyBtn = async (e) => {
+  const handleBuyBtn = async (e: MouseEvent) => {
     e.preventDefault();
-    e.target.disabled = true; // 더블 클릭 방지
+    const target = e.target as HTMLButtonElement;
+    target.disabled = true; // 더블 클릭 방지
     const colRef = collection(appFireStore, 'Ranking_' + openTime);
     try {
       const myTime = Timestamp.fromDate(new Date());
@@ -72,7 +73,7 @@ const PaymentPage = () => {
   };
 
   // 버튼 활성화
-  const checkPaid = (iso) => {
+  const checkPaid = (iso: string) => {
     onSnapshot(
       collection(appFireStore, 'Ranking_' + iso),
       (snapshot) => {
@@ -97,7 +98,7 @@ const PaymentPage = () => {
 
   useEffect(() => {
     (async () => {
-      const openedTiemList = [];
+      const openedTimeList: string[] = [];
       const currTime = new Date();
       const currTimeCopy = new Date(currTime);
       const q = query(
@@ -119,27 +120,29 @@ const PaymentPage = () => {
           const iso = new Date(dateCopy.setHours(dateCopy.getHours() + 9))
             .toISOString()
             .slice(0, 16);
-          openedTiemList.push(iso);
+            openedTimeList.push(iso);
         }
       });
 
-      if (openedTiemList.length) {
-        checkPaid(openedTiemList[openedTiemList.length - 1]);
+      if (openedTimeList.length) {
+        checkPaid(openedTimeList[openedTimeList.length - 1]);
       }
     })();
   }, []);
 
-  const handlePaySelectBtn = (e) => {
+  const handlePaySelectBtn = (e: React.MouseEvent) => {
     e.preventDefault();
-    const sibling = e.target.parentNode.children;
-    [...sibling].forEach((el) => el.classList.remove('selected'));
-    e.target.classList.add('selected');
+    const sibling = e.currentTarget.parentNode?.children;
+    if (sibling) {
+      [...sibling].forEach((el) => el.classList.remove('selected'));
+    }
+    e.currentTarget.classList.add('selected');
   };
 
   return (
     <>
       <Header />
-      <PaymentContainor>
+      <PaymentContainer>
         <h2 className="a11y-hidden">주문결제</h2>
         <h1>주문결제</h1>
         <div className="leftBox">
@@ -184,7 +187,11 @@ const PaymentPage = () => {
             <Button
               className="payBtn"
               size="l"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                if (!isModalOpen) {
+                  setIsModalOpen(true);
+                }
+              }}
               disabled={!ablePay || isModalOpen}
             >
               결제하기
@@ -256,7 +263,7 @@ const PaymentPage = () => {
             결제하기
           </Button>
         </div>
-      </PaymentContainor>
+      </PaymentContainer>
 
       {isModalOpen && (
         <StyledDialog
@@ -284,8 +291,8 @@ const PaymentPage = () => {
               aria-describedby="agreeAll"
               onKeyDown={(e) => {
                 // 32 === 스페이스바
-                if (e.keycode === 32 || e.key === 'Enter') {
-                  e.target.click();
+                if (e.key === ' ' || e.key === 'Enter') {
+                  e.currentTarget.click();
                 }
               }}
             />

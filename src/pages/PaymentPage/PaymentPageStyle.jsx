@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const PaymentContainor = styled.div`
+const PaymentContainer = styled.div`
   max-width: 1240px;
   margin: 0 auto;
   padding: 12.2rem 2rem 0 2rem;
@@ -425,4 +425,4 @@ const RightSection = styled.section`
   }
 `;
 
-export { PaymentContainor, LeftSection, RightSection, PaymentSection };
+export { PaymentContainer, LeftSection, RightSection, PaymentSection };
