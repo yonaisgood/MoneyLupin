@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import StyledForm from '../../components/Form.jsx';
+import StyledForm from '../../components/Form.tsx';
 import {
   Section,
   LeftSection,
   RightSection,
   FormContainer,
-} from './SignUpStyle.jsx';
+} from './SignUpStyle.tsx';
 import Button from '../../components/Button.jsx';
 import SignUpBack from '../../assets/images/login,signup/signup-bg.png';
 import { useSignup } from '../../hooks/useSingup.js';

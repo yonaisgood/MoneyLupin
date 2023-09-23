@@ -1,11 +1,11 @@
 import Header from '../../components/Header.jsx';
-import Footer from '../../components/Footer.jsx';
+import Footer from '../../components/Footer.tsx';
 import {
   PaymentContainer,
   RightSection,
   LeftSection,
   PaymentSection,
-} from './PaymentPageStyle.jsx';
+} from './PaymentPageStyle.tsx';
 import ClassBack from '../../assets/images/payment/ClassBack.png';
 import ClassBoys from '../../assets/images/payment/ClassBoys.png';
 import Button from '../../components/Button.jsx';

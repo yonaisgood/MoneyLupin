@@ -1,10 +1,10 @@
 import Header from '../../components/Header.jsx';
-import Footer from '../../components/Footer.jsx';
+import Footer from '../../components/Footer.tsx';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
-import Modal from './Modal.jsx';
+import Modal from './Modal.tsx';
 import Derection from '../../assets/images/direction.png';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 
