@@ -3,7 +3,7 @@ import logo from '../assets/images/header,footer/logo-gray.png';
 import githubIcon from '../assets/images/header,footer/icon-github.png';
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
+const Footer: React.FC  = () => {
   return (
     <StyledFooter>
       <div className="footerContainer">
