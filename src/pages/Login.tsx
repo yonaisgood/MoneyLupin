@@ -37,6 +37,13 @@ const Login: React.FC = () => {
       <h1 className="a11y-hidden">Lupin</h1>
       <article>
         <StyledH2>Log in</StyledH2>
+        <div className="toolTip">
+          <p className="toolTipInfo">
+            수강신청 예약을 진행할 수 있는 계정이에요!
+          </p>
+          <p>Email : admin@lupin.com</p>
+          <p>PassWord : 123456 </p>
+        </div>
         <StyledForm onSubmit={handleSubmit}>
           <label>
             Email
@@ -72,7 +79,23 @@ const StyledMain = styled.main<props>`
   display: flex;
 
   article {
+    position: relative;
     margin: auto;
+
+    .toolTip {
+      border: 3px solid black;
+      border-radius: 10px;
+      width: 50%;
+      padding: 0 1rem 0;
+      position: absolute;
+      top: -5rem;
+      right: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .toolTipInfo {
+      font-size: 1.5rem;
+    }
   }
 
   .text,
@@ -143,10 +166,11 @@ const StyledMain = styled.main<props>`
     a {
       font-size: 1.5rem;
       line-height: 2.3rem;
+      padding: 5px;
     }
 
     a {
-      margin: 30px -5px 0 0;
+      /* margin: 30px -5px 0 0; */
       padding: 5px;
     }
   }
