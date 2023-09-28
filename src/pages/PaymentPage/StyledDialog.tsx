@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-const StyledDialog = styled.dialog`
+const StyledDialog = styled.dialog<{
+  $checkIcon: string;
+  $checkCheckedIcon: string;
+}>`
   padding: 3.1rem 2.5rem 2.5rem;
   border: none;
   border-radius: 20px;
