@@ -1,11 +1,11 @@
-import Header from '../../components/Header.jsx';
-import Footer from '../../components/Footer.tsx';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import {
   PaymentContainer,
   RightSection,
   LeftSection,
   PaymentSection,
-} from './PaymentPageStyle.tsx';
+} from './PaymentPageStyle';
 import ClassBack from '../../assets/images/payment/ClassBack.png';
 import ClassBoys from '../../assets/images/payment/ClassBoys.png';
 import Button from '../../components/Button.jsx';
@@ -17,12 +17,12 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { appFireStore, Timestamp } from '../../firebase/config.js';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { appFireStore, Timestamp } from '../../firebase/config';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
-import StyledDialog from './StyledDialog.jsx';
+import StyledDialog from './StyledDialog';
 import closeIcon from '../../assets/icons/x-black.svg';
 import checkCheckedIcon from '../../assets/icons/check-checked.svg';
 import checkIcon from '../../assets/icons/check.svg';
@@ -120,7 +120,7 @@ const PaymentPage: React.FC = () => {
           const iso = new Date(dateCopy.setHours(dateCopy.getHours() + 9))
             .toISOString()
             .slice(0, 16);
-            openedTimeList.push(iso);
+          openedTimeList.push(iso);
         }
       });
 

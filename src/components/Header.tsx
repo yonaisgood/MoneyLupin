@@ -2,8 +2,9 @@ import { styled } from 'styled-components';
 import person from '../assets/icons/person.svg';
 import logo from '../assets/images/header,footer/logo.png';
 import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useLogout } from '../hooks/useLogout.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
+import React from 'react';
 
 const Header = () => {
   const { logout } = useLogout();
@@ -17,7 +18,7 @@ const Header = () => {
             <img src={logo} alt="lupin 로고" />
           </Link>
         </h1>
-        <button>
+        <button type="button">
           <span className="hamburger">
             <span></span>
             <span></span>
@@ -66,7 +67,7 @@ const Header = () => {
   );
 };
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.header<{ $person: string }>`
   position: fixed;
   z-index: 995;
   width: 100%;

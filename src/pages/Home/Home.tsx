@@ -1,10 +1,10 @@
-import Header from '../../components/Header.jsx';
-import Footer from '../../components/Footer.tsx';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { contents, banners, best } from './data';
-import Modal from './Modal.tsx';
+import Modal from './Modal';
 import Derection from '../../assets/images/direction.png';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 
@@ -14,6 +14,7 @@ const Home = () => {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth
   );
+
   const [currBanner, setCurrBanner] = useState(0);
   const bannerList = useRef<HTMLUListElement | null>(null);
   const bestList = useRef<HTMLUListElement | null>(null);
@@ -239,24 +240,30 @@ const Home = () => {
             </button>
           </div>
 
-          <ul
-            ref={bannerList}
-            aria-live="off"
-            className="banner-list"
-            style={{ transform: 'translateX(-100%)' }}
-          >
+          <ul ref={bannerList} aria-live="off" className="banner-list">
             {[banners[banners.length - 1], ...banners, banners[0]].map(
               (banner, i) => {
-                return (
-                  <li
-                    aria-roledescription="slide"
-                    aria-hidden={currBanner + 1 !== i}
-                    key={i}
-                  >
-                    <Link
-                      to="/"
-                      tabIndex={currBanner + 1 === i ? undefined : -1}
-                    >
+                return currBanner + 1 !== i ? (
+                  <li aria-roledescription="slide" aria-hidden="true" key={i}>
+                    <Link to="/" tabIndex={-1}>
+                      <img
+                        src={
+                          clientWitch <= 430
+                            ? banner.imgMobile
+                            : clientWitch <= 768
+                            ? banner.imgTablet
+                            : banner.img
+                        }
+                        alt=""
+                      />
+                      <p className="a11y-hidden">{banner.text.join(' ')}</p>
+                      <br />
+                      {`${banners.length}개의 슬라이드 중 ${i + 1}번`}
+                    </Link>
+                  </li>
+                ) : (
+                  <li aria-roledescription="slide" aria-hidden="false" key={i}>
+                    <Link to="/">
                       <img
                         src={
                           clientWitch <= 430
@@ -339,7 +346,7 @@ const Home = () => {
 };
 
 const StyledMain = styled.main`
-  padding: 122px 0 0; // 확인 필요
+  padding: 122px 0 0;
 
   .banners {
     position: relative;
@@ -371,6 +378,7 @@ const StyledMain = styled.main`
       display: flex;
       height: 400px;
       transition: 0.3s;
+      transform: translateX(-100%);
 
       li {
         flex-shrink: 0;
@@ -386,7 +394,6 @@ const StyledMain = styled.main`
       }
     }
 
-    /* 인디케이터 */
     .indicator {
       position: absolute;
       bottom: 23px;
@@ -472,7 +479,7 @@ const StyledMain = styled.main`
       z-index: 800;
     }
 
-    @-webkit-keyframes finger {
+    @keyframes finger {
       0% {
         top: 20px;
       }
