@@ -8,7 +8,7 @@ import {
 } from './PaymentPageStyle';
 import ClassBack from '../../assets/images/payment/ClassBack.png';
 import ClassBoys from '../../assets/images/payment/ClassBoys.png';
-import Button from '../../components/Button.jsx';
+import Button from '../../components/Button.tsx';
 import {
   collection,
   addDoc,
@@ -21,7 +21,7 @@ import { appFireStore, Timestamp } from '../../firebase/config';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext.js';
+import { useAuthContext } from '../../hooks/useAuthContext.ts';
 import StyledDialog from './StyledDialog';
 import closeIcon from '../../assets/icons/x-black.svg';
 import checkCheckedIcon from '../../assets/icons/check-checked.svg';
@@ -57,11 +57,7 @@ const PaymentPage: React.FC = () => {
     }
   }, [isModalOpen]);
 
-  // 결제하기
-  const handleBuyBtn = async (e: MouseEvent) => {
-    e.preventDefault();
-    const target = e.target as HTMLButtonElement;
-    target.disabled = true; // 더블 클릭 방지
+  const postData = async () => {
     const colRef = collection(appFireStore, 'Ranking_' + openTime);
     try {
       const myTime = Timestamp.fromDate(new Date());
@@ -70,6 +66,13 @@ const PaymentPage: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+  // 결제하기
+  const handleBuyBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const target = e.target as HTMLButtonElement;
+    target.disabled = true; // 더블 클릭 방지
+    postData();
   };
 
   // 버튼 활성화

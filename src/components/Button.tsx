@@ -1,6 +1,13 @@
 import { styled, css } from 'styled-components';
 
-const Button = ({ children, ...props }) => {
+type ChildrenProps = {
+  children: string;
+  size: 'l' | 'm';
+  disabled?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
+};
+const Button = ({ children, ...props }: ChildrenProps) => {
   return <BtnStyle {...props}>{children}</BtnStyle>;
 };
 
@@ -40,8 +47,11 @@ const size = {
     }
   `,
 };
+type ButtonProps = {
+  size?: 'l' | 'm';
+};
 
-const BtnStyle = styled.button`
+const BtnStyle = styled.button<ButtonProps>`
   ${(props) => size[props.size || 'l']}
   background-color: var(--brand-color);
   color: white;

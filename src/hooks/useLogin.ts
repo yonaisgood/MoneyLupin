@@ -12,7 +12,7 @@ export const useLogin = () => {
 
   const { dispatch } = useAuthContext();
 
-  const login = (email, password) => {
+  const login = (email: string, password: string) => {
     setError(null);
     setPending(true);
 

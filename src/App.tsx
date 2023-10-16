@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Login from './pages/Login';
 import Signup from './pages/SignUp/SignUp';
-import Detail from './pages/DetailPage/DetailPage.jsx';
+import Detail from './pages/DetailPage/DetailPage';
 import Payment from './pages/PaymentPage/PaymentPage';
-import Ranking from './pages/RankingPage/RankingPage.jsx';
+import Ranking from './pages/RankingPage/RankingPage';
 import GlobalStyle from './GlobalStyle';
 import PayProvider from './context/PayContext';
-import { useAuthContext } from './hooks/useAuthContext.js';
+import { useAuthContext } from './hooks/useAuthContext';
 import React from 'react';
 
 function App() {

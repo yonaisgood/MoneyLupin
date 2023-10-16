@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-import StyledForm from '../components/Form.tsx';
+import StyledForm from '../components/Form';
 import loginBg from '../assets/images/login,signup/login-bg.png';
-import Button from '../components/Button.jsx';
-import { useLogin } from '../hooks/useLogin.js';
+import Button from '../components/Button';
+import { useLogin } from '../hooks/useLogin';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
