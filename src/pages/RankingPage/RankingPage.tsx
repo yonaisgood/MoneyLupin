@@ -2,16 +2,25 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { StyledMain, RightSection, LeftSection } from './RankingPageStyle';
 import rankImg from '../../assets/images/rank_man.png';
-import { collection, getFirestore, getDocs } from 'firebase/firestore';
-import { useContext, useEffect } from 'react';
+import {
+  collection,
+  getFirestore,
+  getDocs,
+  DocumentData,
+} from 'firebase/firestore';
+import { useContext, useEffect, useState } from 'react';
 import { PayContext } from '../../context/PayContext';
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { appFireStore } from '../../firebase/config';
 
-const RankingPage = () => {
-  // const navigate = useNavigate();
-  // const history = createBrowserHistory();
+interface User {
+  rank: number;
+  nickname: string;
+  time: string;
+}
+
+const RankingPage: React.FC = () => {
   const { openTime } = useContext(PayContext);
   const { user } = useAuthContext();
 
@@ -19,9 +28,9 @@ const RankingPage = () => {
   const displayName = user?.displayName || null;
 
   // 사용자 리스트를 보여줄 상태 변수 초기화
-  const [userList, setUserList] = useState([]);
-  const [userRank, setUserRank] = useState(null); // 로그인한 사용자의 랭킹
-  const [userTime, setUserTime] = useState(null); // 로그인한 사용자의 시간
+  const [userList, setUserList] = useState<User[]>([]);
+  const [userRank, setUserRank] = useState<number | null>(null); // 로그인한 사용자의 랭킹
+  const [userTime, setUserTime] = useState<string | null>(null); // 로그인한 사용자의 시간
 
   // 컴포넌트가 마운트될 때 사용자 리스트 업데이트
   useEffect(() => {
@@ -33,13 +42,12 @@ const RankingPage = () => {
 
     const fetchUserList = async () => {
       try {
-        // const db = getFirestore();
-        const usersCollection = collection(appFireStore, 'Ranking_' + openTime); // Firestore 컬렉션 이름을 'users'로 가정합니다.
+        const usersCollection = collection(appFireStore, 'Ranking_' + openTime);
         const usersSnapshot = await getDocs(usersCollection);
-        const fetchedUsers = [];
+        const fetchedUsers: User[] = [];
 
         usersSnapshot.forEach((doc) => {
-          const userData = doc.data();
+          const userData = doc.data() as DocumentData;
           fetchedUsers.push({
             rank: fetchedUsers.length + 1, // 스냅샷에서의 순서에 따른 랭크 설정
             nickname: userData.displayName,
@@ -58,7 +66,7 @@ const RankingPage = () => {
           })
           .map((v, i) => {
             v.rank = i + 1;
-            v.time = v.time.toDate().toLocaleTimeString();
+            v.time = new Date(v.time).toLocaleTimeString();
           });
 
         // 사용자 리스트 업데이트
@@ -76,7 +84,6 @@ const RankingPage = () => {
         console.error('사용자 데이터를 가져오는 중 오류 발생:', error);
       }
     };
-    // console.log(fetchedUsers);
 
     fetchUserList();
   }, [openTime, displayName]);
@@ -112,4 +119,5 @@ const RankingPage = () => {
     </>
   );
 };
+
 export default RankingPage;

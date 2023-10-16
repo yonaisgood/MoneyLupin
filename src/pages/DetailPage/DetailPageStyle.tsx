@@ -280,7 +280,9 @@ const StyledMain = styled.main`
     }
   }
 `;
-const WhiteButton = styled.button`
+const WhiteButton = styled.button<{
+  $watchBlackIcon: string;
+}>`
   margin-top: 57px;
   padding: 16px 0;
   width: 100%;

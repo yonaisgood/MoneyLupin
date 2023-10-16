@@ -2,8 +2,8 @@ import { styled } from 'styled-components';
 import person from '../assets/icons/person.svg';
 import logo from '../assets/images/header,footer/logo.png';
 import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout.js';
-import { useAuthContext } from '../hooks/useAuthContext.js';
+import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
 import React from 'react';
 
 const Header = () => {

@@ -31,18 +31,21 @@ import closeIcon from '../../assets/icons/close.svg';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const DetailPage = () => {
+interface DataItem {
+  time: string;
+}
+const DetailPage: React.FC = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [payBtn, setPayBtn] = useState(false);
-  const [time, setTime] = useState('');
-  const [data, setData] = useState([]);
+  const [time, setTime] = useState<string>('');
+  const [data, setData] = useState<DataItem[]>([]); // 타입 추가
   const [nextPayTime, setNextPayTime] = useState('');
-  const [clientWitch, setClientWitch] = useState(
+  const [clientWitch, setClientWitch] = useState<number>(
     document.documentElement.clientWidth
   );
-  const modal = useRef(null);
-  const timeInp = useRef(null);
+  const modal = useRef<HTMLDialogElement | null>(null);
+  const timeInp = useRef<HTMLInputElement | null>(null); // 타입 추가
 
   const { user } = useAuthContext();
   const uid = user?.uid || null;
@@ -65,8 +68,9 @@ const DetailPage = () => {
     setTitle();
   }, []);
 
+  console.log(data);
   // 시간 예약
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!time) {
@@ -103,14 +107,14 @@ const DetailPage = () => {
   // 오픈 시간 예약 버튼 클릭 시, 모달 open
   useEffect(() => {
     if (isModalOpen) {
-      modal.current.showModal();
+      modal.current!.showModal(); // 'modal'이 null일 가능성이 있으므로 '!'를 사용하여 null이 아님을 단언합니다.
     }
   }, [isModalOpen]);
 
   // 결제한 사용자 체크 및 버튼 활성화
-  const checkPaid = async (iso) => {
+  const checkPaid = async (iso: string) => {
     const docs = await getDocs(collection(appFireStore, 'Ranking_' + iso));
-    const uidList = [];
+    const uidList: string[] = [];
     docs.forEach((doc) => {
       uidList.push(doc.data().uid);
     });
@@ -125,8 +129,8 @@ const DetailPage = () => {
     return true;
   };
 
-  const renderOpenTime = (time) => {
-    const dayList = {
+  const renderOpenTime = (time: string) => {
+    const dayList: Record<string, string> = {
       Sun: '일',
       Mon: '월',
       Tue: '화',
@@ -156,8 +160,8 @@ const DetailPage = () => {
         )
       );
 
-      const result = [];
-      const openedTiemList = [];
+      const result: DataItem[] = [];
+      const openedTiemList: string[] = [];
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((document) => {
@@ -189,10 +193,10 @@ const DetailPage = () => {
     })();
   }, []);
 
-  const deleteTime = async (e) => {
+  const deleteTime = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const time = e.currentTarget.dataset.time;
-    await deleteDoc(doc(appFireStore, 'time', time));
+    await deleteDoc(doc(appFireStore, 'time', time!)); // 'time'이 null일 가능성이 없으므로 '!'를 사용하여 null이 아님을 단언합니다.
     setData(data.filter((v) => v.time !== time));
   };
 
@@ -211,13 +215,12 @@ const DetailPage = () => {
       const timeInpMax =
         parseInt(timeInpMin.slice(0, 4)) + 1 + timeInpMin.slice(4);
 
-      timeInp.current.setAttribute('min', timeInpMin);
-      timeInp.current.setAttribute('max', timeInpMax);
+      timeInp.current!.setAttribute('min', timeInpMin); // 'timeInp'가 null일 가능성이 없으므로 '!'를 사용하여 null이 아님을 단언합니다.
+      timeInp.current!.setAttribute('max', timeInpMax); // 'timeInp'가 null일 가능성이 없으므로 '!'를 사용하여 null이 아님을 단언합니다.
     }, 1000);
 
     return () => clearInterval(interval);
   }, [isModalOpen]);
-
   return (
     <>
       <Header />
@@ -319,14 +322,16 @@ const DetailPage = () => {
                               {v.time.slice(0, 10).replace(/-/g, '.')}
                             </span>
                             <span className="time">
-                              {(v.time.slice(11, 13) > 12
-                                ? (v.time.slice(11, 13) - 12)
+                              {(parseInt(v.time.slice(11, 13)) > 12
+                                ? parseInt(v.time.slice(11, 13))
                                     .toString()
                                     .padStart(2, '0')
                                 : v.time.slice(11, 13)) +
                                 v.time.slice(13, 16) +
                                 ' ' +
-                                (v.time.slice(11, 13) > 12 ? 'PM' : 'AM')}
+                                (parseInt(v.time.slice(11, 13)) > 12
+                                  ? 'PM'
+                                  : 'AM')}
                             </span>
                             <button
                               onClick={deleteTime}

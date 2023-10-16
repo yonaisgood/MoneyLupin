@@ -3,16 +3,21 @@ import { appAuth } from '../firebase/config';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useAuthContext } from './useAuthContext';
 
+type SignupResponse = {
+  error: string | null;
+  isPending: boolean;
+  signup: (email: string, password: string, displayName: string) => void;
+};
 // 회원가입을 진행하는 훅
-export const useSignup = () => {
+export const useSignup = (): SignupResponse => {
   // 에러 정보를 저장합니다.
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   // 현재 서버와의 통신 상태를 저장합니다.
-  const [isPending, setPending] = useState(false);
+  const [isPending, setPending] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
 
-  const signup = (email, password, displayName) => {
+  const signup = (email: string, password: string, displayName: string) => {
     setError(null);
     setPending(true);
 
@@ -27,7 +32,7 @@ export const useSignup = () => {
         }
 
         // 회원의 별명정보를 업데이트합니다.
-        updateProfile(appAuth.currentUser, { displayName })
+        updateProfile(user, { displayName })
           .then(() => {
             setError(null);
             setPending(false);
